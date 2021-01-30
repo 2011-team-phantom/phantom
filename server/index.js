@@ -34,7 +34,7 @@ app.get("/link/token/create", async (req, res) => {
         },
       },
     });
-    console.log(client)
+    console.log('CLIENT indexjs',client)
     const linkToken = response.link_token;
     res.send(response);
   } catch (error) {
@@ -47,15 +47,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 app.post("/plaid_token_exchange", async (req, res) => {
-  const { publicToken } = req.body;
+  const { public_token } = req.body;
+  // console.log('BODY', req.body)
+  console.log('PUBLIC TOKEN', public_token)
   const { access_token } = await client
-    .exchangePublicToken(publicToken)
-    .catch(handleError);
+  .exchangePublicToken(public_token)
+  .catch(handleError);
+  console.log('ACCESS TOKEN', access_token)
   const { accounts, item } = await client
     .getAccounts(access_token)
     .catch(handleError);
-  console.log(accounts, item);
+  // console.log('tokenEXCHANGE', accounts, item);
 });
+
+app.post("/auth/public_token", )
+
+// app.get("/transactions", async (req, res) => {
+//   const {data} = await req.body;
+//   console.log(data)
+//   // res.json(data.transactions)
+//   res.end();
+// })
 
 app.use(express.static(path.join(__dirname, "../public")));
 app.use("/api", require("./api"));

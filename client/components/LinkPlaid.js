@@ -22,7 +22,7 @@ class LinkPlaid extends Component {
 
   handleOnSuccess(public_token, metadata) {
     // send token to client server
-    axios.post("/auth/public_token", {
+    axios.post("/plaid_token_exchange", {
       public_token: public_token,
     });
   }
@@ -43,6 +43,7 @@ class LinkPlaid extends Component {
   handleOnExit() {
     // handle the case when your user exits Link
     // For the sake of this tutorial, we're not going to be doing anything here.
+    // console.log('localSTORAGE',window.localStorage)
   }
 
   handleClick(res) {
