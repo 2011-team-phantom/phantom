@@ -84,12 +84,19 @@ app.post("/plaid_token_exchange", async (req, res) => {
 
 app.post("/auth/public_token");
 
-// app.get("/transactions", async (req, res) => {
-//   const {data} = await req.body;
-//   console.log(data)
-//   // res.json(data.transactions)
-//   res.end();
-// })
+app.get("/transactions/:accessToken", async (req, res) => {
+  try {
+    const data = await client.getTransactions(
+      req.params.accessToken,
+      "2020-12-01",
+      "2021-01-30"
+    );
+    // console.log(data);
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 app.use(express.static(path.join(__dirname, "../public")));
 app.use("/api", require("./api"));

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {PlaidLink} from "react-plaid-link";
+import { PlaidLink } from "react-plaid-link";
 import axios from "axios";
 
 class LinkPlaid extends Component {
@@ -17,21 +17,21 @@ class LinkPlaid extends Component {
     this.handleOnSuccess = this.handleOnSuccess.bind(this);
   }
 
-  componentDidMount(){
-    this.getLinkToken()
+  componentDidMount() {
+    this.getLinkToken();
   }
-  
+
   async handleOnSuccess(public_token, metadata) {
     // send token to client server
-    const {data} = await axios.post("/plaid_token_exchange", {
+    const { data } = await axios.post("/plaid_token_exchange", {
       public_token: public_token,
     });
-    console.log('DATA-LINK-PLAID',data)
-    this.setState({access_token: data})
+    console.log("DATA-LINK-PLAID", data);
+    this.setState({ access_token: data });
   }
 
   async getLinkToken() {
-    const {data} = await axios.get("/link/token/create");
+    const { data } = await axios.get("/link/token/create");
     this.setState({ link_token: data.link_token });
   }
   // handler = plaid.create({
@@ -50,13 +50,14 @@ class LinkPlaid extends Component {
   }
 
   handleClick(res) {
-    axios.get("/transactions").then((res) => {
-      this.setState({ transactions: res.data });
+    axios.get(`/transactions/${this.state.access_token}`).then((res) => {
+      this.setState({ transactions: res.data.transactions });
     });
   }
 
   render() {
-    console.log('sdfjkdsjkdf',this.state)
+    console.log("sdfjkdsjkdf", this.state);
+    let transactions = this.state.transactions || []
     return (
       <div>
         <PlaidLink
@@ -72,6 +73,12 @@ class LinkPlaid extends Component {
         </PlaidLink>
         <div>
           <button onClick={this.handleClick}>Get Transactions</button>
+        </div>
+        <div>
+          {transactions.length ?
+            transactions.map((item, index) => {
+              return <div key={index}>{item.amount}</div>;
+            }):<h1>No Transactions</h1>}
         </div>
       </div>
     );
