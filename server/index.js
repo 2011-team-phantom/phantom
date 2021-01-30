@@ -34,7 +34,7 @@ app.get("/link/token/create", async (req, res) => {
         },
       },
     });
-    console.log('CLIENT indexjs',client)
+    console.log("CLIENT indexjs", client);
     const linkToken = response.link_token;
     res.send(response);
   } catch (error) {
@@ -49,18 +49,40 @@ app.use(morgan("dev"));
 app.post("/plaid_token_exchange", async (req, res) => {
   const { public_token } = req.body;
   // console.log('BODY', req.body)
-  console.log('PUBLIC TOKEN', public_token)
+  console.log("PUBLIC TOKEN", public_token);
   const { access_token } = await client
-  .exchangePublicToken(public_token)
-  .catch(handleError);
-  console.log('ACCESS TOKEN', access_token)
+    .exchangePublicToken(public_token)
+    .catch(handleError);
+  console.log("ACCESS TOKEN", access_token);
   const { accounts, item } = await client
     .getAccounts(access_token)
     .catch(handleError);
   // console.log('tokenEXCHANGE', accounts, item);
+  // await client.getTransactions(
+  //   access_token,
+  //   2020 - 12 - 31,
+  //   2021 - 01 - 30,
+  //   {
+  //     count: 250,
+  //     offset: 0,
+  //   },
+  //   function (error, transactionsResponse) {
+  //     if (error != null) {
+  //       console.log(error);
+  //       return res.json({
+  //         error,
+  //       });
+  //     } else {
+  //       console.log(transactionsResponse);
+  //       res.json(transactionsResponse);
+  //     }
+  //   }
+  // );
+  // console.log(transactions);
+  res.send(access_token);
 });
 
-app.post("/auth/public_token", )
+app.post("/auth/public_token");
 
 // app.get("/transactions", async (req, res) => {
 //   const {data} = await req.body;

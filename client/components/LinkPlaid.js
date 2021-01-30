@@ -9,6 +9,7 @@ class LinkPlaid extends Component {
     this.state = {
       transactions: [],
       link_token: "",
+      access_token: "",
     };
 
     this.getLinkToken = this.getLinkToken.bind(this);
@@ -19,12 +20,14 @@ class LinkPlaid extends Component {
   componentDidMount(){
     this.getLinkToken()
   }
-
-  handleOnSuccess(public_token, metadata) {
+  
+  async handleOnSuccess(public_token, metadata) {
     // send token to client server
-    axios.post("/plaid_token_exchange", {
+    const {data} = await axios.post("/plaid_token_exchange", {
       public_token: public_token,
     });
+    console.log('DATA-LINK-PLAID',data)
+    this.setState({access_token: data})
   }
 
   async getLinkToken() {
