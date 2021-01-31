@@ -1,30 +1,18 @@
-const MongoClient = require("mongodb").MongoClient;
-const assert = require("assert");
+//Import the mongoose module
+const mongoose = require('mongoose');
 
-// Connection URL
-const url = "mongodb://localhost:27017";
-
-// Database Name
-const dbName = "phantomdb";
-
-// Create a new MongoClient
-const db = new MongoClient(url);
-
-// Use connect method to connect to the Server
-db.connect(function (err) {
-  assert.equal(null, err);
-  console.log(`Connected successfully to server, ${dbName}`);
-
-  const db2 = db.db(dbName);
-  db2
-    .collection("users")
-    .find()
-    .toArray(function (err, result) {
-      if (err) throw err;
-
-      console.log(result);
-    });
-  console.log(db2);
-  //   db.close();
+//Set up default mongoose connection
+const mongoDB = 'mongodb://localhost:27017/phantomdb';
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
 });
+
+//Get the default connection
+const db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 module.exports = db;
