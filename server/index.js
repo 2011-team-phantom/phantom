@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv").config();
 const port = process.env.PORT || 3000;
+const db = require("./db");
 
 function handleError(errorMessage) {
   console.error(errorMessage);
