@@ -14,13 +14,11 @@ class Login extends Component {
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
-    console.log("state ", this.state);
   }
 
   async handleLogin(event) {
     event.preventDefault();
     const res = await axios.post("/auth/login/", this.state);
-    console.log(res.status);
   }
 
   render() {

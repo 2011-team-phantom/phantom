@@ -48,7 +48,6 @@ class LinkPlaid extends Component {
   }
 
   render() {
-    console.log("sdfjkdsjkdf", this.state);
     let transactions = this.state.transactions || [];
     return (
       <div>
