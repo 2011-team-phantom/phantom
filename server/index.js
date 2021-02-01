@@ -29,7 +29,7 @@ const client = new plaid.Client({
 
 store.on('error', function(error){console.log(error)})
 
-app.use(cors())
+app.use(cors({credentials: true, origin: "localhost:3000"}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
