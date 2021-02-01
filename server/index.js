@@ -9,10 +9,17 @@ const port = process.env.PORT || 3000;
 const db = require("./db");
 const session = require("express-session");
 const passport = require("passport");
+const MongoDBStore = require('connect-mongodb-session')(session);
+const cors = require('cors')
 
 function handleError(errorMessage) {
   console.error(errorMessage);
 }
+
+const store = new MongoDBStore({
+  uri: 'mongodb://localhost:27017/phantomdb',
+  collection: 'mySessions'
+});
 
 const client = new plaid.Client({
   clientID: process.env.PLAID_CLIENT_ID,
@@ -20,6 +27,9 @@ const client = new plaid.Client({
   env: plaid.environments.sandbox,
 });
 
+store.on('error', function(error){console.log(error)})
+
+app.use(cors({credentials: true, origin: "localhost:3000"}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
@@ -40,6 +50,9 @@ app.use(
     secret: "a wildly insecure secret",
     resave: false,
     saveUninitialized: true,
+    store: store,
+    cookie: { secure: false },
+    credentials: 'include',
   })
 );
 
@@ -63,7 +76,7 @@ app.get("/link/token/create", async (req, res) => {
         },
       },
     });
-    console.log("CLIENT indexjs", client);
+    // console.log("CLIENT indexjs", client);
     const linkToken = response.link_token;
     res.send(response);
   } catch (error) {
@@ -122,10 +135,7 @@ app.get("/transactions/:accessToken", async (req, res) => {
     console.error(error);
   }
 });
-app.use((req, res, next) => {
-  console.log("SESSION --> ", req.session);
-  next();
-});
+
 app.use(express.static(path.join(__dirname, "../public")));
 app.use("/api", require("./api"));
 app.use("/auth", require("./auth"));
