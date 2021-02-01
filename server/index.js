@@ -9,16 +9,16 @@ const port = process.env.PORT || 3000;
 const db = require("./db");
 const session = require("express-session");
 const passport = require("passport");
-const MongoDBStore = require('connect-mongodb-session')(session);
-const cors = require('cors')
+const MongoDBStore = require("connect-mongodb-session")(session);
+// const cors = require("cors");
 
 function handleError(errorMessage) {
   console.error(errorMessage);
 }
 
 const store = new MongoDBStore({
-  uri: 'mongodb://localhost:27017/phantomdb',
-  collection: 'mySessions'
+  uri: "mongodb://localhost:27017/phantomdb",
+  collection: "mySessions",
 });
 
 const client = new plaid.Client({
@@ -27,9 +27,11 @@ const client = new plaid.Client({
   env: plaid.environments.sandbox,
 });
 
-store.on('error', function(error){console.log(error)})
+store.on("error", function (error) {
+  console.log(error);
+});
 
-app.use(cors({credentials: true, origin: "localhost:3000"}))
+// app.use(cors({ credentials: true, origin: "localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
@@ -38,7 +40,7 @@ passport.serializeUser((user, done) => done(null, user._id));
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await db.collection("user").findOne(id);
+    const user = await db.collection("users").findOne({ _id: id });
     done(null, user);
   } catch (err) {
     done(err);
@@ -52,7 +54,7 @@ app.use(
     saveUninitialized: true,
     store: store,
     cookie: { secure: false },
-    credentials: 'include',
+    credentials: "include",
   })
 );
 
@@ -76,8 +78,6 @@ app.get("/link/token/create", async (req, res) => {
         },
       },
     });
-    // console.log("CLIENT indexjs", client);
-    const linkToken = response.link_token;
     res.send(response);
   } catch (error) {
     console.error(error);
@@ -86,41 +86,16 @@ app.get("/link/token/create", async (req, res) => {
 
 app.post("/plaid_token_exchange", async (req, res) => {
   const { public_token } = req.body;
-  // console.log('BODY', req.body)
-  console.log("PUBLIC TOKEN", public_token);
   const { access_token } = await client
     .exchangePublicToken(public_token)
     .catch(handleError);
-  console.log("ACCESS TOKEN", access_token);
   const { accounts, item } = await client
     .getAccounts(access_token)
     .catch(handleError);
-  // console.log('tokenEXCHANGE', accounts, item);
-  // await client.getTransactions(
-  //   access_token,
-  //   2020 - 12 - 31,
-  //   2021 - 01 - 30,
-  //   {
-  //     count: 250,
-  //     offset: 0,
-  //   },
-  //   function (error, transactionsResponse) {
-  //     if (error != null) {
-  //       console.log(error);
-  //       return res.json({
-  //         error,
-  //       });
-  //     } else {
-  //       console.log(transactionsResponse);
-  //       res.json(transactionsResponse);
-  //     }
-  //   }
-  // );
-  // console.log(transactions);
   res.send(access_token);
 });
 
-// app.post("/auth/public_token");
+app.post("/auth/public_token");
 
 app.get("/transactions/:accessToken", async (req, res) => {
   try {
@@ -129,7 +104,7 @@ app.get("/transactions/:accessToken", async (req, res) => {
       "2020-12-01",
       "2021-01-30"
     );
-    // console.log(data);
+
     res.json(data);
   } catch (error) {
     console.error(error);
