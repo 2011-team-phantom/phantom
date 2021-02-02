@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { PlaidLink } from "react-plaid-link";
 import axios from "axios";
-
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 class LinkPlaid extends Component {
   constructor() {
     super();
@@ -19,6 +20,7 @@ class LinkPlaid extends Component {
 
   componentDidMount() {
     this.getLinkToken();
+    console.log("IM LINKPLAID COMPONENT DID MOUNT!!")
   }
 
   async handleOnSuccess(public_token, metadata) {
@@ -49,6 +51,7 @@ class LinkPlaid extends Component {
 
   render() {
     let transactions = this.state.transactions || [];
+    console.log('IM HERE IN LINKPLAID!!!')
     return (
       <div>
         <PlaidLink
@@ -66,8 +69,10 @@ class LinkPlaid extends Component {
           <button onClick={this.handleClick}>Get Transactions</button>
         </div>
         <div>
+
           {transactions.length ? (
             transactions.map((item, index) => {
+              console.log(item)
               return <div key={index}>{item.amount}</div>;
             })
           ) : (
@@ -79,4 +84,4 @@ class LinkPlaid extends Component {
   }
 }
 
-export default LinkPlaid;
+export default withRouter(connect(null, null)(LinkPlaid));

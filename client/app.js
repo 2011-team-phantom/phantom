@@ -1,18 +1,13 @@
-// import React from 'react';
-// import { PlaidLink } from 'react-plaid-link';
+import React from 'react'
 
-// const App = props => {
-//   const onSuccess = (token, metadata) => {
-//     // send token to server
-//   };
+import Routes from './routes'
 
-//   return (
-//     <PlaidLink
-//       token="<GENERATED_LINK_TOKEN>"
-//       onSuccess={onSuccess}
-//     >
-//       Connect a bank account
-//     </PlaidLink>
-//   );
-// };
-// export default App;
+const App = () => {
+  return (
+    <div>
+      <Routes />
+    </div>
+  )
+}
+
+export default App

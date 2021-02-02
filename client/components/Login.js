@@ -20,7 +20,9 @@ class Login extends Component {
 
   async handleLogin(event) {
     event.preventDefault();
-    this.props.login(this.state.email, this.state.password);
+    await this.props.login(this.state.email, this.state.password)
+    this.props.history.push("/plaid")
+    // this.props.login
     // return <Redirect to="/plaid" />;
   }
 
@@ -49,10 +51,10 @@ class Login extends Component {
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     login: (email, password) => {
-      dispatch(auth(email, password));
+      dispatch(auth(email, password, ownProps.history));
     },
   };
 };

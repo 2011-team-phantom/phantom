@@ -16,7 +16,7 @@ export const me = () => async (dispatch) => {
   }
 };
 
-export const auth = (email, password) => async (dispatch) => {
+export const auth = (email, password, history) => async (dispatch) => {
   let res;
   console.log('auth email/pw', email, password);
   try {
@@ -27,7 +27,8 @@ export const auth = (email, password) => async (dispatch) => {
 
   try {
     dispatch(getUser(res.data));
-    history.replace('/plaid');
+    console.log(history)
+    // history.push('/plaid');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }
