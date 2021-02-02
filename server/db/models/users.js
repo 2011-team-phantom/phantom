@@ -12,6 +12,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    dateOfBirth: {
+      type: String,
+    },
+    monthlyIncome: {
+      type: Number,
+    },
+    housingCost: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
@@ -26,6 +35,6 @@ userSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-const user = mongoose.model("user", userSchema);
+const User = mongoose.model("user", userSchema);
 
-module.exports = user;
+module.exports = User;
