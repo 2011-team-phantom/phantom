@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { auth } from '../store/user';
-import { Redirect } from 'react-router-dom';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { auth } from "../store/user";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -20,10 +20,8 @@ class Login extends Component {
 
   async handleLogin(event) {
     event.preventDefault();
-    await this.props.login(this.state.email, this.state.password)
-    this.props.history.push("/plaid")
-    // this.props.login
-    // return <Redirect to="/plaid" />;
+    await this.props.login(this.state.email, this.state.password);
+    this.props.history.push("/plaid");
   }
 
   render() {

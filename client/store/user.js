@@ -1,34 +1,45 @@
-import axios from 'axios';
-import history from '../history';
+import axios from "axios";
+import history from "../history";
 
-const GET_USER = 'GET_USER';
-const REMOVE_USER = 'REMOVE_USER';
+const GET_USER = "GET_USER";
+const REMOVE_USER = "REMOVE_USER";
 
 const getUser = (user) => ({ type: GET_USER, user });
 const removeUser = () => ({ type: REMOVE_USER });
 
 export const me = () => async (dispatch) => {
   try {
-    const res = await axios.get('/auth/me');
+    const res = await axios.get("/auth/me");
     dispatch(getUser(res.data || defaultUser));
   } catch (err) {
     console.error(err);
   }
 };
 
+export const signUp = (userBody) => async (dispatch) => {
+  let res;
+  try {
+    res = await axios.post("/auth/signup", userBody);
+  } catch (error) {
+    return dispatch(getUser({ error: error }));
+  }
+  try {
+    dispatch(getUser(res.data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const auth = (email, password, history) => async (dispatch) => {
   let res;
-  console.log('auth email/pw', email, password);
   try {
-    res = await axios.post('/auth/login', { email, password });
+    res = await axios.post("/auth/login", { email, password });
   } catch (authError) {
     return dispatch(getUser({ error: authError }));
   }
 
   try {
     dispatch(getUser(res.data));
-    console.log(history)
-    // history.push('/plaid');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }
@@ -36,9 +47,9 @@ export const auth = (email, password, history) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    await axios.post('/auth/logout');
+    await axios.post("/auth/logout");
     dispatch(removeUser());
-    history.push('/login');
+    history.push("/login");
   } catch (err) {
     console.error(err);
   }
@@ -49,7 +60,7 @@ const defaultUser = {};
 export default function (state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      return action.user;
+      return action.user || state;
     case REMOVE_USER:
       return defaultUser;
     default:
