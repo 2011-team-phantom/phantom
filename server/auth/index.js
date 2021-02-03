@@ -57,4 +57,15 @@ router.get("/me", (req, res) => {
   res.json(req.user);
 });
 
+router.put("/updateAccess", async (req, res) => {
+  console.log("inside update access route");
+  try {
+    const thisUser = await User.findOne({ email: req.body.user.email });
+    thisUser.accessToken.push(req.body.access_token);
+    await thisUser.save();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
