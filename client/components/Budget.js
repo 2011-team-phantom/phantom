@@ -15,7 +15,7 @@ class Budget extends Component {
 
   componentDidMount() {
     this.parseTransactionData();
-    console.log("WE'RE HEERE IN BUDGETTT");
+
   }
 
   // handleChange(event) {
