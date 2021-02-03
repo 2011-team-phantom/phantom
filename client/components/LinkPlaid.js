@@ -3,7 +3,11 @@ import { PlaidLink } from "react-plaid-link";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchTransactions } from "../store/transactions";
+import {
+  fetchAcessToken,
+  fetchLinkToken,
+  fetchTransactions,
+} from "../store/transactions";
 
 class LinkPlaid extends Component {
   constructor() {
@@ -12,15 +16,18 @@ class LinkPlaid extends Component {
     this.state = {
       link_token: "",
       access_token: "",
+      render: "",
+      didRender: false,
     };
 
     this.getLinkToken = this.getLinkToken.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    //this.handleClick = this.handleClick.bind(this);
     this.handleOnSuccess = this.handleOnSuccess.bind(this);
+    this.handleOnExit = this.handleOnExit.bind(this);
   }
 
   componentDidMount() {
-    this.getLinkToken();
+    this.props.fetchLinkToken();
   }
 
   async handleOnSuccess(public_token, metadata) {
@@ -37,36 +44,46 @@ class LinkPlaid extends Component {
     this.setState({ link_token: data.link_token });
   }
 
-  handleOnExit() {
+  async handleOnExit() {
     // handle the case when your user exits Link
     // For the sake of this tutorial, we're not going to be doing anything here.
     // console.log('localSTORAGE',window.localStorage)
+    await this.props.fetchTransactions(this.props.access_token);
+    this.setState({ render: "yo" });
   }
 
-  async handleClick() {
-    await this.props.fetchTransactions(this.state.access_token);
-    //this.setState({ transactions: this.props.transactions });
-  }
+  // async handleClick() {
+  //   //this.setState({ transactions: this.props.transactions });
+  // }
 
   render() {
+    if (this.props.access_token && !this.state.didRender) {
+      this.props.fetchTransactions(this.props.access_token);
+      this.setState({ didRender: true });
+    }
     let transactions = this.props.transactions || [];
-
+    console.log("linktokenplz", this.props.link_token);
     return (
       <div>
-        <PlaidLink
-          clientName="React Plaid Setup"
-          env="sandbox"
-          product={["auth", "transactions"]}
-          token={this.state.link_token}
-          onExit={this.handleOnExit}
-          onSuccess={this.handleOnSuccess}
-          className="test"
-        >
-          Open Link and connect your bank!
-        </PlaidLink>
-        <div>
-          <button onClick={this.handleClick}>Get Transactions</button>
-        </div>
+        {this.props.link_token ? (
+          <PlaidLink
+            clientName="React Plaid Setup"
+            env="sandbox"
+            product={["auth", "transactions"]}
+            token={this.props.link_token}
+            onExit={this.handleOnExit}
+            onSuccess={(public_token) => {
+              this.props.fetchAcessToken(public_token);
+              this.setState({ didRender: false });
+            }}
+            className="test"
+          >
+            Open Link and connect your bank!
+          </PlaidLink>
+        ) : (
+          <h3>Link Loading</h3>
+        )}
+
         <div>
           {transactions.length ? (
             transactions.map((item, index) => {
@@ -96,13 +113,19 @@ class LinkPlaid extends Component {
 }
 
 const mapState = (state) => {
-  return { transactions: state.transactions };
+  return {
+    transactions: state.transactions.transactions,
+    access_token: state.transactions.access_token,
+    link_token: state.transactions.link_token,
+  };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     fetchTransactions: (access_token) =>
       dispatch(fetchTransactions(access_token)),
+    fetchAcessToken: (public_token) => dispatch(fetchAcessToken(public_token)),
+    fetchLinkToken: () => dispatch(fetchLinkToken()),
   };
 };
 

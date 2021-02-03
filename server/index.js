@@ -63,7 +63,8 @@ app.use(passport.session());
 
 app.get("/link/token/create", async (req, res) => {
   try {
-    const response = await client.createLinkToken({
+    console.log("linktoken?");
+    const { link_token } = await client.createLinkToken({
       user: {
         client_user_id: "123-test-user-id",
       },
@@ -78,13 +79,15 @@ app.get("/link/token/create", async (req, res) => {
         },
       },
     });
-    res.send(response);
+
+    res.send(link_token);
   } catch (error) {
     console.error(error);
   }
 });
 
 app.post("/plaid_token_exchange", async (req, res) => {
+  console.log("tokenexchange?");
   const { public_token } = req.body;
   const { access_token } = await client
     .exchangePublicToken(public_token)
