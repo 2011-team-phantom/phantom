@@ -22,7 +22,7 @@ class LinkPlaid extends Component {
 
     this.getLinkToken = this.getLinkToken.bind(this);
     //this.handleClick = this.handleClick.bind(this);
-    this.handleOnSuccess = this.handleOnSuccess.bind(this);
+    // this.handleOnSuccess = this.handleOnSuccess.bind(this);
     this.handleOnExit = this.handleOnExit.bind(this);
   }
 
@@ -30,13 +30,9 @@ class LinkPlaid extends Component {
     this.props.fetchLinkToken();
   }
 
-  async handleOnSuccess(public_token, metadata) {
+  handleOnSuccess() {
     // send token to client server
-    const { data } = await axios.post('/plaid_token_exchange', {
-      public_token: public_token,
-    });
-    console.log('DATA-LINK-PLAID', data);
-    this.setState({ access_token: data });
+
   }
 
   async getLinkToken() {
@@ -47,9 +43,7 @@ class LinkPlaid extends Component {
   async handleOnExit() {
     // handle the case when your user exits Link
     // For the sake of this tutorial, we're not going to be doing anything here.
-    // console.log('localSTORAGE',window.localStorage)
-    await this.props.fetchTransactions(this.props.access_token);
-    this.setState({ render: 'yo' });
+
   }
 
   // async handleClick() {
@@ -62,7 +56,7 @@ class LinkPlaid extends Component {
       this.setState({ didRender: true });
     }
     let transactions = this.props.transactions || [];
-    console.log('linktokenplz', this.props.link_token);
+
     return (
       <div>
         {this.props.link_token ? (
@@ -87,11 +81,13 @@ class LinkPlaid extends Component {
         <div>
           {transactions.length ? (
             transactions.map((item, index) => {
-              // console.log(item);
               return (
                 <div key={index}>
                   <div className="transactions">
-                    Merchant:{' '}
+
+                    Date: {item.date}
+                    {":  "}
+                    Merchant:{" "}
                     {item.merchant_name !== null
                       ? item.merchant_name
                       : item.name}
@@ -120,6 +116,7 @@ const mapState = (state) => {
     transactions: state.transactions.transactions,
     access_token: state.transactions.access_token,
     link_token: state.transactions.link_token,
+    user: state.user,
   };
 };
 

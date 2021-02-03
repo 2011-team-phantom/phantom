@@ -23,9 +23,7 @@ const getLinkToken = (link_token) => ({
 export const fetchTransactions = (access_token) => {
   return async (dispatch) => {
     try {
-      console.log("isthistheaccess?", access_token);
       const res = await axios.get(`/transactions/${access_token}`);
-      console.log("transactions?", res);
       dispatch(getTransactions(res.data.transactions));
     } catch (error) {
       console.log("error fetching transactions", error);
@@ -39,6 +37,7 @@ export const fetchAcessToken = (public_token) => {
       const { data } = await axios.post("/plaid_token_exchange", {
         public_token: public_token,
       });
+
       dispatch(getAccessToken(data));
     } catch (error) {
       console.log("error fetching public token", error);
@@ -67,7 +66,7 @@ export default function transactionsReducer(state = initialState, action) {
     case GET_TRANSACTIONS:
       return {
         ...state,
-        transactions: [...state.transactions, ...action.transactions],
+        transactions: [...action.transactions],
       };
     case GET_ACCESS_TOKEN:
       return { ...state, access_token: action.access_token };

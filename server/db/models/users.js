@@ -21,6 +21,9 @@ const userSchema = new mongoose.Schema(
     housingCost: {
       type: Number,
     },
+    access_token: {
+      type: Array,
+    },
   },
   { timestamps: true }
 );
