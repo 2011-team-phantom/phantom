@@ -99,11 +99,13 @@ app.post("/auth/public_token");
 
 app.get("/transactions/:accessToken", async (req, res) => {
   try {
+    console.log("accessToken?", req.params.accessToken);
     const data = await client.getTransactions(
       req.params.accessToken,
       "2020-12-01",
       "2021-01-30"
     );
+    console.log("we go it?", data);
 
     res.json(data);
   } catch (error) {

@@ -3,12 +3,13 @@ import { PlaidLink } from "react-plaid-link";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { fetchTransactions } from "../store/transactions";
+
 class LinkPlaid extends Component {
   constructor() {
     super();
 
     this.state = {
-      transactions: [],
       link_token: "",
       access_token: "",
     };
@@ -42,14 +43,13 @@ class LinkPlaid extends Component {
     // console.log('localSTORAGE',window.localStorage)
   }
 
-  handleClick(res) {
-    axios.get(`/transactions/${this.state.access_token}`).then((res) => {
-      this.setState({ transactions: res.data.transactions });
-    });
+  async handleClick() {
+    await this.props.fetchTransactions(this.state.access_token);
+    //this.setState({ transactions: this.props.transactions });
   }
 
   render() {
-    let transactions = this.state.transactions || [];
+    let transactions = this.props.transactions || [];
 
     return (
       <div>
@@ -73,12 +73,15 @@ class LinkPlaid extends Component {
               // console.log(item);
               return (
                 <div key={index}>
-                  <div>
+                  <div className="transactions">
+                    Merchant:{" "}
                     {item.merchant_name !== null
                       ? item.merchant_name
                       : item.name}
                     {":  "}
-                    {item.amount}
+                    Amount: {item.amount}
+                    {":  "}
+                    Category: {item.category[0]}
                   </div>
                 </div>
               );
@@ -92,4 +95,15 @@ class LinkPlaid extends Component {
   }
 }
 
-export default withRouter(connect(null, null)(LinkPlaid));
+const mapState = (state) => {
+  return { transactions: state.transactions };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    fetchTransactions: (access_token) =>
+      dispatch(fetchTransactions(access_token)),
+  };
+};
+
+export default connect(mapState, mapDispatch)(LinkPlaid);
