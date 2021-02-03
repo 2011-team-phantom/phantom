@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import { PlaidLink } from "react-plaid-link";
-import axios from "axios";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { PlaidLink } from 'react-plaid-link';
+import axios from 'axios';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   fetchAcessToken,
   fetchLinkToken,
   fetchTransactions,
-} from "../store/transactions";
+} from '../store/transactions';
 
 class LinkPlaid extends Component {
   constructor() {
     super();
 
     this.state = {
-      link_token: "",
-      access_token: "",
-      render: "",
+      link_token: '',
+      access_token: '',
+      render: '',
       didRender: false,
     };
 
@@ -32,16 +32,18 @@ class LinkPlaid extends Component {
 
   handleOnSuccess() {
     // send token to client server
+
   }
 
   async getLinkToken() {
-    const { data } = await axios.get("/link/token/create");
+    const { data } = await axios.get('/link/token/create');
     this.setState({ link_token: data.link_token });
   }
 
   async handleOnExit() {
     // handle the case when your user exits Link
     // For the sake of this tutorial, we're not going to be doing anything here.
+
   }
 
   // async handleClick() {
@@ -61,7 +63,7 @@ class LinkPlaid extends Component {
           <PlaidLink
             clientName="React Plaid Setup"
             env="sandbox"
-            product={["auth", "transactions"]}
+            product={['auth', 'transactions']}
             token={this.props.link_token}
             onExit={this.handleOnExit}
             onSuccess={(public_token) => {
@@ -82,15 +84,16 @@ class LinkPlaid extends Component {
               return (
                 <div key={index}>
                   <div className="transactions">
+
                     Date: {item.date}
                     {":  "}
                     Merchant:{" "}
                     {item.merchant_name !== null
                       ? item.merchant_name
                       : item.name}
-                    {":  "}
+                    {':  '}
                     Amount: {item.amount}
-                    {":  "}
+                    {':  '}
                     Category: {item.category[0]}
                   </div>
                 </div>
@@ -100,6 +103,9 @@ class LinkPlaid extends Component {
             <h1>No Transactions</h1>
           )}
         </div>
+        <Link to="/budget">
+          <button>BUDGET</button>
+        </Link>
       </div>
     );
   }
