@@ -10,6 +10,7 @@ const db = require("./db");
 const session = require("express-session");
 const passport = require("passport");
 const MongoDBStore = require("connect-mongodb-session")(session);
+
 // const cors = require("cors");
 
 function handleError(errorMessage) {
@@ -63,7 +64,6 @@ app.use(passport.session());
 
 app.get("/link/token/create", async (req, res) => {
   try {
-    console.log("linktoken?");
     const { link_token } = await client.createLinkToken({
       user: {
         client_user_id: "123-test-user-id",
@@ -79,7 +79,6 @@ app.get("/link/token/create", async (req, res) => {
         },
       },
     });
-
     res.send(link_token);
   } catch (error) {
     console.error(error);
@@ -87,7 +86,6 @@ app.get("/link/token/create", async (req, res) => {
 });
 
 app.post("/plaid_token_exchange", async (req, res) => {
-  console.log("tokenexchange?");
   const { public_token } = req.body;
   const { access_token } = await client
     .exchangePublicToken(public_token)
@@ -102,13 +100,15 @@ app.post("/auth/public_token");
 
 app.get("/transactions/:accessToken", async (req, res) => {
   try {
-    console.log("accessToken?", req.params.accessToken);
+    db.collection("users").updateOne(
+      { _id: req.user._id },
+      { $set: { access_token: req.params.accessToken } }
+    );
     const data = await client.getTransactions(
       req.params.accessToken,
       "2020-12-01",
       "2021-01-30"
     );
-    console.log("we go it?", data);
 
     res.json(data);
   } catch (error) {
