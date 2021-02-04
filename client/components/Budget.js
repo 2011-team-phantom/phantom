@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchTransactions } from "../store/transactions";
-import AddBudget from "./AddBudget";
+import { fetchTransactions, fetchBudget } from "../store/transactions";
 
 class Budget extends Component {
   constructor() {
@@ -9,24 +8,15 @@ class Budget extends Component {
     this.state = {
       src:
         "https://assets.justinmind.com/wp-content/uploads/2018/09/green-progress-bar.png",
-      budgetCategory: {},
+      categoryAmount: {},
     };
     this.parseTransactionData = this.parseTransactionData.bind(this);
   }
 
   componentDidMount() {
+    this.props.fetchBudget();
     this.parseTransactionData();
   }
-
-  // handleChange(event) {
-  //   this.setState({ [event.target.name]: event.target.value });
-  // }
-
-  // async handleLogin(event) {
-  //   event.preventDefault();
-  //   await this.props.login(this.state.email, this.state.password);
-  //   this.props.history.push('/plaid');
-  // }
 
   parseTransactionData() {
     let categories = {};
@@ -37,21 +27,45 @@ class Budget extends Component {
         categories[transaction.category[0]] += transaction.amount;
       }
     });
-    this.setState({ budgetCategory: categories });
+    this.setState({ categoryAmount: categories });
   }
 
   render() {
-    const categories = Object.keys(this.state.budgetCategory);
+    const categories = Object.keys(this.state.categoryAmount);
+    const budget = Object.keys(this.props.budget) || [];
+    console.log("budgetcategories", budget);
     return (
       <div className="budgets">
-          <AddBudget categorys={categories}/>
+        <div className="editBudget">
+          <form>
+            <label htmlFor="categories">Choose a category:</label>
+            <select name="categories">
+              <option value="Travel">Travel</option>
+              <option value="Food and Drink">Food and Drink</option>
+              <option value="Payment">Payment</option>
+              <option value="Shops">Shops</option>
+              <option value="Transfer">Transfer</option>
+              <option value="Recreation">Recreation</option>
+            </select>
+            <label htmlFor="goalTotal">Goal Total:</label>
+            <input type="number" name="goalTotal" />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
         <div>
-          {categories.map((category) => (
-            <div>
-              {category} : {this.state.budgetCategory[category]}
-              <img src={this.state.src} style={{ height: "60px" }} />
-            </div>
-          ))}
+          {budget.length ? (
+            budget
+              .filter((cat) => this.props.budget[cat] > 0)
+              .map((category) => (
+                <div>
+                  {category} : {this.state.categoryAmount[category] || "0"} /{" "}
+                  {this.props.budget[category]}
+                  <img src={this.state.src} style={{ height: "60px" }} />
+                </div>
+              ))
+          ) : (
+            <span>Nope</span>
+          )}
         </div>
       </div>
     );
@@ -59,13 +73,17 @@ class Budget extends Component {
 }
 
 const mapState = (state) => {
-  return { transactions: state.transactions.transactions };
+  return {
+    transactions: state.transactions.transactions,
+    budget: state.transactions.budget,
+  };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     fetchTransactions: (access_token) =>
       dispatch(fetchTransactions(access_token)),
+    fetchBudget: () => dispatch(fetchBudget()),
   };
 };
 
