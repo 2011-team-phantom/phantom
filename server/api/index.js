@@ -35,20 +35,15 @@ router.get('/budget', async function (req, res, next) {
 
 router.put('/updatebudget', async function (req, res, next) {
   try {
-    console.log('REQ.BODYYY update budget', req.body);
-    const user = await User.findOne(
-      { _id: '601c65e9975da49e0899d1cf' },
-      { budget: 1 }
-    );
+    const user = await User.findOne({ _id: req.user._id }, { budget: 1 });
     const budgetUser = await User.updateOne(
-      { _id: '601c65e9975da49e0899d1cf' },
+      { _id: req.user._id },
       { $set: { budget: { ...user.budget, ...req.body } } }
     );
     const updatedUser = await User.findOne(
-      { _id: '601c65e9975da49e0899d1cf' },
+      { _id: req.user._id },
       { budget: 1 }
     );
-    console.log('updatedUser?', updatedUser);
     res.send(updatedUser.budget);
   } catch (error) {
     console.log('errorbudgetadding', error);
