@@ -25,7 +25,7 @@ class Signup extends Component {
     event.preventDefault();
 
     await this.props.signUP(this.state);
-    this.props.history.push("/plaid");
+    this.props.history.push("/addbudget");
   }
 
   render() {
