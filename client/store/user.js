@@ -4,7 +4,7 @@ import history from "../history";
 const GET_USER = "GET_USER";
 const REMOVE_USER = "REMOVE_USER";
 
-const getUser = (container) => ({ type: GET_USER, container });
+const getUser = (user) => ({ type: GET_USER, user });
 const removeUser = () => ({ type: REMOVE_USER });
 
 export const me = () => async (dispatch) => {
@@ -40,7 +40,6 @@ export const auth = (email, password) => async (dispatch) => {
 
   try {
     console.log("res.data in auth before dispatch to reducer", res.data);
-    console.log(res.data);
     dispatch(getUser(res.data));
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
@@ -62,11 +61,7 @@ const defaultUser = {};
 export default function (state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      console.log(action);
-      return {
-        user: action.container.user || state,
-        transactions: action.container.transactions,
-      };
+      return action.user;
     case REMOVE_USER:
       return defaultUser;
     default:

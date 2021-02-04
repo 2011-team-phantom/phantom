@@ -26,19 +26,7 @@ router.post("/login", async (req, res, next) => {
       console.log("Incorrect password for user:", req.body.email);
       res.status(401).send("Wrong username and/or password");
     } else {
-      const data = await client.getTransactions(
-        thisUser.access_token[0],
-        "2020-02-03",
-        "2021-02-04"
-      );
-      console.log(data.transactions[0]);
-      thisUser.transactions = "test value";
-      const container = {
-        user: thisUser,
-        transactions: data.transactions,
-      };
-
-      req.login(thisUser, (err) => (err ? next(err) : res.json(container)));
+      req.login(thisUser, (err) => (err ? next(err) : res.json(thisUser)));
     }
   } catch (err) {
     console.error("sessionerr", err);
