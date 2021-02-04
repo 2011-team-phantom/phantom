@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchTransactions } from "../store/transactions";
-import AddBudget from "./AddBudget";
 
-class Budget extends Component {
-  constructor() {
-    super();
+class AddBudget extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      src:
-        "https://assets.justinmind.com/wp-content/uploads/2018/09/green-progress-bar.png",
-      budgetCategory: {},
+      categories: this.props.categorys,
     };
     this.parseTransactionData = this.parseTransactionData.bind(this);
   }
@@ -17,16 +14,6 @@ class Budget extends Component {
   componentDidMount() {
     this.parseTransactionData();
   }
-
-  // handleChange(event) {
-  //   this.setState({ [event.target.name]: event.target.value });
-  // }
-
-  // async handleLogin(event) {
-  //   event.preventDefault();
-  //   await this.props.login(this.state.email, this.state.password);
-  //   this.props.history.push('/plaid');
-  // }
 
   parseTransactionData() {
     let categories = {};
@@ -44,14 +31,21 @@ class Budget extends Component {
     const categories = Object.keys(this.state.budgetCategory);
     return (
       <div className="budgets">
-          <AddBudget categorys={categories}/>
         <div>
-          {categories.map((category) => (
-            <div>
-              {category} : {this.state.budgetCategory[category]}
-              <img src={this.state.src} style={{ height: "60px" }} />
-            </div>
-          ))}
+          <form>
+            <label for="categories">Choose a category:</label>
+            <select name="categories">
+              <option value="Travel">Travel</option>
+              <option value="Food and Drink">Food and Drink</option>
+              <option value="Payment">Payment</option>
+              <option value="Shops">Shops</option>
+              <option value="Transfer">Transfer</option>
+              <option value="Recreation">Recreation</option>
+            </select>
+            <label for="goalTotal">Goal Total:</label>
+            <input type="number" name="goalTotal" />
+            <button type="submit">Submit</button>
+          </form>
         </div>
       </div>
     );
@@ -69,6 +63,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(mapState, mapDispatch)(Budget);
-
-// categories: travel, food and drink, payment, shops, transfer, recreation
+export default connect(mapState, mapDispatch)(AddBudget);

@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema(
     access_token: {
       type: Array,
     },
+    budget: {
+      type: Object,
+    },
   },
   { timestamps: true }
 );
