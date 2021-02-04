@@ -31,10 +31,11 @@ export const fetchTransactions = (access_token) => {
   };
 };
 
-export const fetchAcessToken = (public_token) => {
+export const fetchAcessToken = (public_token, user) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post("/plaid_token_exchange", {
+        user: user,
         public_token: public_token,
       });
 

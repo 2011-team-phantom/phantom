@@ -86,14 +86,27 @@ app.get("/link/token/create", async (req, res) => {
 });
 
 app.post("/plaid_token_exchange", async (req, res) => {
-  const { public_token } = req.body;
-  const { access_token } = await client
-    .exchangePublicToken(public_token)
-    .catch(handleError);
-  const { accounts, item } = await client
-    .getAccounts(access_token)
-    .catch(handleError);
-  res.send(access_token);
+  try {
+    const user = await db.collection("users").findOne({ _id: req.user._id });
+    const { public_token } = req.body;
+    console.log(user);
+    if (user.access_token.length) {
+      const { accounts, item } = await client
+        .getAccounts(user.access_token)
+        .catch(handleError);
+      res.send(user.access_token);
+    } else {
+      const { access_token } = await client
+        .exchangePublicToken(public_token)
+        .catch(handleError);
+      const { accounts, item } = await client
+        .getAccounts(access_token)
+        .catch(handleError);
+      res.send(access_token);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.post("/auth/public_token");
@@ -135,3 +148,5 @@ app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(err.status || 500).send(err.message || "Internal server error.");
 });
+
+module.exports = client;
