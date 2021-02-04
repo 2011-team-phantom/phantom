@@ -1,11 +1,11 @@
-import axios from "axios";
-import history from "../history";
+import axios from 'axios';
+import history from '../history';
 
-const GET_TRANSACTIONS = "GET_TRANSACTIONS";
-const GET_ACCESS_TOKEN = "GET_ACCESS_TOKEN";
-const GET_LINK_TOKEN = "GET_LINK_TOKEN";
-const SET_BUDGET = "SET_BUDGET";
-const GET_BUDGET = "GET_BUDGET";
+const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
+const GET_ACCESS_TOKEN = 'GET_ACCESS_TOKEN';
+const GET_LINK_TOKEN = 'GET_LINK_TOKEN';
+const SET_BUDGET = 'SET_BUDGET';
+const GET_BUDGET = 'GET_BUDGET';
 
 const getTransactions = (transactions) => ({
   type: GET_TRANSACTIONS,
@@ -38,7 +38,7 @@ export const fetchTransactions = (access_token) => {
       const res = await axios.get(`/transactions/${access_token}`);
       dispatch(getTransactions(res.data.transactions));
     } catch (error) {
-      console.log("error fetching transactions", error);
+      console.log('error fetching transactions', error);
     }
   };
 };
@@ -46,14 +46,14 @@ export const fetchTransactions = (access_token) => {
 export const fetchAcessToken = (public_token, user) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("/plaid_token_exchange", {
+      const { data } = await axios.post('/plaid_token_exchange', {
         user: user,
         public_token: public_token,
       });
 
       dispatch(getAccessToken(data));
     } catch (error) {
-      console.log("error fetching public token", error);
+      console.log('error fetching public token', error);
     }
   };
 };
@@ -61,10 +61,10 @@ export const fetchAcessToken = (public_token, user) => {
 export const fetchLinkToken = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/link/token/create");
+      const { data } = await axios.get('/link/token/create');
       dispatch(getLinkToken(data));
     } catch (error) {
-      console.log("error fetching link token", error);
+      console.log('error fetching link token', error);
     }
   };
 };
@@ -72,11 +72,11 @@ export const fetchLinkToken = () => {
 export const createBudget = (budget) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("/api/addbudget", budget);
-      console.log("data createBudget", data);
+      const { data } = await axios.post('/api/addbudget', budget);
+      console.log('data createBudget', data);
       dispatch(setBudget(data));
     } catch (error) {
-      console.log("error creating budget", error);
+      console.log('error creating budget', error);
     }
   };
 };
@@ -84,19 +84,31 @@ export const createBudget = (budget) => {
 export const fetchBudget = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/api/budget");
-      console.log("data createBudget", data.budget);
+      const { data } = await axios.get('/api/budget');
+      console.log('data createBudget', data.budget);
       dispatch(getBudget(data.budget));
     } catch (error) {
-      console.log("error fetching budget", error);
+      console.log('error fetching budget', error);
+    }
+  };
+};
+
+export const updateBudget = (budget) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put('/api/updatebudget', budget);
+      console.log('data updateBudget', data);
+      dispatch(setBudget(data));
+    } catch (error) {
+      console.log('error updating budget', error);
     }
   };
 };
 
 const initialState = {
   transactions: [],
-  access_token: "",
-  link_token: "",
+  access_token: '',
+  link_token: '',
   budget: {},
 };
 
