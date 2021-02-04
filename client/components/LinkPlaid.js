@@ -28,6 +28,13 @@ class LinkPlaid extends Component {
 
   componentDidMount() {
     this.props.fetchLinkToken();
+    console.log(this.props.user);
+  }
+  componentDidUpdate() {
+    // console.log(this.props.user);
+    if (this.props.user.access_token && this.props.transactions.length < 1) {
+      this.props.fetchTransactions(this.props.user.access_token);
+    }
   }
 
   handleOnSuccess() {

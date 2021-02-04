@@ -8,10 +8,13 @@ router.get("/", function (req, res, next) {
 router.post("/addbudget", async function (req, res, next) {
   try {
     const budgetUser = await User.updateOne(
-      { _id: req.user.id },
+      { _id: req.user._id },
       { $set: { budget: req.body } }
     );
-    const updatedUser = await User.findOne({ _id: req.user.id }, { budget: 1 });
+    const updatedUser = await User.findOne(
+      { _id: req.user._id },
+      { budget: 1 }
+    );
     console.log("updatedUser?", updatedUser);
     res.send(updatedUser.budget);
   } catch (error) {
