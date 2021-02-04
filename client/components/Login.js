@@ -49,10 +49,10 @@ class Login extends Component {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => {
+const mapDispatch = (dispatch) => {
   return {
     login: (email, password) => {
-      dispatch(auth(email, password, ownProps.history));
+      dispatch(auth(email, password));
     },
   };
 };

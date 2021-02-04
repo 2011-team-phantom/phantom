@@ -3,11 +3,17 @@ const User = require("../db/models/users");
 const db = require("../db");
 const BCrypt = require("bcrypt-nodejs");
 const { session } = require("passport");
-
+// const { client } = require("../index.js");
+const plaid = require("plaid");
 //session logger for debugging
 router.use((req, res, next) => {
   console.log("SESSION --> ", req.session);
   next();
+});
+const client = new plaid.Client({
+  clientID: process.env.PLAID_CLIENT_ID,
+  secret: process.env.PLAID_SECRET,
+  env: plaid.environments.sandbox,
 });
 
 router.post("/login", async (req, res, next) => {
@@ -20,8 +26,19 @@ router.post("/login", async (req, res, next) => {
       console.log("Incorrect password for user:", req.body.email);
       res.status(401).send("Wrong username and/or password");
     } else {
-      req.login(thisUser, (err) => (err ? next(err) : res.json(thisUser)));
-      res.end();
+      const data = await client.getTransactions(
+        thisUser.access_token[0],
+        "2020-02-03",
+        "2021-02-04"
+      );
+      console.log(data.transactions[0]);
+      thisUser.transactions = "test value";
+      const container = {
+        user: thisUser,
+        transactions: data.transactions,
+      };
+
+      req.login(thisUser, (err) => (err ? next(err) : res.json(container)));
     }
   } catch (err) {
     console.error("sessionerr", err);
