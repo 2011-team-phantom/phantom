@@ -8,6 +8,7 @@ import {
   fetchLinkToken,
   fetchTransactions,
 } from "../store/transactions";
+// import Transactions from "./Transactions";
 
 class LinkPlaid extends Component {
   constructor() {
@@ -30,12 +31,12 @@ class LinkPlaid extends Component {
     this.props.fetchLinkToken();
     console.log(this.props.user);
   }
-  componentDidUpdate() {
-    // console.log(this.props.user);
-    if (this.props.user.access_token && this.props.transactions.length < 1) {
-      this.props.fetchTransactions(this.props.user.access_token);
-    }
-  }
+  // componentDidUpdate() {
+  // //   // console.log(this.props.user);
+  //   if (this.props.user.access_token && this.props.transactions.length <= 0) {
+  //     this.props.fetchTransactions(this.props.user.access_token);
+  //   }
+  // }
 
   handleOnSuccess() {
     // send token to client server
@@ -56,11 +57,11 @@ class LinkPlaid extends Component {
   // }
 
   render() {
-    if (this.props.access_token && !this.state.didRender) {
-      this.props.fetchTransactions(this.props.access_token);
+    if (this.props.user.access_token && !this.state.didRender) {
+      this.props.fetchTransactions(this.props.user.access_token);
       this.setState({ didRender: true });
     }
-    let transactions = this.props.transactions || [];
+    // let transactions = this.props.transactions || [];
 
     return (
       <div>
@@ -82,8 +83,8 @@ class LinkPlaid extends Component {
         ) : (
           <h3>Link Loading</h3>
         )}
-
-        <div>
+        {/* <Transactions transactions={transactions}/> */}
+        {/* <div>
           {transactions.length ? (
             transactions.map((item, index) => {
               return (
@@ -106,10 +107,10 @@ class LinkPlaid extends Component {
           ) : (
             <h1>No Transactions</h1>
           )}
-        </div>
-        <Link to="/budget">
+        </div> */}
+        {/* <Link to="/budget">
           <button>BUDGET</button>
-        </Link>
+        </Link> */}
       </div>
     );
   }

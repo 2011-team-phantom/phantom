@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AddBudget from "./components/AddBudget";
 import Budget from "./components/Budget";
+import Transactions from "./components/Transactions";
 
 class Routes extends Component {
   render() {
@@ -17,6 +18,8 @@ class Routes extends Component {
         <Route exact path="/join" component={Signup} />
         <Route exact path="/addbudget" component={AddBudget} />
         <Route exact path="/budget" component={Budget} />
+        <Route exact path="/transactions" component={Transactions} />
+        
         {/* Displays our Login component as a fallback */}
         {/* <Route component={Login} /> */}
       </Switch>
