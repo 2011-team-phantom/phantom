@@ -36,7 +36,7 @@ export const fetchTransactions = (access_token) => {
   return async (dispatch) => {
     try {
       const res = await axios.get(`/transactions/${access_token}`);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch(getTransactions(res.data.transactions));
     } catch (error) {
       console.log("error fetching transactions", error);
