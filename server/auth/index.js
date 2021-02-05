@@ -58,12 +58,12 @@ router.post("/logout", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/me", (req, res) => {
-  res.json(req.user);
+router.get("/me", async (req, res) => {
+  const user = await User.findOne({ _id: req.user._id });
+  res.json(user);
 });
 
 router.put("/updateAccess", async (req, res) => {
-  console.log("inside update access route");
   try {
     const thisUser = await User.findOne({ email: req.body.user.email });
     thisUser.accessToken.push(req.body.access_token);

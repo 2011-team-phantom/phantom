@@ -7,7 +7,7 @@ const REMOVE_USER = "REMOVE_USER";
 const getUser = (user) => ({ type: GET_USER, user });
 const removeUser = () => ({ type: REMOVE_USER });
 
-export const me = () => async (dispatch) => {
+export const me = (user) => async (dispatch) => {
   try {
     const res = await axios.get("/auth/me");
     dispatch(getUser(res.data || defaultUser));
@@ -39,7 +39,6 @@ export const auth = (email, password) => async (dispatch) => {
   }
 
   try {
-    console.log("res.data in auth before dispatch to reducer", res.data);
     dispatch(getUser(res.data));
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
