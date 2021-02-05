@@ -14,6 +14,7 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/login" component={Login} />
+        <Route exact path="/" component={Login} />
         <Route exact path="/plaid" component={LinkPlaid} />
         <Route exact path="/join" component={Signup} />
         <Route exact path="/addbudget" component={AddBudget} />

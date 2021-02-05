@@ -102,7 +102,7 @@ class Transactions extends Component {
                         ? item.merchant_name
                         : item.name}
                     </Table.Cell>
-                    <Table.Cell>{item.amount}</Table.Cell>
+                    <Table.Cell>${item.amount}</Table.Cell>
                     <Table.Cell>{item.category[0]}</Table.Cell>
                   </Table.Row>
                 );
