@@ -18,7 +18,7 @@ function handleError(errorMessage) {
 }
 
 const store = new MongoDBStore({
-  uri: "mongodb://localhost:27017/phantomdb",
+  uri: process.env.MONGODB_URI || "mongodb://localhost:27017/phantomdb",
   collection: "mySessions",
 });
 
