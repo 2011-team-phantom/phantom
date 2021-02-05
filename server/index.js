@@ -54,7 +54,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     store: store,
-    cookie: { secure: false },
+    cookie: { secure: false, _expires: 3600000 },
     credentials: "include",
   })
 );
