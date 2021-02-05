@@ -57,10 +57,10 @@ class LinkPlaid extends Component {
   // }
 
   render() {
-    if (this.props.user.access_token && !this.state.didRender) {
-      this.props.fetchTransactions(this.props.user.access_token);
-      this.setState({ didRender: true });
-    }
+    // if (this.props.user.access_token && !this.state.didRender) {
+    //   this.props.fetchTransactions(this.props.user.access_token);
+    //   this.setState({ didRender: true });
+    // }
     // let transactions = this.props.transactions || [];
 
     return (
@@ -74,7 +74,7 @@ class LinkPlaid extends Component {
             onExit={this.handleOnExit}
             onSuccess={(public_token) => {
               this.props.fetchAcessToken(public_token, this.props.user);
-              this.setState({ didRender: false });
+              // this.setState({ didRender: false });
             }}
             className="test"
           >

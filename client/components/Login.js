@@ -33,6 +33,7 @@ class Login extends Component {
             onChange={this.handleChange}
             type="email"
             name="email"
+            autoComplete="email"
             value={this.state.email}
           />
           <label htmlFor="password">Password: </label>
@@ -40,6 +41,7 @@ class Login extends Component {
             onChange={this.handleChange}
             type="password"
             name="password"
+            autoComplete="password"
             value={this.state.password}
           />
           <button type="submit">Submit</button>
