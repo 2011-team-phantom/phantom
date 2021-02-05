@@ -102,6 +102,10 @@ app.post("/plaid_token_exchange", async (req, res) => {
       const { accounts, item } = await client
         .getAccounts(access_token)
         .catch(handleError);
+      db.collection("users").updateOne(
+        { _id: req.user._id },
+        { $set: { access_token } }
+      );
       res.send(access_token);
     }
   } catch (error) {
@@ -113,10 +117,6 @@ app.post("/auth/public_token");
 
 app.get("/transactions/:accessToken", async (req, res) => {
   try {
-    db.collection("users").updateOne(
-      { _id: req.user._id },
-      { $set: { access_token: req.params.accessToken } }
-    );
     const data = await client.getTransactions(
       req.params.accessToken,
       "2020-12-01",
