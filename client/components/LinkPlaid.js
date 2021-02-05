@@ -3,6 +3,7 @@ import { PlaidLink } from "react-plaid-link";
 import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+
 import {
   fetchAcessToken,
   fetchLinkToken,
@@ -22,21 +23,12 @@ class LinkPlaid extends Component {
     };
 
     this.getLinkToken = this.getLinkToken.bind(this);
-    //this.handleClick = this.handleClick.bind(this);
-    // this.handleOnSuccess = this.handleOnSuccess.bind(this);
     this.handleOnExit = this.handleOnExit.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchLinkToken();
-    console.log(this.props.user);
   }
-  // componentDidUpdate() {
-  // //   // console.log(this.props.user);
-  //   if (this.props.user.access_token && this.props.transactions.length <= 0) {
-  //     this.props.fetchTransactions(this.props.user.access_token);
-  //   }
-  // }
 
   handleOnSuccess() {
     // send token to client server
@@ -52,17 +44,7 @@ class LinkPlaid extends Component {
     // For the sake of this tutorial, we're not going to be doing anything here.
   }
 
-  // async handleClick() {
-  //   //this.setState({ transactions: this.props.transactions });
-  // }
-
   render() {
-    // if (this.props.user.access_token && !this.state.didRender) {
-    //   this.props.fetchTransactions(this.props.user.access_token);
-    //   this.setState({ didRender: true });
-    // }
-    // let transactions = this.props.transactions || [];
-
     return (
       <div>
         {this.props.link_token ? (
@@ -74,7 +56,7 @@ class LinkPlaid extends Component {
             onExit={this.handleOnExit}
             onSuccess={(public_token) => {
               this.props.fetchAcessToken(public_token, this.props.user);
-              // this.setState({ didRender: false });
+              setTimeout(() => this.props.history.push("/transactions"), 1000);
             }}
             className="test"
           >
@@ -83,34 +65,6 @@ class LinkPlaid extends Component {
         ) : (
           <h3>Link Loading</h3>
         )}
-        {/* <Transactions transactions={transactions}/> */}
-        {/* <div>
-          {transactions.length ? (
-            transactions.map((item, index) => {
-              return (
-                <div key={index}>
-                  <div className="transactions">
-                    Date: {item.date}
-                    {":  "}
-                    Merchant:{" "}
-                    {item.merchant_name !== null
-                      ? item.merchant_name
-                      : item.name}
-                    {":  "}
-                    Amount: {item.amount}
-                    {":  "}
-                    Category: {item.category[0]}
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <h1>No Transactions</h1>
-          )}
-        </div> */}
-        {/* <Link to="/budget">
-          <button>BUDGET</button>
-        </Link> */}
       </div>
     );
   }

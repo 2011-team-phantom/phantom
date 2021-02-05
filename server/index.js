@@ -89,7 +89,7 @@ app.post("/plaid_token_exchange", async (req, res) => {
   try {
     const user = await db.collection("users").findOne({ _id: req.user._id });
     const { public_token } = req.body;
-    console.log(user);
+
     if (user.access_token.length) {
       const { accounts, item } = await client
         .getAccounts(user.access_token)

@@ -20,9 +20,8 @@ class Login extends Component {
 
   async handleLogin(event) {
     event.preventDefault();
-    const mRn = await this.props.login(this.state.email, this.state.password);
-    console.log('ME RIGHT NOW',mRn)
-    setTimeout(()=>this.props.history.push("/transactions"),1000);
+    await this.props.login(this.state.email, this.state.password);
+    setTimeout(() => this.props.history.push("/transactions"), 1000);
   }
 
   render() {

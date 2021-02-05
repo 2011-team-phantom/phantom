@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchTransactions } from "../store/transactions";
 import { Line } from "react-chartjs-2";
 import { Table } from "semantic-ui-react";
+import { me } from "../store/user";
 
 class Transactions extends Component {
   constructor(props) {
@@ -21,18 +22,23 @@ class Transactions extends Component {
         },
       ],
     };
-    // console.log("constructor transactions.js comp", this.props.user);
   }
+
   componentDidMount() {
-    // console.log("componentdidmount", this.props.user.access_token);
-    this.props.fetchTransactions(this.props.user.access_token[0]);
+    this.props.fetchUpdatedUser();
+
     this.setState();
   }
-
-  // export default TableExampleSelectableRow
+  componentDidUpdate() {
+    if (
+      this.props.user.access_token &&
+      this.props.transactions.transactions.length <= 0
+    ) {
+      this.props.fetchTransactions(this.props.user.access_token[0]);
+    }
+  }
 
   render() {
-    // console.log(this.props);
     let transactions = this.props.transactions.transactions || [];
     let spending = transactions
       .map((t) => {
@@ -58,7 +64,7 @@ class Transactions extends Component {
         },
       ],
     };
-    // console.log(spending);
+
     return (
       <div>
         <div id="transactions_spending">
@@ -130,6 +136,7 @@ const mapDispatch = (dispatch) => {
   return {
     fetchTransactions: (access_token) =>
       dispatch(fetchTransactions(access_token)),
+    fetchUpdatedUser: () => dispatch(me()),
   };
 };
 
