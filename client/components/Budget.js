@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Segment, Progress } from 'semantic-ui-react';
 import {
   fetchTransactions,
   fetchBudget,
@@ -90,10 +91,29 @@ class Budget extends Component {
             budget
               .filter((cat) => this.props.budget[cat] > 0)
               .map((category, index) => (
-                <div key={index}>
+                <div
+                  key={index}
+                  style={{ display: 'inline-block', width: '80%' }}
+                >
                   {category} : {this.state.categoryAmount[category] || '0'} /{' '}
                   {this.props.budget[category]}
-                  <img src={this.state.src} style={{ height: '60px' }} />
+                  <Segment inverted>
+                    <Progress
+                      inverted
+                      value={this.state.categoryAmount[category] || '0'}
+                      total={this.props.budget[category]}
+                      progress="ratio"
+                      color={
+                        this.state.categoryAmount[category] /
+                          this.props.budget[category] >
+                        0.85
+                          ? 'red'
+                          : 'green'
+                      }
+                      size="medium"
+                    />
+                  </Segment>
+                  {/* <img src={this.state.src} style={{ height: '60px' }} /> */}
                 </div>
               ))
           ) : (
