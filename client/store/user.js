@@ -39,7 +39,7 @@ export const auth = (email, password) => async (dispatch) => {
   }
 
   try {
-    // console.log("res.data in auth before dispatch to reducer", res.data);
+    console.log("res.data in auth before dispatch to reducer", res.data);
     dispatch(getUser(res.data));
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
