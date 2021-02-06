@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Progress, Button } from 'semantic-ui-react';
+import { Segment, Progress, Button, Icon } from 'semantic-ui-react';
 import {
   fetchTransactions,
   fetchBudget,
@@ -104,6 +104,10 @@ class Budget extends Component {
                 >
                   {category} : {this.state.categoryAmount[category] || '0'} /{' '}
                   {this.props.budget[category]}
+                  {(this.state.categoryAmount[category] || '0') >
+                    this.props.budget[category] && (
+                    <div style={{ color: 'red' }}>OVERBUDGET!</div>
+                  )}
                   <Segment>
                     <Progress
                       value={this.state.categoryAmount[category] || '0'}
@@ -124,6 +128,7 @@ class Budget extends Component {
                       this.handleDelete(category);
                     }}
                   >
+                    <Icon name="trash alternate" />
                     Delete
                   </Button>
                 </div>
