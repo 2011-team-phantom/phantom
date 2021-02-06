@@ -29,6 +29,11 @@ class Navbar extends Component {
                 Plaid Sync
               </Menu.Item>
             </Link>
+            <Link to="/glance" font="Open Sans">
+              <Menu.Item className="navItem" name="glance">
+                At-a-Glance
+              </Menu.Item>
+            </Link>
           </Menu>
         ) : (
           <Menu>
