@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Progress, Button, Icon } from 'semantic-ui-react';
+import { Progress, Button, Icon, Input, Dropdown } from 'semantic-ui-react';
 import {
   fetchTransactions,
   fetchBudget,
@@ -14,14 +14,24 @@ class Budget extends Component {
       categoryAmount: {},
       categories: '',
       goalBudget: '',
+      addBudgetForm: false,
     };
     this.parseTransactionData = this.parseTransactionData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.toggleAdd = this.toggleAdd.bind(this);
+  }
+
+  handleCategoryChange(event) {
+    const { name, value } = event;
+    this.setState({ [name]: value });
   }
 
   handleChange(event) {
+    console.log('event name:', event.target.name);
+    console.log('event value:', event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -34,6 +44,10 @@ class Budget extends Component {
 
   handleDelete(category) {
     this.props.updateBudget({ [category]: 0 });
+  }
+
+  toggleAdd() {
+    this.setState({ addBudgetForm: !this.state.addBudgetForm });
   }
 
   componentDidMount() {
@@ -59,12 +73,32 @@ class Budget extends Component {
   }
 
   render() {
-    console.log('state:', this.state);
+    console.log(this.state);
     const categories = Object.keys(this.state.categoryAmount);
     const budget = Object.keys(this.props.budget) || [];
+    const categoryOptions = [
+      { key: 'Travel', value: 'Travel', text: 'Travel' },
+      {
+        key: 'Food and Drink',
+        value: 'Food and Drink',
+        text: 'Food and Drink',
+      },
+      { key: 'Payment', value: 'Payment', text: 'Payment' },
+      { key: 'Shops', value: 'Shops', text: 'Shops' },
+      { key: 'Transfer', value: 'Transfer', text: 'Transfer' },
+      { key: 'Recreation', value: 'Recreation', text: 'Recreation' },
+      { key: 'Bank Fees', value: 'Bank Fees', text: 'Bank Fees' },
+      { key: 'Healthcare', value: 'Healthcare', text: 'Healthcare' },
+      { key: 'Service', value: 'Service', text: 'Service' },
+      { key: 'Tax', value: 'Tax', text: 'Tax' },
+      { key: 'Other', value: 'Other', text: 'Other' },
+      { key: 'Total', value: 'Total', text: 'Total' },
+    ];
     return (
-      <div className="budgets">
+      <div className="budget-container">
+        <h3>Budget</h3>
         <div className="editBudget">
+          <h4>Edit Budget</h4>
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="categories">Choose a category: </label>
             <select onChange={this.handleChange} name="categories">
@@ -84,57 +118,90 @@ class Budget extends Component {
               <option value="Other">Other</option>
               <option value="Total">Total</option>
             </select>
+            <br />
             <label htmlFor="goalBudget">Goal Budget: </label>
-            <input
+            <Input
               onChange={this.handleChange}
               type="number"
               name="goalBudget"
             />
-            <button type="submit">Submit</button>
+            <Button type="submit">Save</Button>
           </form>
         </div>
-        <div>
+        <div className="budget-category-container">
+          <h4>Your Spending vs Budget</h4>
           {budget.length ? (
             budget
               .filter((cat) => this.props.budget[cat] > 0)
               .map((category, index) => (
-                <div
-                  key={index}
-                  style={{ display: 'inline-block', width: '80%' }}
-                >
-                  {category} : {this.state.categoryAmount[category] || '0'} /{' '}
-                  {this.props.budget[category]}
-                  {(this.state.categoryAmount[category] || '0') >
-                    this.props.budget[category] && (
-                    <div style={{ color: 'red' }}>OVERBUDGET!</div>
-                  )}
-                  <Segment>
-                    <Progress
-                      value={this.state.categoryAmount[category] || '0'}
-                      total={this.props.budget[category]}
-                      progress="ratio"
-                      color={
-                        this.state.categoryAmount[category] /
-                          this.props.budget[category] >
-                        0.85
-                          ? 'red'
-                          : 'green'
-                      }
-                      size="medium"
-                    />
-                  </Segment>
-                  <Button
-                    onClick={() => {
-                      this.handleDelete(category);
-                    }}
-                  >
-                    <Icon name="trash alternate" />
-                    Delete
-                  </Button>
+                <div className="single-budget-category" key={index}>
+                  <div className="budget-progress-bar-container">
+                    <div className="budget-category-title">{category}</div>
+                    <div className="budget-progress-bar">
+                      ${this.state.categoryAmount[category] || '0'} / $
+                      {this.props.budget[category]}
+                      {(this.state.categoryAmount[category] || '0') >
+                        this.props.budget[category] && (
+                        <div style={{ color: 'red' }}>OVERBUDGET!</div>
+                      )}
+                      <Progress
+                        value={this.state.categoryAmount[category] || '0'}
+                        total={this.props.budget[category]}
+                        progress="ratio"
+                        color={
+                          this.state.categoryAmount[category] /
+                            this.props.budget[category] >
+                          0.85
+                            ? 'red'
+                            : 'green'
+                        }
+                        size="medium"
+                      />
+                    </div>
+                    <Button
+                      className="delete-budget-btn"
+                      onClick={() => {
+                        this.handleDelete(category);
+                      }}
+                    >
+                      <Icon name="trash alternate" />
+                    </Button>
+                  </div>
                 </div>
               ))
           ) : (
             <span>Nope</span>
+          )}
+          <Button onClick={this.toggleAdd}>
+            <Icon name="add" />
+          </Button>
+          {this.state.addBudgetForm && (
+            <div className="add-budget-container">
+              <h4 style={{ textAlign: 'center' }}>Add Budget</h4>
+              <form className="add-budget-form" onSubmit={this.handleSubmit}>
+                <label htmlFor="categories">Budget Category: </label>
+                <Dropdown
+                  onChange={this.handleCategoryChange}
+                  name="categories"
+                  placeholder="Select Category"
+                  fluid
+                  search
+                  selection
+                  options={categoryOptions}
+                />
+                <br />
+                <label htmlFor="goalBudget">Budget Goal: </label>
+                <Input
+                  onChange={this.handleChange}
+                  type="number"
+                  name="goalBudget"
+                />
+                <br />
+                <Button className="add-budget-btn" type="submit">
+                  Save
+                </Button>
+              </form>
+            </div>
           )}
         </div>
       </div>

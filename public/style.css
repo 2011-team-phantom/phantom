@@ -1,18 +1,72 @@
 .navItem {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    
-  }
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
 .navbar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
 }
 li a:hover:not(.active) {
-    background-color: #111;
-  }
+  background-color: #111;
+}
+
+.add-budget-container {
+  padding-top: 50px;
+}
+
+.budget-category-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  align-items: center;
+}
+
+.single-budget-category {
+  align-items: center;
+  width: 70%;
+}
+
+.budget-progress-bar-container {
+  display: flex;
+}
+
+.budget-category-title {
+  width: 15vw;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 15px;
+}
+
+.budget-progress-bar {
+  width: 80vw;
+  padding-right: 10px;
+  /* margin-bottom: 0px; */
+}
+
+.delete-budget-btn {
+  /* padding-left: 10px; */
+  width: 5vw;
+}
+
+.budget-category {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-budget-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-budget-btn {
+  /* justify-self: center; */
+  align-self: center;
+}
