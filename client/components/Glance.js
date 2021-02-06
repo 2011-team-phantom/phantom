@@ -34,7 +34,7 @@ class Glance extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchUpdatedUser();
+    // this.props.fetchUpdatedUser();
     this.setState();
   }
 
@@ -49,6 +49,7 @@ class Glance extends Component {
   }
 
   render() {
+    let totals = {};
     const labels = this.props.transactions.transactions.map((item) => {
       return item.category[0];
     });
@@ -56,9 +57,16 @@ class Glance extends Component {
     //   labels: [...new Set(labels)],
     // });
     let transactions = this.props.transactions.transactions || [];
+    console.log(transactions);
     let spending = transactions.map((t) => {
+      if (totals[t.category[0]]) {
+        totals[t.category[0]] += Math.round(t.amount);
+      } else {
+        totals[t.category[0]] = Math.round(t.amount);
+      }
       return t.amount;
     });
+    console.log(totals);
     // console.log(spending, "spending");
     //need two arrays, one with labels
     //one with corresponding totals
@@ -82,11 +90,12 @@ class Glance extends Component {
             "#003350",
             "#35014F",
           ],
-          data: spending,
+          data: Object.values(totals),
         },
       ],
     };
-    // console.log(labels, newData.datasets[0].data);
+    console.log(newData.labels);
+
     return (
       <div>
         <Doughnut
