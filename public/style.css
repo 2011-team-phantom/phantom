@@ -48,11 +48,9 @@ li a:hover:not(.active) {
 .budget-progress-bar {
   width: 80vw;
   padding-right: 10px;
-  /* margin-bottom: 0px; */
 }
 
 .delete-budget-btn {
-  /* padding-left: 10px; */
   width: 5vw;
 }
 
@@ -67,6 +65,5 @@ li a:hover:not(.active) {
 }
 
 .add-budget-btn {
-  /* justify-self: center; */
   align-self: center;
 }

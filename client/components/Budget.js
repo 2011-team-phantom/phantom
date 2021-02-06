@@ -24,14 +24,12 @@ class Budget extends Component {
     this.toggleAdd = this.toggleAdd.bind(this);
   }
 
-  handleCategoryChange(event) {
-    const { name, value } = event;
+  handleCategoryChange(event, data) {
+    const { name, value } = data;
     this.setState({ [name]: value });
   }
 
   handleChange(event) {
-    console.log('event name:', event.target.name);
-    console.log('event value:', event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -73,8 +71,6 @@ class Budget extends Component {
   }
 
   render() {
-    console.log(this.state);
-    const categories = Object.keys(this.state.categoryAmount);
     const budget = Object.keys(this.props.budget) || [];
     const categoryOptions = [
       { key: 'Travel', value: 'Travel', text: 'Travel' },
