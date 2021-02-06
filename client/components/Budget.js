@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Progress } from 'semantic-ui-react';
+import { Segment, Progress, Button } from 'semantic-ui-react';
 import {
   fetchTransactions,
   fetchBudget,
@@ -11,15 +11,14 @@ class Budget extends Component {
   constructor() {
     super();
     this.state = {
-      src:
-        'https://assets.justinmind.com/wp-content/uploads/2018/09/green-progress-bar.png',
       categoryAmount: {},
       categories: '',
-      goalBudget: 0,
+      goalBudget: '',
     };
     this.parseTransactionData = this.parseTransactionData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleChange(event) {
@@ -33,6 +32,10 @@ class Budget extends Component {
     });
   }
 
+  handleDelete(category) {
+    this.props.updateBudget({ [category]: 0 });
+  }
+
   componentDidMount() {
     this.props.fetchBudget();
     this.parseTransactionData();
@@ -42,24 +45,28 @@ class Budget extends Component {
     let categories = {};
     let total = 0;
     this.props.transactions.forEach((transaction) => {
-      total += transaction.amount;
+      total += transaction.amount * 100;
       if (!categories[transaction.category[0]]) {
-        categories[transaction.category[0]] = transaction.amount;
+        categories[transaction.category[0]] = transaction.amount * 100;
       } else {
-        categories[transaction.category[0]] += transaction.amount;
+        categories[transaction.category[0]] += transaction.amount * 100;
       }
     });
-    this.setState({ categoryAmount: { ...categories, Total: total } });
+    for (let key in categories) {
+      categories[key] = categories[key] / 100;
+    }
+    this.setState({ categoryAmount: { ...categories, Total: total / 100 } });
   }
 
   render() {
+    console.log('state:', this.state);
     const categories = Object.keys(this.state.categoryAmount);
     const budget = Object.keys(this.props.budget) || [];
     return (
       <div className="budgets">
         <div className="editBudget">
           <form onSubmit={this.handleSubmit}>
-            <label htmlFor="categories">Choose a category:</label>
+            <label htmlFor="categories">Choose a category: </label>
             <select onChange={this.handleChange} name="categories">
               <option disabled selected value="pickOne">
                 --Select Category--
@@ -77,7 +84,7 @@ class Budget extends Component {
               <option value="Other">Other</option>
               <option value="Total">Total</option>
             </select>
-            <label htmlFor="goalBudget">Goal Budget:</label>
+            <label htmlFor="goalBudget">Goal Budget: </label>
             <input
               onChange={this.handleChange}
               type="number"
@@ -97,9 +104,8 @@ class Budget extends Component {
                 >
                   {category} : {this.state.categoryAmount[category] || '0'} /{' '}
                   {this.props.budget[category]}
-                  <Segment inverted>
+                  <Segment>
                     <Progress
-                      inverted
                       value={this.state.categoryAmount[category] || '0'}
                       total={this.props.budget[category]}
                       progress="ratio"
@@ -113,7 +119,13 @@ class Budget extends Component {
                       size="medium"
                     />
                   </Segment>
-                  {/* <img src={this.state.src} style={{ height: '60px' }} /> */}
+                  <Button
+                    onClick={() => {
+                      this.handleDelete(category);
+                    }}
+                  >
+                    Delete
+                  </Button>
                 </div>
               ))
           ) : (
