@@ -19,7 +19,7 @@ class Navbar extends Component {
     return (
       <div>
         {this.props.isLoggedIn ? (
-          <Menu secondary>
+          <Menu borderless color={"green"} inverted>
             <Link to="/transactions" font="Open Sans">
               <Menu.Item className="navItem" name="transactions"
                 active={activeItem === "transactions"}
@@ -47,7 +47,7 @@ class Navbar extends Component {
             <Menu.Item position="right">{email}</Menu.Item>
           </Menu>
         ) : (
-          <Menu secondary>
+          <Menu borderless color={"green"} inverted>
             <Link to="/login" font="Open Sans">
               <Menu.Item className="navItem" name="login"
                 active={activeItem === "login"}
