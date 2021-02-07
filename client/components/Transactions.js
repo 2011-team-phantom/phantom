@@ -39,6 +39,7 @@ class Transactions extends Component {
   }
 
   render() {
+    this.props.user.access_token ? this.props.fetchTransactions(this.props.user.access_token[0]) : console.log('hi');
     let transactions = this.props.transactions.transactions || [];
     let spending = transactions
       .map((t) => {
