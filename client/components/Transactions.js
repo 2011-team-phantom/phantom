@@ -21,6 +21,7 @@ class Transactions extends Component {
           data: [65, 59, 80, 81, 56],
         },
       ],
+      counter: 0,
     };
   }
 
@@ -39,7 +40,7 @@ class Transactions extends Component {
   }
 
   render() {
-    this.props.user.access_token ? this.props.fetchTransactions(this.props.user.access_token[0]) : console.log('hi');
+    this.props.user.access_token && this.state.counter < 5? this.props.fetchTransactions(this.props.user.access_token[0]) && this.state.counter++ : console.log('hi');
     let transactions = this.props.transactions.transactions || [];
     let spending = transactions
       .map((t) => {
