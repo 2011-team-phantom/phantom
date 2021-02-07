@@ -57,8 +57,8 @@ class Transactions extends Component {
           label: "spending",
           fill: true,
           lineTension: 0.5,
-          backgroundColor: "rgba(75,192,192,1)", //color of the dots
-          borderColor: "rgba(75,192,192,1)", //border of the dots
+          backgroundColor: "#81B29A", //color of the dots
+          borderColor: "#81B29A", //border of the dots
           borderWidth: 2,
           data: spending,
         },
@@ -66,7 +66,7 @@ class Transactions extends Component {
     };
 
     return (
-      <div>
+      <div className="transactionsContainer">
         <div id="transactions_spending">
           <Line
             data={newData}
@@ -108,7 +108,7 @@ class Transactions extends Component {
                         ? item.merchant_name
                         : item.name}
                     </Table.Cell>
-                    <Table.Cell>${item.amount}</Table.Cell>
+                    <Table.Cell>${item.amount.toFixed(2)}</Table.Cell>
                     <Table.Cell>{item.category[0]}</Table.Cell>
                   </Table.Row>
                 );

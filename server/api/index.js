@@ -17,7 +17,7 @@ router.post('/addbudget', async function (req, res, next) {
     );
     res.send(updatedUser.budget);
   } catch (error) {
-    console.log('errorbudgetadding', error);
+    console.log('Error adding budget:', error);
   }
 });
 
@@ -26,7 +26,7 @@ router.get('/budget', async function (req, res, next) {
     const user = await User.findOne({ _id: req.user._id });
     res.send(user);
   } catch (error) {
-    console.log('errorbudgetgetting', error);
+    console.log('Error getting budget:', error);
   }
 });
 
@@ -43,7 +43,7 @@ router.put('/updatebudget', async function (req, res, next) {
     );
     res.send(updatedUser.budget);
   } catch (error) {
-    console.log('errorbudgetadding', error);
+    console.log('Error updating budget:', error);
   }
 });
 

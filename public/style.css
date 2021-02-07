@@ -1,18 +1,101 @@
-.navItem {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    
-  }
-.navbar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
+body{
+  background-color: aliceblue;
+
 }
+
+
+
+.signup{
+  margin-top: 60px;
+}
+
+.addbudgets{
+  margin-top: 100px;
+}
+
 li a:hover:not(.active) {
-    background-color: #111;
-  }
+  background-color: #111;
+}
+
+
+.add-budget-container {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.budget-category-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  align-items: center;
+}
+
+.single-budget-category {
+  align-items: center;
+  width: 70%;
+  padding-bottom: 10px;
+}
+
+.budget-progress-bar-container {
+  display: flex;
+}
+
+.budget-category-title {
+  width: 10vw;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 15px;
+  flex-direction: column;
+}
+
+.budget-progress-bar {
+  width: 80vw;
+  padding-right: 15px;
+  margin-top: 20px;
+}
+
+.delete-budget-btn-container {
+  align-self: center;
+  padding-top: 17px;
+}
+
+.delete-budget-btn-container button {
+  width: 50px;
+}
+
+.budget-category {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-budget-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-budget-form button {
+  align-self: center;
+}
+
+.budget-category-container .icon-btn {
+  width: 52px;
+}
+
+.plaidLink{
+  margin-top: 80px;
+}
+
+.transactionsContainer {
+  margin-top: 100px;
+}
+
+.glanceContainer{
+
+  margin-top: 100px;
+}
+
+.budgets {
+  margin-top: 100px;
+}
