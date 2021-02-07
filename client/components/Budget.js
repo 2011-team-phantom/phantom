@@ -165,7 +165,11 @@ class Budget extends Component {
                           this.state.categoryAmount[category] /
                             this.props.budget[category] >
                           0.85
-                            ? 'red'
+                            ? this.state.categoryAmount[category] /
+                                this.props.budget[category] >
+                              1
+                              ? 'red'
+                              : 'yellow'
                             : 'green'
                         }
                         size="medium"
