@@ -11,7 +11,7 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div>
+      <div className="navBar">
         {this.props.isLoggedIn ? (
           <Menu>
             <Link to="/transactions" font="Open Sans">

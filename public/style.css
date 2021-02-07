@@ -1,18 +1,59 @@
+body{
+  background-color: aliceblue;
+
+}
+
 .navItem {
-    display: block;
+    /* 
     color: white;
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
+    text-decoration: none; */
+    display: flex;
+  text-align: right;
+  padding: 14px 16px;
+  text-decoration: none;
     
   }
-.navbar {
-    list-style-type: none;
+
+  .navItem:hover {
+    background-color: #336699;
+  } 
+
+  .navBar {
+    /* list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #333; */
+    display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background: linear-gradient(45deg, #336699, #f4f3ee); */
+  background-color: teal;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  left: 0px;
+  z-index: 1;
 }
+
+.signup{
+  margin-top: 60px;
+}
+
+.login{
+  margin-top: 60px;
+}
+
+.addbudgets{
+  margin-top: 60px;
+}
+
 li a:hover:not(.active) {
     background-color: #111;
+  }
+
+  .plaidLink{
+    margin-top: 60px;
   }
