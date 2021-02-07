@@ -61,7 +61,7 @@ class LinkPlaid extends Component {
                   this.props.fetchAcessToken(public_token, this.props.user);
                   setTimeout(
                     () => this.props.history.push("/transactions"),
-                    1000
+                    500
                   );
                 }}
                 className="test"
