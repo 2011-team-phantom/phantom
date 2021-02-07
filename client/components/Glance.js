@@ -4,38 +4,16 @@ import { connect } from "react-redux";
 import { fetchTransactions } from "../store/transactions";
 import { me } from "../store/user";
 import { Pie, Doughnut } from "react-chartjs-2";
+import { table } from "semantic-ui-react";
 
 class Glance extends Component {
   constructor(props) {
     super(props);
-    const state = {
-      labels: ["January", "February", "March", "April", "May"],
-      datasets: [
-        {
-          label: "Rainfall",
-          backgroundColor: [
-            "#F4F1DE",
-            "#E07A5F",
-            "#3D405B",
-            "#81B29A",
-            "#F2CC8F",
-          ],
-          hoverBackgroundColor: [
-            "#F4F100",
-            "#E07A00",
-            "#3D4000",
-            "#81B250",
-            "#F2CC4F",
-          ],
-          data: [65, 59, 80, 81, 56],
-        },
-      ],
-    };
   }
 
   componentDidMount() {
     // this.props.fetchUpdatedUser();
-    this.setState();
+    // this.setState();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -57,7 +35,7 @@ class Glance extends Component {
     //   labels: [...new Set(labels)],
     // });
     let transactions = this.props.transactions.transactions || [];
-    console.log(transactions);
+    // console.log(transactions);
     let spending = transactions.map((t) => {
       if (totals[t.category[0]]) {
         totals[t.category[0]] += Math.round(t.amount);
@@ -66,7 +44,7 @@ class Glance extends Component {
       }
       return t.amount;
     });
-    console.log(totals);
+    // console.log(totals);
     // console.log(spending, "spending");
     //need two arrays, one with labels
     //one with corresponding totals
@@ -94,26 +72,49 @@ class Glance extends Component {
         },
       ],
     };
-    console.log(newData.labels);
+    // console.log(newData.labels);
 
     return (
       <div className="glanceContainer">
-        <Doughnut
-          data={newData}
-          height={300}
-          options={{
-            title: {
-              display: true,
-              text: "Spending by Category",
-              fontSize: 20,
-            },
-            legend: {
-              display: true,
-              position: "right",
-            },
-            maintainAspectRatio: false,
-          }}
-        />
+        <div>
+          <Doughnut
+            data={newData}
+            options={{
+              title: {
+                display: true,
+                text: "Spending by Category",
+                fontSize: 20,
+              },
+              legend: {
+                display: true,
+                position: "left",
+              },
+              maintainAspectRatio: false,
+              responsive: true,
+            }}
+            height={300}
+          />
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Total Spent</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(totals).map((cat, idx) => {
+              return (
+                <tr key={idx}>
+                  <td>{cat}</td>
+                  <td>${totals[cat]}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+
       </div>
     );
   }
