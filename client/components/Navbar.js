@@ -7,9 +7,15 @@ import { Container, Image, Menu } from "semantic-ui-react";
 class Navbar extends Component {
   constructor() {
     super();
+    this.state = {
+      activeItem: "",
+    }
   }
+  handleItemClick (e, { name }) {this.setState({ activeItem: name })}
 
   render() {
+    const { email } = this.props.meRn;
+    const { activeItem } = this.state
     return (
       <div className="navBar">
         {this.props.isLoggedIn ? (
@@ -47,6 +53,7 @@ class Navbar extends Component {
                   At-a-Glance
                 </Link>
               </Menu.Item>
+      <Menu.Item position="right">{email}</Menu.Item>
             </Container>
           </Menu>
         ) : (
@@ -68,6 +75,7 @@ class Navbar extends Component {
                 <Link to="/join" font="Open Sans">
                   Join
                 </Link>
+
               </Menu.Item>
             </Container>
           </Menu>
@@ -79,6 +87,8 @@ class Navbar extends Component {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user._id,
+    meRn: state.user,
+    // activeItem: 'join'
   };
 };
 
