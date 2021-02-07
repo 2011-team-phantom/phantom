@@ -66,7 +66,7 @@ class Transactions extends Component {
     };
 
     return (
-      <div>
+      <div className="transactionsContainer">
         <div id="transactions_spending">
           <Line
             data={newData}
@@ -108,7 +108,7 @@ class Transactions extends Component {
                         ? item.merchant_name
                         : item.name}
                     </Table.Cell>
-                    <Table.Cell>${item.amount}</Table.Cell>
+                    <Table.Cell>${item.amount.toFixed(2)}</Table.Cell>
                     <Table.Cell>{item.category[0]}</Table.Cell>
                   </Table.Row>
                 );

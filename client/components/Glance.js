@@ -75,7 +75,7 @@ class Glance extends Component {
     // console.log(newData.labels);
 
     return (
-      <div>
+      <div className="glanceContainer">
         <div>
           <Doughnut
             data={newData}
@@ -114,6 +114,7 @@ class Glance extends Component {
             })}
           </tbody>
         </table>
+
       </div>
     );
   }

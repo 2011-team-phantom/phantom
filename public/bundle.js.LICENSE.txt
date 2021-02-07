@@ -5,6 +5,12 @@ object-assign
 */
 
 /*!
+  Copyright (c) 2015 Jed Watson.
+  Based on code that is Copyright 2013-2015, Facebook, Inc.
+  All rights reserved.
+*/
+
+/*!
  * Chart.js v2.9.4
  * https://www.chartjs.org
  * (c) 2020 Chart.js Contributors
