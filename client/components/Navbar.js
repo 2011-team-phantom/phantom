@@ -11,7 +11,7 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div>
+      <div className="navBar">
         {this.props.isLoggedIn ? (
           <Menu>
             <Link to="/transactions" font="Open Sans">
@@ -27,6 +27,11 @@ class Navbar extends Component {
             <Link to="/plaid" font="Open Sans">
               <Menu.Item className="navItem" name="plaid">
                 Plaid Sync
+              </Menu.Item>
+            </Link>
+            <Link to="/glance" font="Open Sans">
+              <Menu.Item className="navItem" name="glance">
+                At-a-Glance
               </Menu.Item>
             </Link>
           </Menu>

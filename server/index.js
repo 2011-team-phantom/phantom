@@ -117,10 +117,30 @@ app.post("/auth/public_token");
 
 app.get("/transactions/:accessToken", async (req, res) => {
   try {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
+    let mmMinusSix = String(today.getMonth() - 6).padStart(2, "0"); //January is 0!
+    let yyyyFix = today.getFullYear();
+    
+    const now = yyyy + "-" + mm + "-" + dd;
+    let nowMinusSixmm = yyyyFix + "-" + mmMinusSix + "-" + dd;
+    if (parseInt(mmMinusSix) < 0) {
+      mmMinusSix = 12 + parseInt(mmMinusSix);
+      yyyyFix --
+      nowMinusSixmm = yyyyFix + "-0" + mmMinusSix + "-" + dd;
+    }
+    // if (mmMinusSix > 6) yyyy = today.getFullYear() - 1;
+    // const nowMinusSixmm = yyyy + "-" + mmMinusSix + "-" + dd;
+
+    console.log("MONTH-6", mmMinusSix);
     const data = await client.getTransactions(
       req.params.accessToken,
-      "2020-12-01",
-      "2021-01-30"
+      nowMinusSixmm,
+      // "2020-12-01",
+      // "2021-01-01"
+      now
     );
 
     res.json(data);

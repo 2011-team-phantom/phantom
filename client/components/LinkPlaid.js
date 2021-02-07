@@ -46,7 +46,7 @@ class LinkPlaid extends Component {
 
   render() {
     return (
-      <div>
+      <div className="plaidLink">
         {this.props.link_token ? (
           <PlaidLink
             clientName="React Plaid Setup"
