@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Menu } from "semantic-ui-react";
+import { Container, Image, Menu } from "semantic-ui-react";
 
 class Navbar extends Component {
   constructor() {
@@ -13,40 +13,63 @@ class Navbar extends Component {
     return (
       <div className="navBar">
         {this.props.isLoggedIn ? (
-          <Menu>
-            <Link to="/transactions" font="Open Sans">
-              <Menu.Item className="navItem" name="transactions">
-                Transactions
+          <Menu fixed="top" inverted>
+            <Container>
+              <Menu.Item header as="a" className="navItem" name="phantom">
+                <Image
+                  size="mini"
+                  src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
+                  style={{ marginRight: "1.5em" }}
+                />
               </Menu.Item>
-            </Link>
-            <Link to="/budget" font="Open Sans">
-              <Menu.Item className="navItem" name="budget">
-                Budget
+
+              <Menu.Item header as="a" className="navItem" name="transactions">
+                <Link to="/transactions" font="Open Sans">
+                  Transactions
+                </Link>
               </Menu.Item>
-            </Link>
-            <Link to="/plaid" font="Open Sans">
-              <Menu.Item className="navItem" name="plaid">
-                Plaid Sync
+
+              <Menu.Item header as="a" className="navItem" name="budget">
+                <Link to="/budget" font="Open Sans">
+                  {" "}
+                  Budget{" "}
+                </Link>
               </Menu.Item>
-            </Link>
-            <Link to="/glance" font="Open Sans">
-              <Menu.Item className="navItem" name="glance">
-                At-a-Glance
+
+              <Menu.Item header as="a" className="navItem" name="plaid">
+                <Link to="/plaid" font="Open Sans">
+                  Plaid Sync
+                </Link>
               </Menu.Item>
-            </Link>
+
+              <Menu.Item header as="a" className="navItem" name="glance">
+                <Link to="/glance" font="Open Sans">
+                  At-a-Glance
+                </Link>
+              </Menu.Item>
+            </Container>
           </Menu>
         ) : (
-          <Menu>
-            <Link to="/login" font="Open Sans">
-              <Menu.Item className="navItem" name="login">
-                Login
+          <Menu fixed="top" inverted>
+            <Container>
+              <Menu.Item header as="a" className="navItem" name="phantom">
+                <Image
+                  size="mini"
+                  src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
+                  style={{ marginRight: "1.5em" }}
+                />
               </Menu.Item>
-            </Link>
-            <Link to="/join" font="Open Sans">
-              <Menu.Item className="navItem" name="join">
-                Join
+              <Menu.Item header as="a" className="navItem" name="login">
+                <Link to="/login" font="Open Sans">
+                  Login
+                </Link>
               </Menu.Item>
-            </Link>
+              <Menu.Item header as="a" className="navItem" name="join">
+                <Link to="/join" font="Open Sans">
+                  Join
+                </Link>
+              </Menu.Item>
+            </Container>
           </Menu>
         )}
       </div>
