@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Progress, Button, Icon, Input, Dropdown } from 'semantic-ui-react';
+import moment from 'moment';
 import {
   fetchTransactions,
   fetchBudget,
@@ -16,18 +17,18 @@ class Budget extends Component {
       editBudgetForm: false,
       categories: '',
       goalBudget: '',
-      Travel: '',
-      'Food and Drink': '',
-      Payment: '',
-      Shops: '',
-      Transfer: '',
-      Recreation: '',
-      'Bank Fees': '',
-      Healthcare: '',
-      Service: '',
-      Tax: '',
-      Other: '',
-      Total: '',
+      // Travel: '',
+      // 'Food and Drink': '',
+      // Payment: '',
+      // Shops: '',
+      // Transfer: '',
+      // Recreation: '',
+      // 'Bank Fees': '',
+      // Healthcare: '',
+      // Service: '',
+      // Tax: '',
+      // Other: '',
+      // Total: '',
     };
     this.parseTransactionData = this.parseTransactionData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -76,11 +77,13 @@ class Budget extends Component {
     let categories = {};
     let total = 0;
     this.props.transactions.forEach((transaction) => {
-      total += transaction.amount * 100;
-      if (!categories[transaction.category[0]]) {
-        categories[transaction.category[0]] = transaction.amount * 100;
-      } else {
-        categories[transaction.category[0]] += transaction.amount * 100;
+      if (transaction.date.slice(0, 7) === moment().format().slice(0, 7)) {
+        total += transaction.amount * 100;
+        if (!categories[transaction.category[0]]) {
+          categories[transaction.category[0]] = transaction.amount * 100;
+        } else {
+          categories[transaction.category[0]] += transaction.amount * 100;
+        }
       }
     });
     for (let key in categories) {
@@ -110,13 +113,12 @@ class Budget extends Component {
       { key: 'Total', value: 'Total', text: 'Total' },
     ];
 
-    console.log(this.state);
     return (
       <div className="budget-container">
         <div className="budget-category-container">
           {/* <h3>Budget</h3> */}
           <h3>My Spending vs Budget</h3>
-          {this.state.editBudgetForm ? (
+          {/* {this.state.editBudgetForm ? (
             <Button
               className="icon-btn"
               onClick={(event) => {
@@ -130,7 +132,7 @@ class Budget extends Component {
             <Button className="icon-btn" onClick={this.toggleEdit}>
               <Icon name="edit" />
             </Button>
-          )}
+          )} */}
           {budget.length ? (
             budget
               .filter((cat) => this.props.budget[cat] > 0)
@@ -139,8 +141,7 @@ class Budget extends Component {
                   <div className="budget-progress-bar-container">
                     <div className="budget-category-title">
                       {category}
-
-                      {this.state.editBudgetForm && (
+                      {/* {this.state.editBudgetForm && (
                         <Input
                           style={{ width: '80px' }}
                           onChange={this.handleChange}
@@ -148,7 +149,7 @@ class Budget extends Component {
                           name={category}
                           value={this.state[category]}
                         />
-                      )}
+                      )} */}
                     </div>
                     <div className="budget-progress-bar">
                       ${this.state.categoryAmount[category] || '0'} / $
@@ -191,7 +192,7 @@ class Budget extends Component {
             <span>Nope</span>
           )}
           <Button className="icon-btn" onClick={this.toggleAdd}>
-            <Icon name="add" />
+            <Icon name="edit" />
           </Button>
           {this.state.addBudgetForm && (
             <div className="add-budget-container">
