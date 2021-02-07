@@ -66,7 +66,7 @@ class Transactions extends Component {
     };
 
     return (
-      <div>
+      <div className="transactionsContainer">
         <div id="transactions_spending">
           <Line
             data={newData}

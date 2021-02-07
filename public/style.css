@@ -51,9 +51,17 @@ body{
 }
 
 li a:hover:not(.active) {
-    background-color: #111;
-  }
+  background-color: #111;
+}
 
-  .plaidLink{
-    margin-top: 60px;
-  }
+.plaidLink{
+  margin-top: 60px;
+}
+
+.transactionsContainer {
+  margin-top: 60px;
+}
+
+.glanceContainer{
+  margin-top: 60px;
+}
