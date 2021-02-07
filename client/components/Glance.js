@@ -76,23 +76,26 @@ class Glance extends Component {
 
     return (
       <div>
-        <Doughnut
-          data={newData}
-          options={{
-            title: {
-              display: true,
-              text: "Spending by Category",
-              fontSize: 20,
-            },
-            legend: {
-              display: true,
-              position: "left",
-            },
-            maintainAspectRatio: false,
-            responsive: true,
-          }}
-          height={300}
-        />
+        <div>
+          <Doughnut
+            data={newData}
+            options={{
+              title: {
+                display: true,
+                text: "Spending by Category",
+                fontSize: 20,
+              },
+              legend: {
+                display: true,
+                position: "left",
+              },
+              maintainAspectRatio: false,
+              responsive: true,
+            }}
+            height={300}
+          />
+        </div>
+
         <table>
           <thead>
             <tr>
