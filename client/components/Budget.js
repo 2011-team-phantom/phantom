@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Segment, Progress } from 'semantic-ui-react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Segment, Progress } from "semantic-ui-react";
 import {
   fetchTransactions,
   fetchBudget,
   updateBudget,
-} from '../store/transactions';
+} from "../store/transactions";
 
 class Budget extends Component {
   constructor() {
     super();
     this.state = {
       src:
-        'https://assets.justinmind.com/wp-content/uploads/2018/09/green-progress-bar.png',
+        "https://assets.justinmind.com/wp-content/uploads/2018/09/green-progress-bar.png",
       categoryAmount: {},
-      categories: '',
+      categories: "",
       goalBudget: 0,
     };
     this.parseTransactionData = this.parseTransactionData.bind(this);
@@ -93,22 +93,21 @@ class Budget extends Component {
               .map((category, index) => (
                 <div
                   key={index}
-                  style={{ display: 'inline-block', width: '80%' }}
+                  style={{ display: "inline-block", width: "80%" }}
                 >
-                  {category} : {this.state.categoryAmount[category] || '0'} /{' '}
+                  {category} : {this.state.categoryAmount[category] || "0"} /{" "}
                   {this.props.budget[category]}
-                  <Segment inverted>
+                  <Segment>
                     <Progress
-                      inverted
-                      value={this.state.categoryAmount[category] || '0'}
+                      value={this.state.categoryAmount[category] || "0"}
                       total={this.props.budget[category]}
                       progress="ratio"
                       color={
                         this.state.categoryAmount[category] /
                           this.props.budget[category] >
                         0.85
-                          ? 'red'
-                          : 'green'
+                          ? "red"
+                          : "green"
                       }
                       size="medium"
                     />

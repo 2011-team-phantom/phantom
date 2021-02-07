@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { fetchTransactions } from "../store/transactions";
 import { me } from "../store/user";
 import { Pie, Doughnut } from "react-chartjs-2";
-import { table } from "semantic-ui-react";
+import { table, Segment, Progress } from "semantic-ui-react";
 
 class Glance extends Component {
   constructor(props) {
@@ -73,9 +73,23 @@ class Glance extends Component {
       ],
     };
     // console.log(newData.labels);
-
+    const totalSpending = Object.values(totals).reduce((accum, cur) => {
+      return accum + cur;
+    }, 0);
+    const percent = totalSpending / this.props.user.budget.Total;
+    //{`${totalSpending}/${this.props.user.budget.Total}`}
+    console.log(percent);
     return (
       <div className="glanceContainer">
+        <Segment>
+          <Progress
+            value={totalSpending}
+            total={this.props.user.budget.Total}
+            progress="ratio"
+            color={percent > 0.85 ? "red" : percent > 0.4 ? "yellow" : "green"}
+          />
+        </Segment>
+
         <div>
           <Doughnut
             data={newData}
@@ -114,7 +128,6 @@ class Glance extends Component {
             })}
           </tbody>
         </table>
-
       </div>
     );
   }
