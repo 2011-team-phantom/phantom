@@ -7,7 +7,7 @@ import {
   fetchTransactions,
   fetchBudget,
   updateBudget,
-} from "../store/transactions";
+} from '../store/transactions';
 
 class Budget extends Component {
   constructor() {
@@ -153,8 +153,11 @@ class Budget extends Component {
                       )} */}
                     </div>
                     <div className="budget-progress-bar">
-                      ${this.state.categoryAmount[category] || '0'} / $
-                      {this.props.budget[category]}
+                      $
+                      {this.state.categoryAmount[category]
+                        ? Number(this.state.categoryAmount[category]).toFixed(2)
+                        : '0'}
+                      / ${this.props.budget[category]}
                       {(this.state.categoryAmount[category] || '0') >
                         this.props.budget[category] && (
                         <div style={{ color: 'red' }}>OVERBUDGET!</div>
@@ -162,7 +165,8 @@ class Budget extends Component {
                       <Progress
                         value={this.state.categoryAmount[category] || '0'}
                         total={this.props.budget[category]}
-                        progress="ratio"
+                        precision={0}
+                        progress="percent"
                         color={
                           this.state.categoryAmount[category] /
                             this.props.budget[category] >
