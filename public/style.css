@@ -63,10 +63,6 @@ li a:hover:not(.active) {
   width: 50px;
 }
 
-.ui.button > .icon:not(.button) {
-  margin: 0 0;
-}
-
 .budget-category {
   display: flex;
   flex-direction: row;
