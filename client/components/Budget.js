@@ -12,9 +12,22 @@ class Budget extends Component {
     super();
     this.state = {
       categoryAmount: {},
+      addBudgetForm: false,
+      editBudgetForm: false,
       categories: '',
       goalBudget: '',
-      addBudgetForm: false,
+      Travel: '',
+      'Food and Drink': '',
+      Payment: '',
+      Shops: '',
+      Transfer: '',
+      Recreation: '',
+      'Bank Fees': '',
+      Healthcare: '',
+      Service: '',
+      Tax: '',
+      Other: '',
+      Total: '',
     };
     this.parseTransactionData = this.parseTransactionData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,6 +35,7 @@ class Budget extends Component {
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.toggleAdd = this.toggleAdd.bind(this);
+    this.toggleEdit = this.toggleEdit.bind(this);
   }
 
   handleCategoryChange(event, data) {
@@ -38,6 +52,7 @@ class Budget extends Component {
     await this.props.updateBudget({
       [this.state.categories]: this.state.goalBudget,
     });
+    console.log('form submitted');
   }
 
   handleDelete(category) {
@@ -46,6 +61,10 @@ class Budget extends Component {
 
   toggleAdd() {
     this.setState({ addBudgetForm: !this.state.addBudgetForm });
+  }
+
+  toggleEdit() {
+    this.setState({ editBudgetForm: !this.state.editBudgetForm });
   }
 
   componentDidMount() {
@@ -90,49 +109,47 @@ class Budget extends Component {
       { key: 'Other', value: 'Other', text: 'Other' },
       { key: 'Total', value: 'Total', text: 'Total' },
     ];
+
+    console.log(this.state);
     return (
       <div className="budget-container">
-        <h3>Budget</h3>
-        <div className="editBudget">
-          <h4>Edit Budget</h4>
-          <form onSubmit={this.handleSubmit}>
-            <label htmlFor="categories">Choose a category: </label>
-            <select onChange={this.handleChange} name="categories">
-              <option disabled selected value="pickOne">
-                --Select Category--
-              </option>
-              <option value="Travel">Travel</option>
-              <option value="Food and Drink">Food and Drink</option>
-              <option value="Payment">Payment</option>
-              <option value="Shops">Shops</option>
-              <option value="Transfer">Transfer</option>
-              <option value="Recreation">Recreation</option>
-              <option value="Bank Fees">Bank Fees</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Service">Service</option>
-              <option value="Tax">Tax</option>
-              <option value="Other">Other</option>
-              <option value="Total">Total</option>
-            </select>
-            <br />
-            <label htmlFor="goalBudget">Goal Budget: </label>
-            <Input
-              onChange={this.handleChange}
-              type="number"
-              name="goalBudget"
-            />
-            <Button type="submit">Save</Button>
-          </form>
-        </div>
         <div className="budget-category-container">
-          <h4>Your Spending vs Budget</h4>
+          {/* <h3>Budget</h3> */}
+          <h3>My Spending vs Budget</h3>
+          {this.state.editBudgetForm ? (
+            <Button
+              className="icon-btn"
+              onClick={(event) => {
+                this.toggleEdit();
+                this.handleSubmit(event);
+              }}
+            >
+              <Icon name="save" />
+            </Button>
+          ) : (
+            <Button className="icon-btn" onClick={this.toggleEdit}>
+              <Icon name="edit" />
+            </Button>
+          )}
           {budget.length ? (
             budget
               .filter((cat) => this.props.budget[cat] > 0)
               .map((category, index) => (
                 <div className="single-budget-category" key={index}>
                   <div className="budget-progress-bar-container">
-                    <div className="budget-category-title">{category}</div>
+                    <div className="budget-category-title">
+                      {category}
+
+                      {this.state.editBudgetForm && (
+                        <Input
+                          style={{ width: '80px' }}
+                          onChange={this.handleChange}
+                          type="number"
+                          name={category}
+                          value={this.state[category]}
+                        />
+                      )}
+                    </div>
                     <div className="budget-progress-bar">
                       ${this.state.categoryAmount[category] || '0'} / $
                       {this.props.budget[category]}
@@ -154,26 +171,27 @@ class Budget extends Component {
                         size="medium"
                       />
                     </div>
-                    <Button
-                      className="delete-budget-btn"
-                      onClick={() => {
-                        this.handleDelete(category);
-                      }}
-                    >
-                      <Icon name="trash alternate" />
-                    </Button>
+                    <div className="delete-budget-btn-container">
+                      <Button
+                        onClick={() => {
+                          this.handleDelete(category);
+                        }}
+                      >
+                        <Icon name="trash alternate" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))
           ) : (
             <span>Nope</span>
           )}
-          <Button onClick={this.toggleAdd}>
+          <Button className="icon-btn" onClick={this.toggleAdd}>
             <Icon name="add" />
           </Button>
           {this.state.addBudgetForm && (
             <div className="add-budget-container">
-              <h4 style={{ textAlign: 'center' }}>Add Budget</h4>
+              <h4 style={{ textAlign: 'center' }}>Add/Edit Budget</h4>
               <form className="add-budget-form" onSubmit={this.handleSubmit}>
                 <label htmlFor="categories">Budget Category: </label>
                 <Dropdown
@@ -193,9 +211,7 @@ class Budget extends Component {
                   name="goalBudget"
                 />
                 <br />
-                <Button className="add-budget-btn" type="submit">
-                  Save
-                </Button>
+                <Button type="submit">Save</Button>
               </form>
             </div>
           )}
