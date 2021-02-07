@@ -3,6 +3,7 @@ import { PlaidLink } from "react-plaid-link";
 import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { Grid, Message } from "semantic-ui-react";
 
 import {
   fetchAcessToken,
@@ -47,24 +48,47 @@ class LinkPlaid extends Component {
   render() {
     return (
       <div className="plaidLink">
-        {this.props.link_token ? (
-          <PlaidLink
-            clientName="React Plaid Setup"
-            env="sandbox"
-            product={["auth", "transactions"]}
-            token={this.props.link_token}
-            onExit={this.handleOnExit}
-            onSuccess={(public_token) => {
-              this.props.fetchAcessToken(public_token, this.props.user);
-              setTimeout(() => this.props.history.push("/transactions"), 1000);
-            }}
-            className="test"
-          >
-            Open Link and connect your bank!
-          </PlaidLink>
-        ) : (
-          <h3>Link Loading</h3>
-        )}
+        <Grid container style={{ padding: "5em 0em" }}>
+          {this.props.link_token ? (
+            <div>
+              <PlaidLink
+                clientName="React Plaid Setup"
+                env="sandbox"
+                product={["auth", "transactions"]}
+                token={this.props.link_token}
+                onExit={this.handleOnExit}
+                onSuccess={(public_token) => {
+                  this.props.fetchAcessToken(public_token, this.props.user);
+                  setTimeout(
+                    () => this.props.history.push("/transactions"),
+                    1000
+                  );
+                }}
+                className="test"
+              >
+                <Message positive>Open Link and connect your bank!</Message>
+              </PlaidLink>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+            </div>
+          ) : (
+            <h3>Link Loading...</h3>
+          )}
+        </Grid>
       </div>
     );
   }
