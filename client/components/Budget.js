@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Progress, Button, Icon, Input, Dropdown } from 'semantic-ui-react';
 import moment from 'moment';
+
 import {
   fetchTransactions,
   fetchBudget,
   updateBudget,
-} from '../store/transactions';
+} from "../store/transactions";
 
 class Budget extends Component {
   constructor() {
