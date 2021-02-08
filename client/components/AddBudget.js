@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { createBudget } from "../store/transactions";
-import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createBudget } from '../store/transactions';
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
 
 class AddBudget extends Component {
   constructor(props) {
     super(props);
     this.state = {
       Travel: 0,
-      "Food and Drink": 0,
+      'Food and Drink': 0,
       Payment: 0,
       Shops: 0,
       Transfer: 0,
       Recreation: 0,
-      "Bank Fees": 0,
+      'Bank Fees': 0,
       Healthcare: 0,
       Service: 0,
       Tax: 0,
@@ -30,15 +30,18 @@ class AddBudget extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    let total = Object.values(this.state).reduce((acc, num) => {
-      return acc + Number(num);
-    }, 0);
-    console.log("total", { ...this.state, Total: total });
+    // let total = Object.values(this.state).reduce((acc, num) => {
+    //   return acc + Number(num);
+    // }, 0);
+    // console.log('total', { ...this.state, Total: total });
 
-    this.setState({ Total: total });
+    // this.setState({ Total: total });
 
-    await this.props.createBudget({ ...this.state, Total: total });
-    this.props.history.push("/plaid");
+    await this.props.createBudget({
+      ...this.state,
+      // , Total: total
+    });
+    this.props.history.push('/plaid');
   }
 
   render() {
@@ -48,7 +51,7 @@ class AddBudget extends Component {
       <div className="addbudgets">
         <Grid
           textAlign="center"
-          style={{ height: "100vh" }}
+          style={{ height: '100vh' }}
           verticalAlign="middle"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
@@ -174,8 +177,8 @@ class AddBudget extends Component {
                   iconPosition="left"
                   name="Total"
                   placeholder="Total"
-                  //onChange={this.handleChange}
-                  value={this.state.Total}
+                  onChange={this.handleChange}
+                  // value={this.state.Total}
                 />
                 <Button color="teal" fluid size="large" type="submit">
                   Submit
