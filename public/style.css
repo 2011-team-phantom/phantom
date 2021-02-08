@@ -1,22 +1,18 @@
-body{
+body {
   background-color: aliceblue;
-
 }
 
-
-
-.signup{
+.signup {
   margin-top: 60px;
 }
 
-.addbudgets{
+.addbudgets {
   margin-top: 100px;
 }
 
 li a:hover:not(.active) {
   background-color: #111;
 }
-
 
 .add-budget-container {
   padding-top: 30px;
@@ -26,7 +22,7 @@ li a:hover:not(.active) {
 .budget-category-container {
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
+  padding-top: 100px;
   align-items: center;
 }
 
@@ -83,7 +79,7 @@ li a:hover:not(.active) {
   width: 52px;
 }
 
-.plaidLink{
+.plaidLink {
   margin-top: 80px;
 }
 
@@ -91,8 +87,7 @@ li a:hover:not(.active) {
   margin-top: 100px;
 }
 
-.glanceContainer{
-
+.glanceContainer {
   margin-top: 100px;
 }
 
