@@ -30,8 +30,14 @@ class AddBudget extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+    let total = Object.values(this.state).reduce((acc, num) => {
+      return acc + Number(num);
+    }, 0);
+    console.log("total", { ...this.state, Total: total });
 
-    await this.props.createBudget(this.state);
+    this.setState({ Total: total });
+
+    await this.props.createBudget({ ...this.state, Total: total });
     this.props.history.push("/plaid");
   }
 
@@ -59,7 +65,7 @@ class AddBudget extends Component {
                   name="Food and Drink"
                   placeholder="Food and Drink"
                   onChange={this.handleChange}
-                  value={this.state["Food and Drink"]}
+                  //value={this.state["Food and Drink"]}
                 />
                 <Form.Input
                   fluid
@@ -69,7 +75,7 @@ class AddBudget extends Component {
                   name="Travel"
                   placeholder="Travel"
                   onChange={this.handleChange}
-                  value={this.state.Travel}
+                  //value={this.state.Travel}
                 />
                 <Form.Input
                   fluid
@@ -168,8 +174,8 @@ class AddBudget extends Component {
                   iconPosition="left"
                   name="Total"
                   placeholder="Total"
-                  onChange={this.handleChange}
-                  //value={this.state.Total}
+                  //onChange={this.handleChange}
+                  value={this.state.Total}
                 />
                 <Button color="teal" fluid size="large" type="submit">
                   Submit
@@ -178,95 +184,6 @@ class AddBudget extends Component {
             </Form>
           </Grid.Column>
         </Grid>
-        {/* <div>
-          <form onSubmit={this.handleSubmit}>
-            <label htmlFor="Food and Drink">Food and Drink: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Food and Drink"
-              value={this.state["Food and Drink"]}
-            />
-            <label htmlFor="Travel">Travel: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Travel"
-              value={this.state.Travel}
-            />
-            <label htmlFor="Payment">Payment: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Payment"
-              value={this.state.Payment}
-            />
-            <label htmlFor="Shops">Shops: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Shops"
-              value={this.state.Shops}
-            />
-            <label htmlFor="Transfer">Transfer: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Transfer"
-              value={this.state.Transfer}
-            />
-            <label htmlFor="Recreation">Recreation: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Recreation"
-              value={this.state.Recreation}
-            />
-            <label htmlFor="Bank Fees">Bank Fees: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Bank Fees"
-              value={this.state["Bank Fees"]}
-            />
-            <label htmlFor="Healthcare">Healthcare: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Healthcare"
-              value={this.state.Healthcare}
-            />
-            <label htmlFor="Service">Service: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Service"
-              value={this.state.Service}
-            />
-            <label htmlFor="Tax">Tax: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Tax"
-              value={this.state.Tax}
-            />
-            <label htmlFor="Other">Other: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Other"
-              value={this.state.Other}
-            />
-            <label htmlFor="Total">Total: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              name="Total"
-              value={this.state.Total}
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </div> */}
       </div>
     );
   }

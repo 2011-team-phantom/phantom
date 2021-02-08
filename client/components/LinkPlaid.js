@@ -68,22 +68,6 @@ class LinkPlaid extends Component {
               >
                 <Message positive>Open Link and connect your bank!</Message>
               </PlaidLink>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
             </div>
           ) : (
             <h3>Link Loading...</h3>

@@ -14,7 +14,6 @@ class Footer extends Component {
           style={{ margin: "5em 0em 0em", padding: "5em 0em" }}
         >
           <Container textAlign="center">
-            <Divider inverted section />
             <Image
               centered
               size="mini"
