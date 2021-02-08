@@ -49,12 +49,11 @@ class Budget extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
-    await this.props.updateBudget({
+    this.props.updateBudget({
       [this.state.categories]: this.state.goalBudget,
     });
-    console.log('form submitted');
   }
 
   handleDelete(category) {
@@ -118,7 +117,7 @@ class Budget extends Component {
       <div className="budget-container">
         <div className="budget-category-container">
           {/* <h3>Budget</h3> */}
-          <h3>My Spending vs Budget</h3>
+          <h3>My Monthly Spending vs Budget</h3>
           {/* {this.state.editBudgetForm ? (
             <Button
               className="icon-btn"
