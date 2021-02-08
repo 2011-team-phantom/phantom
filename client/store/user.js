@@ -3,11 +3,12 @@ import history from "../history";
 
 const GET_USER = "GET_USER";
 const REMOVE_USER = "REMOVE_USER";
+const defaultUser = {};
 
 const getUser = (user) => ({ type: GET_USER, user });
 const removeUser = () => ({ type: REMOVE_USER });
 
-export const me = (user) => async (dispatch) => {
+export const me = () => async (dispatch) => {
   try {
     const res = await axios.get("/auth/me");
     dispatch(getUser(res.data || defaultUser));
@@ -55,7 +56,7 @@ export const logout = () => async (dispatch) => {
   }
 };
 
-const defaultUser = {};
+
 
 export default function (state = defaultUser, action) {
   switch (action.type) {

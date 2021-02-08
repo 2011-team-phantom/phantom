@@ -59,8 +59,13 @@ router.post("/logout", (req, res) => {
 });
 
 router.get("/me", async (req, res) => {
-  const user = await User.findOne({ _id: req.user._id });
-  res.json(user);
+  try {
+    const user = await User.findOne({ _id: req.user._id });
+    res.json(user);
+    
+  } catch (error) {
+    console.error(error)
+  }
 });
 
 router.put("/updateAccess", async (req, res) => {
