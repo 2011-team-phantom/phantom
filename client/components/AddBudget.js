@@ -30,23 +30,11 @@ class AddBudget extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    // let total = Object.values(this.state).reduce((acc, num) => {
-    //   return acc + Number(num);
-    // }, 0);
-    // console.log('total', { ...this.state, Total: total });
-
-    // this.setState({ Total: total });
-
-    await this.props.createBudget({
-      ...this.state,
-      // , Total: total
-    });
+    await this.props.createBudget(this.state);
     this.props.history.push('/plaid');
   }
 
   render() {
-    //const categories = Object.keys(this.state.budgetCategory);
-
     return (
       <div className="addbudgets">
         <Grid

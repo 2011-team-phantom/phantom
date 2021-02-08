@@ -49,12 +49,11 @@ class Budget extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
-    await this.props.updateBudget({
+    this.props.updateBudget({
       [this.state.categories]: this.state.goalBudget,
     });
-    console.log('form submitted');
   }
 
   handleDelete(category) {
