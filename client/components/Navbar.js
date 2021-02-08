@@ -22,7 +22,7 @@ class Navbar extends Component {
         {this.props.isLoggedIn ? (
           <Menu fixed="top" inverted >
             <Container>
-              <Menu.Item header as="a" className="navItem" name="phantom">
+              <Menu.Item name="phantom">
                 <Image
                   size="mini"
                   src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
