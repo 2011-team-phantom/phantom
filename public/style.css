@@ -1,19 +1,22 @@
-body{
+body {
   background-color: aliceblue;
-
 }
+
 
 .navItem {
     margin-top: 1em;
   }
 
-.signup{
+
+.signup {
+
   margin-top: 60px;
 }
 
-.addbudgets{
+.addbudgets {
   margin-top: 100px;
 }
+
 
 .add-budget-container {
   padding-top: 30px;
@@ -23,7 +26,7 @@ body{
 .budget-category-container {
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
+  padding-top: 100px;
   align-items: center;
 }
 
@@ -80,7 +83,7 @@ body{
   width: 52px;
 }
 
-.plaidLink{
+.plaidLink {
   margin-top: 80px;
 }
 
@@ -88,8 +91,7 @@ body{
   margin-top: 100px;
 }
 
-.glanceContainer{
-
+.glanceContainer {
   margin-top: 100px;
 }
 
