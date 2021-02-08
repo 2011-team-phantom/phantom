@@ -9,12 +9,13 @@ body {
 
 
 .signup {
-
+  min-height: 100vh;
   margin-top: 60px;
 }
 
 .addbudgets {
   margin-top: 100px;
+  min-height: 100vh;
 }
 
 
@@ -73,6 +74,7 @@ body {
 .add-budget-form {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .add-budget-form button {
@@ -85,16 +87,23 @@ body {
 
 .plaidLink {
   margin-top: 80px;
+  min-height: 100vh;
 }
 
 .transactionsContainer {
   margin-top: 100px;
+  min-height: 100vh;
 }
 
 .glanceContainer {
   margin-top: 100px;
+  min-height: 100vh;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .budgets {
   margin-top: 100px;
+  min-height: 100vh;
 }
