@@ -34,15 +34,15 @@ export const auth = (email, password) => async (dispatch) => {
   let res;
   try {
     res = await axios.post("/auth/login", { email, password });
+    dispatch(getUser(res.data));
+    history.push("/transactions");
   } catch (authError) {
     return dispatch(getUser({ error: authError }));
   }
-
-  try {
-    dispatch(getUser(res.data));
-  } catch (dispatchOrHistoryErr) {
-    console.error(dispatchOrHistoryErr);
-  }
+  // try {
+  // } catch (dispatchOrHistoryErr) {
+  //   console.error(dispatchOrHistoryErr);
+  // }
 };
 
 export const logout = () => async (dispatch) => {
