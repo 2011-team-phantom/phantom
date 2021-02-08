@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { fetchTransactions } from "../store/transactions";
-import { me } from "../store/user";
-import { Pie, Doughnut } from "react-chartjs-2";
-import { table, Segment, Progress } from "semantic-ui-react";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchTransactions } from '../store/transactions';
+import { me } from '../store/user';
+import { Pie, Doughnut } from 'react-chartjs-2';
+import { table, Segment, Progress } from 'semantic-ui-react';
 
 class Glance extends Component {
   constructor(props) {
@@ -43,20 +43,20 @@ class Glance extends Component {
       labels: [...new Set(labels)],
       datasets: [
         {
-          label: "Spending",
+          label: 'Spending',
           backgroundColor: [
-            "#F4F1DE",
-            "#E07A5F",
-            "#3D405B",
-            "#81B29A",
-            "#F2CC8F",
+            '#F4F1DE',
+            '#E07A5F',
+            '#3D405B',
+            '#81B29A',
+            '#F2CC8F',
           ],
           hoverBackgroundColor: [
-            "#dbd9c8",
-            "#c46b52",
-            "#555a80",
-            "#6a917e",
-            "#c7a877",
+            '#dbd9c8',
+            '#c46b52',
+            '#555a80',
+            '#6a917e',
+            '#c7a877',
           ],
           data: Object.values(totals),
         },
@@ -66,16 +66,17 @@ class Glance extends Component {
     const totalSpending = Object.values(totals).reduce((accum, cur) => {
       return accum + cur;
     }, 0);
-    const percent = totalSpending / this.props.user.budget.Total;
+    const percent = totalSpending / (this.props.user.budget.Total * 6);
     //{`${totalSpending}/${this.props.user.budget.Total}`}
     return (
       <div className="glanceContainer">
         <Segment>
           <Progress
             value={totalSpending}
-            total={this.props.user.budget.Total}
-            progress="ratio"
-            color={percent > 0.85 ? "red" : percent > 0.4 ? "yellow" : "green"}
+            total={this.props.user.budget.Total * 6}
+            progress="percent"
+            precision={0}
+            color={percent > 0.85 ? 'red' : percent > 0.4 ? 'yellow' : 'green'}
           />
         </Segment>
 
@@ -85,12 +86,12 @@ class Glance extends Component {
             options={{
               title: {
                 display: true,
-                text: "Spending by Category",
+                text: 'Spending by Category',
                 fontSize: 20,
               },
               legend: {
                 display: true,
-                position: "left",
+                position: 'left',
               },
               maintainAspectRatio: false,
               responsive: true,
