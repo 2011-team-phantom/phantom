@@ -11,10 +11,7 @@ class Glance extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    // this.props.fetchUpdatedUser();
-    // this.setState();
-  }
+  componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -23,7 +20,6 @@ class Glance extends Component {
     ) {
       this.props.fetchTransactions(this.props.user.access_token[0]);
     }
-    // console.log(this.state);
   }
 
   render() {
@@ -31,11 +27,7 @@ class Glance extends Component {
     const labels = this.props.transactions.transactions.map((item) => {
       return item.category[0];
     });
-    // this.setState({
-    //   labels: [...new Set(labels)],
-    // });
     let transactions = this.props.transactions.transactions || [];
-    // console.log(transactions);
     let spending = transactions.map((t) => {
       if (totals[t.category[0]]) {
         totals[t.category[0]] += Math.round(t.amount);
@@ -44,8 +36,6 @@ class Glance extends Component {
       }
       return t.amount;
     });
-    // console.log(totals);
-    // console.log(spending, "spending");
     //need two arrays, one with labels
     //one with corresponding totals
     //totals must be in order of labels
@@ -53,7 +43,7 @@ class Glance extends Component {
       labels: [...new Set(labels)],
       datasets: [
         {
-          label: "Rainfall",
+          label: "Spending",
           backgroundColor: [
             "#F4F1DE",
             "#E07A5F",
@@ -78,7 +68,6 @@ class Glance extends Component {
     }, 0);
     const percent = totalSpending / this.props.user.budget.Total;
     //{`${totalSpending}/${this.props.user.budget.Total}`}
-    console.log(percent);
     return (
       <div className="glanceContainer">
         <Segment>
@@ -110,7 +99,7 @@ class Glance extends Component {
           />
         </div>
 
-        <table>
+        <table className="center">
           <thead>
             <tr>
               <th>Category</th>
