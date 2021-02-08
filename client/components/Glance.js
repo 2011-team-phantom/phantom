@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchTransactions } from '../store/transactions';
 import { me } from '../store/user';
 import { Pie, Doughnut } from 'react-chartjs-2';
-import { table, Segment, Progress } from 'semantic-ui-react';
+import { Table, Segment, Progress } from 'semantic-ui-react';
 
 class Glance extends Component {
   constructor(props) {
@@ -100,24 +100,22 @@ class Glance extends Component {
           />
         </div>
 
-        <table className="center">
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Total Spent</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table className="center">
+          <Table.Header>
+            <Table.HeaderCell>Header</Table.HeaderCell>
+            <Table.HeaderCell>Header</Table.HeaderCell>
+          </Table.Header>
+          <Table.Body>
             {Object.keys(totals).map((cat, idx) => {
               return (
-                <tr key={idx}>
-                  <td>{cat}</td>
-                  <td>${totals[cat]}</td>
-                </tr>
+                <Table.Row key={idx}>
+                  <Table.Cell>{cat}</Table.Cell>
+                  <Table.Cell>${totals[cat]}</Table.Cell>
+                </Table.Row>
               );
             })}
-          </tbody>
-        </table>
+          </Table.Body>
+        </Table>
       </div>
     );
   }
