@@ -15,11 +15,12 @@ class Navbar extends Component {
 
   render() {
     const { email } = this.props.meRn;
-    const { activeItem } = this.state
+    // const { activeItem } = this.state
     return (
       <div className="navBar">
+        {/* <Menu fixed="top" inverted></Menu> */}
         {this.props.isLoggedIn ? (
-          <Menu fixed="top" inverted>
+          <Menu fixed="top" inverted >
             <Container>
               <Menu.Item header as="a" className="navItem" name="phantom">
                 <Image
@@ -29,57 +30,59 @@ class Navbar extends Component {
                 />
               </Menu.Item>
 
-              <Menu.Item header as="a" className="navItem" name="transactions">
                 <Link to="/transactions" font="Open Sans">
+              <Menu.Item header as="a" className="navItem" name="transactions" style={{ marginTop: "1em" }}>
                   Transactions
-                </Link>
               </Menu.Item>
+                </Link>
 
-              <Menu.Item header as="a" className="navItem" name="budget">
                 <Link to="/budget" font="Open Sans">
-                  {" "}
-                  Budget{" "}
-                </Link>
+              <Menu.Item header as="a" className="navItem" name="budget" style={{ marginTop: "1em" }}>
+                  Budget
               </Menu.Item>
+                </Link>
 
-              <Menu.Item header as="a" className="navItem" name="plaid">
                 <Link to="/plaid" font="Open Sans">
+              <Menu.Item header as="a" className="navItem" name="plaid" style={{ marginTop: "1em" }}>
                   Plaid Sync
-                </Link>
               </Menu.Item>
+                </Link>
 
-              <Menu.Item header as="a" className="navItem" name="glance">
                 <Link to="/glance" font="Open Sans">
+              <Menu.Item header as="a" className="navItem" name="glance" style={{ marginTop: "1em" }}>
                   At-a-Glance
-                </Link>
               </Menu.Item>
-      <Menu.Item position="right">{email}</Menu.Item>
+                </Link>
             </Container>
+      
+      <Menu.Item position="right" font="Open Sans">{email}</Menu.Item>
+      
           </Menu>
         ) : (
-          <Menu fixed="top" inverted>
+          <Menu fixed="top" inverted >
             <Container>
-              <Menu.Item header as="a" className="navItem" name="phantom">
+              <Menu.Item name="phantom">
                 <Image
                   size="mini"
                   src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
-                  style={{ marginRight: "1.5em" }}
+                  style={{ marginRight: "1.5em" }
+                }
                 />
               </Menu.Item>
-              <Menu.Item header as="a" className="navItem" name="login">
                 <Link to="/login" font="Open Sans">
+              <Menu.Item header as="a" className="navItem" name="login" style={{ marginTop: "1em" }}>
                   Login
-                </Link>
               </Menu.Item>
-              <Menu.Item header as="a" className="navItem" name="join">
+                </Link>
                 <Link to="/join" font="Open Sans">
+              <Menu.Item header as="a" className="navItem" name="join" style={{ marginTop: "1em" }}>
                   Join
-                </Link>
-
               </Menu.Item>
+                </Link>
             </Container>
           </Menu>
         )}
+        {/* <Menu fixed="top" inverted></Menu> */}
       </div>
     );
   }
