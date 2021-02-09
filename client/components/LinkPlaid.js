@@ -60,7 +60,8 @@ class LinkPlaid extends Component {
                 onSuccess={(public_token) => {
                   this.props.fetchAcessToken(public_token, this.props.user);
                   setTimeout(
-                    () => this.props.history.push("/transactions"),
+                    // () => (window.location.href = "/transactions"),
+                    () => this.props.history.push("/addbudget"),
                     500
                   );
                 }}
@@ -89,8 +90,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchTransactions: () =>
-      dispatch(fetchTransactions()),
+    fetchTransactions: () => dispatch(fetchTransactions()),
     fetchAcessToken: (public_token) => dispatch(fetchAcessToken(public_token)),
     fetchLinkToken: () => dispatch(fetchLinkToken()),
   };
