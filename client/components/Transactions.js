@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchTransactions } from "../store/transactions";
 import { Line } from "react-chartjs-2";
-import { Table } from "semantic-ui-react";
+import { Table, Segment, Image, Loader, Dimmer } from "semantic-ui-react";
 import { me } from "../store/user";
 
 class Transactions extends Component {
@@ -37,7 +37,7 @@ class Transactions extends Component {
   componentDidUpdate() {}
 
   render() {
-    this.props.user.access_token && this.state.counter < 3
+    this.props.user.access_token && this.state.counter < 1
       ? this.props.fetchTransactions() && this.state.counter++
       : console.log("hi");
     let transactions = this.props.transactions.transactions || [];
@@ -115,9 +115,13 @@ class Transactions extends Component {
                 );
               })
             ) : (
-              <Table.Row>
-                <Table.Cell>No Transactions</Table.Cell>
-              </Table.Row>
+              <Dimmer active>
+                <Loader content="Loading" size="huge" />
+              </Dimmer>
+
+              // <Table.Row>
+              //   <Table.Cell>No Transactions</Table.Cell>
+              // </Table.Row>
             )}
           </Table.Body>
         </Table>
@@ -135,8 +139,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchTransactions: () =>
-      dispatch(fetchTransactions()),
+    fetchTransactions: () => dispatch(fetchTransactions()),
     fetchUpdatedUser: () => dispatch(me()),
   };
 };

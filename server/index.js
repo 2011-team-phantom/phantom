@@ -102,11 +102,12 @@ app.post("/plaid_token_exchange", async (req, res) => {
       const { accounts, item } = await client
         .getAccounts(access_token)
         .catch(handleError);
+
       db.collection("users").updateOne(
         { _id: req.user._id },
         { $set: { access_token } }
       );
-      req.user.access_token = access_token
+      req.user.access_token = access_token;
       res.send(access_token);
     }
   } catch (error) {
@@ -116,7 +117,7 @@ app.post("/plaid_token_exchange", async (req, res) => {
 
 app.post("/auth/public_token");
 
-app.get("/transactions/", async (req, res) => {
+app.get("/gettransactions/", async (req, res) => {
   try {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, "0");
@@ -124,12 +125,12 @@ app.get("/transactions/", async (req, res) => {
     const yyyy = today.getFullYear();
     let mmMinusSix = String(today.getMonth() - 6).padStart(2, "0"); //January is 0!
     let yyyyFix = today.getFullYear();
-    
+
     const now = yyyy + "-" + mm + "-" + dd;
     let nowMinusSixmm = yyyyFix + "-" + mmMinusSix + "-" + dd;
     if (parseInt(mmMinusSix) < 0) {
       mmMinusSix = 12 + parseInt(mmMinusSix);
-      yyyyFix --
+      yyyyFix--;
       nowMinusSixmm = yyyyFix + "-0" + mmMinusSix + "-" + dd;
     }
     // if (mmMinusSix > 6) yyyy = today.getFullYear() - 1;
@@ -144,7 +145,6 @@ app.get("/transactions/", async (req, res) => {
       now
     );
 
-    console.log('ACCESS TOKEN IN TRANSACTION ROUTES',req.user.access_token)
     res.json(data);
   } catch (error) {
     console.error(error);

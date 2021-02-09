@@ -35,7 +35,7 @@ const getBudget = (budget) => ({
 export const fetchTransactions = () => {
   return async (dispatch) => {
     try {
-      const res = await axios.get('/transactions');
+      const res = await axios.get("/gettransactions");
       dispatch(getTransactions(res.data.transactions));
     } catch (error) {
       console.log("error fetching transactions", error);
