@@ -9,9 +9,11 @@ class Navbar extends Component {
     super();
     this.state = {
       activeItem: "",
-    }
+    };
   }
-  handleItemClick (e, { name }) {this.setState({ activeItem: name })}
+  handleItemClick(e, { name }) {
+    this.setState({ activeItem: name });
+  }
 
   render() {
     const { email } = this.props.meRn;
@@ -20,7 +22,7 @@ class Navbar extends Component {
       <div className="navBar">
         {/* <Menu fixed="top" inverted></Menu> */}
         {this.props.isLoggedIn ? (
-          <Menu fixed="top" inverted >
+          <Menu fixed="top" inverted>
             <Container>
               <Menu.Item name="phantom">
                 <Image
@@ -30,55 +32,79 @@ class Navbar extends Component {
                 />
               </Menu.Item>
 
-                <Link to="/transactions" font="Open Sans">
-              <Menu.Item header as="a" className="navItem" name="transactions" style={{ marginTop: "1em" }}>
+              <Link to="/transactions" font="Open Sans">
+                <Menu.Item
+                  className="navItem"
+                  name="transactions"
+                  style={{ marginTop: "1em" }}
+                >
                   Transactions
-              </Menu.Item>
-                </Link>
+                </Menu.Item>
+              </Link>
 
-                <Link to="/budget" font="Open Sans">
-              <Menu.Item header as="a" className="navItem" name="budget" style={{ marginTop: "1em" }}>
+              <Link to="/budget" font="Open Sans">
+                <Menu.Item
+                  className="navItem"
+                  name="budget"
+                  style={{ marginTop: "1em" }}
+                >
                   Budget
-              </Menu.Item>
-                </Link>
+                </Menu.Item>
+              </Link>
 
-                <Link to="/plaid" font="Open Sans">
-              <Menu.Item header as="a" className="navItem" name="plaid" style={{ marginTop: "1em" }}>
+              <Link to="/plaid" font="Open Sans">
+                <Menu.Item
+                  className="navItem"
+                  name="plaid"
+                  style={{ marginTop: "1em" }}
+                >
                   Plaid Sync
-              </Menu.Item>
-                </Link>
+                </Menu.Item>
+              </Link>
 
-                <Link to="/glance" font="Open Sans">
-              <Menu.Item header as="a" className="navItem" name="glance" style={{ marginTop: "1em" }}>
+              <Link to="/glance" font="Open Sans">
+                <Menu.Item
+                  className="navItem"
+                  name="glance"
+                  style={{ marginTop: "1em" }}
+                >
                   At-a-Glance
-              </Menu.Item>
-                </Link>
+                </Menu.Item>
+              </Link>
             </Container>
-      
-      <Menu.Item position="right" font="Open Sans">{email}</Menu.Item>
-      
+
+            <Menu.Item position="right" font="Open Sans">
+              {email}
+            </Menu.Item>
           </Menu>
         ) : (
-          <Menu fixed="top" inverted >
+          <Menu fixed="top" inverted>
             <Container>
               <Menu.Item name="phantom">
                 <Image
                   size="mini"
                   src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
-                  style={{ marginRight: "1.5em" }
-                }
+                  style={{ marginRight: "1.5em" }}
                 />
               </Menu.Item>
-                <Link to="/login" font="Open Sans">
-              <Menu.Item header as="a" className="navItem" name="login" style={{ marginTop: "1em" }}>
+              <Link to="/login" font="Open Sans">
+                <Menu.Item
+                  className="navItem"
+                  name="login"
+                  style={{ marginTop: "1em" }}
+                >
                   Login
-              </Menu.Item>
-                </Link>
-                <Link to="/join" font="Open Sans">
-              <Menu.Item header as="a" className="navItem" name="join" style={{ marginTop: "1em" }}>
+                </Menu.Item>
+              </Link>
+              <Link to="/join" font="Open Sans">
+                <Menu.Item
+                  className="navItem"
+                  name="join"
+                  style={{ marginTop: "1em" }}
+                >
                   Join
-              </Menu.Item>
-                </Link>
+                </Menu.Item>
+              </Link>
             </Container>
           </Menu>
         )}

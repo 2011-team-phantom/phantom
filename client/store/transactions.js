@@ -104,7 +104,6 @@ export const updateBudget = (budget) => {
 
 const initialState = {
   transactions: [],
-  access_token: "",
   link_token: "",
   budget: {},
 };
@@ -116,8 +115,6 @@ export default function transactionsReducer(state = initialState, action) {
         ...state,
         transactions: [...action.transactions],
       };
-    case GET_ACCESS_TOKEN:
-      return { ...state, access_token: action.access_token };
     case GET_LINK_TOKEN:
       return { ...state, link_token: action.link_token };
     case SET_BUDGET:
