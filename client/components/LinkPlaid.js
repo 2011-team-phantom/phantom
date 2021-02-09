@@ -89,8 +89,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchTransactions: (access_token) =>
-      dispatch(fetchTransactions(access_token)),
+    fetchTransactions: () =>
+      dispatch(fetchTransactions()),
     fetchAcessToken: (public_token) => dispatch(fetchAcessToken(public_token)),
     fetchLinkToken: () => dispatch(fetchLinkToken()),
   };

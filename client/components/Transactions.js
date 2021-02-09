@@ -29,9 +29,7 @@ class Transactions extends Component {
 
   componentDidMount() {
     if (this.props.user.access_token) {
-      this.props.fetchTransactions(
-        this.props.user.access_token[0] || this.props.transactions.access_token
-      );
+      this.props.fetchTransactions();
     }
 
     this.setState();
@@ -40,10 +38,7 @@ class Transactions extends Component {
 
   render() {
     this.props.user.access_token && this.state.counter < 3
-      ? this.props.fetchTransactions(
-          this.props.user.access_token[0] ||
-            this.props.transactions.access_token
-        ) && this.state.counter++
+      ? this.props.fetchTransactions() && this.state.counter++
       : console.log("hi");
     let transactions = this.props.transactions.transactions || [];
     let spending = transactions
@@ -140,8 +135,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchTransactions: (access_token) =>
-      dispatch(fetchTransactions(access_token)),
+    fetchTransactions: () =>
+      dispatch(fetchTransactions()),
     fetchUpdatedUser: () => dispatch(me()),
   };
 };
