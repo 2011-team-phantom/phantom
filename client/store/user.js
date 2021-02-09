@@ -11,7 +11,12 @@ const removeUser = () => ({ type: REMOVE_USER });
 export const me = () => async (dispatch) => {
   try {
     const res = await axios.get("/auth/me");
-    dispatch(getUser(res.data || defaultUser));
+    let postUser = {
+      _id: res.data._id,
+      email: res.data.email,
+      budget: res.data.budget,
+    };
+    dispatch(getUser(postUser || defaultUser));
   } catch (err) {
     console.error(err);
   }
@@ -25,7 +30,12 @@ export const signUp = (userBody) => async (dispatch) => {
     return dispatch(getUser({ error: error }));
   }
   try {
-    dispatch(getUser(res.data));
+    let postUser = {
+      _id: res.data._id,
+      email: res.data.email,
+      budget: res.data.budget,
+    };
+    dispatch(getUser(postUser));
   } catch (error) {
     console.error(error);
   }
@@ -35,8 +45,18 @@ export const auth = (email, password) => async (dispatch) => {
   let res;
   try {
     res = await axios.post("/auth/login", { email, password });
-    dispatch(getUser(res.data));
-    history.push("/transactions");
+    let postUser = {
+      _id: res.data._id,
+      email: res.data.email,
+      budget: res.data.budget,
+    };
+    dispatch(getUser(postUser));
+
+    if (!res.data.access_token[0]) {
+      history.push("/plaid");
+    } else {
+      history.push("/transactions");
+    }
   } catch (authError) {
     return dispatch(getUser({ error: authError }));
   }
@@ -56,12 +76,14 @@ export const logout = () => async (dispatch) => {
   }
 };
 
-
-
 export default function (state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      return action.user;
+      return {
+        _id: action.user._id,
+        email: action.user.email,
+        budget: action.user.budget,
+      };
     case REMOVE_USER:
       return defaultUser;
     default:

@@ -9,37 +9,18 @@ class Transactions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // labels: ["January", "February", "March", "April", "May"],
-      // datasets: [
-      //   {
-      //     label: "Rainfall",
-      //     fill: false,
-      //     lineTension: 0.5,
-      //     backgroundColor: "rgba(75,192,192,1)",
-      //     borderColor: "rgba(0,0,0,1)",
-      //     borderWidth: 2,
-      //     data: [65, 59, 80, 81, 56],
-      //   },
-      // ],
       counter: 0,
     };
-    console.log("in constructor", this.props.user, "before fetch");
     this.props.fetchUpdatedUser();
   }
 
   componentDidMount() {
-    if (this.props.user.access_token) {
-      this.props.fetchTransactions();
-    }
+    this.props.fetchTransactions();
 
     this.setState();
   }
-  componentDidUpdate() {}
 
   render() {
-    this.props.user.access_token && this.state.counter < 1
-      ? this.props.fetchTransactions() && this.state.counter++
-      : console.log("hi");
     let transactions = this.props.transactions.transactions || [];
     let spending = transactions
       .map((t) => {
@@ -115,13 +96,13 @@ class Transactions extends Component {
                 );
               })
             ) : (
-              <Dimmer active>
-                <Loader content="Loading" size="huge" />
-              </Dimmer>
-
-              // <Table.Row>
-              //   <Table.Cell>No Transactions</Table.Cell>
-              // </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  <Dimmer active>
+                    <Loader content="Loading" size="huge" />
+                  </Dimmer>
+                </Table.Cell>
+              </Table.Row>
             )}
           </Table.Body>
         </Table>

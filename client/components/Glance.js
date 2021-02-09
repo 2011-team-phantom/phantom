@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { fetchTransactions } from '../store/transactions';
-import { me } from '../store/user';
-import { Pie, Doughnut } from 'react-chartjs-2';
-import { Table, Segment, Progress } from 'semantic-ui-react';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { fetchTransactions } from "../store/transactions";
+import { me } from "../store/user";
+import { Pie, Doughnut } from "react-chartjs-2";
+import { Table, Segment, Progress } from "semantic-ui-react";
 
 class Glance extends Component {
   constructor(props) {
@@ -14,25 +14,20 @@ class Glance extends Component {
   componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      this.props.user.access_token &&
-      this.props.transactions.transactions.length <= 0
-    ) {
-      this.props.fetchTransactions();
-    }
+    this.props.fetchTransactions();
   }
 
   render() {
     let totals = {};
     const labels = this.props.transactions.transactions.map((item) => {
-      return item.category[0];
+      return item.category[item.category.length - 1];
     });
     let transactions = this.props.transactions.transactions || [];
     let spending = transactions.map((t) => {
-      if (totals[t.category[0]]) {
-        totals[t.category[0]] += Math.round(t.amount);
+      if (totals[t.category[t.category.length - 1]]) {
+        totals[t.category[t.category.length - 1]] += Math.round(t.amount);
       } else {
-        totals[t.category[0]] = Math.round(t.amount);
+        totals[t.category[t.category.length - 1]] = Math.round(t.amount);
       }
       return t.amount;
     });
@@ -43,20 +38,20 @@ class Glance extends Component {
       labels: [...new Set(labels)],
       datasets: [
         {
-          label: 'Spending',
+          label: "Spending",
           backgroundColor: [
-            '#F4F1DE',
-            '#E07A5F',
-            '#3D405B',
-            '#81B29A',
-            '#F2CC8F',
+            "#F4F1DE",
+            "#E07A5F",
+            "#3D405B",
+            "#81B29A",
+            "#F2CC8F",
           ],
           hoverBackgroundColor: [
-            '#dbd9c8',
-            '#c46b52',
-            '#555a80',
-            '#6a917e',
-            '#c7a877',
+            "#dbd9c8",
+            "#c46b52",
+            "#555a80",
+            "#6a917e",
+            "#c7a877",
           ],
           data: Object.values(totals),
         },
@@ -76,7 +71,7 @@ class Glance extends Component {
             total={this.props.user.budget.Total * 6}
             progress="percent"
             precision={0}
-            color={percent > 0.85 ? 'red' : percent > 0.4 ? 'yellow' : 'green'}
+            color={percent > 0.85 ? "red" : percent > 0.4 ? "yellow" : "green"}
           />
         </Segment>
 
@@ -86,12 +81,12 @@ class Glance extends Component {
             options={{
               title: {
                 display: true,
-                text: 'Spending by Category',
+                text: "Spending by Category",
                 fontSize: 20,
               },
               legend: {
                 display: true,
-                position: 'left',
+                position: "left",
               },
               maintainAspectRatio: false,
               responsive: true,
@@ -102,8 +97,10 @@ class Glance extends Component {
 
         <Table className="center">
           <Table.Header>
-            <Table.HeaderCell>Header</Table.HeaderCell>
-            <Table.HeaderCell>Header</Table.HeaderCell>
+            <Table.Row>
+              <Table.HeaderCell>Category</Table.HeaderCell>
+              <Table.HeaderCell>Spending</Table.HeaderCell>
+            </Table.Row>
           </Table.Header>
           <Table.Body>
             {Object.keys(totals).map((cat, idx) => {
@@ -129,8 +126,7 @@ const mapState = (state) => {
 };
 const mapDispatch = (dispatch) => {
   return {
-    fetchTransactions: () =>
-      dispatch(fetchTransactions()),
+    fetchTransactions: () => dispatch(fetchTransactions()),
     fetchUpdatedUser: () => dispatch(me()),
   };
 };
