@@ -18,7 +18,7 @@ class Glance extends Component {
       this.props.user.access_token &&
       this.props.transactions.transactions.length <= 0
     ) {
-      this.props.fetchTransactions(this.props.user.access_token[0]);
+      this.props.fetchTransactions();
     }
   }
 
@@ -129,8 +129,8 @@ const mapState = (state) => {
 };
 const mapDispatch = (dispatch) => {
   return {
-    fetchTransactions: (access_token) =>
-      dispatch(fetchTransactions(access_token)),
+    fetchTransactions: () =>
+      dispatch(fetchTransactions()),
     fetchUpdatedUser: () => dispatch(me()),
   };
 };

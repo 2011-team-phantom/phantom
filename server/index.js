@@ -106,6 +106,7 @@ app.post("/plaid_token_exchange", async (req, res) => {
         { _id: req.user._id },
         { $set: { access_token } }
       );
+      req.user.access_token = access_token
       res.send(access_token);
     }
   } catch (error) {
@@ -115,7 +116,7 @@ app.post("/plaid_token_exchange", async (req, res) => {
 
 app.post("/auth/public_token");
 
-app.get("/transactions/:accessToken", async (req, res) => {
+app.get("/transactions/", async (req, res) => {
   try {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, "0");
@@ -136,13 +137,14 @@ app.get("/transactions/:accessToken", async (req, res) => {
 
     console.log("MONTH-6", mmMinusSix);
     const data = await client.getTransactions(
-      req.params.accessToken,
+      req.user.access_token,
       nowMinusSixmm,
       // "2020-12-01",
       // "2021-01-01"
       now
     );
 
+    console.log('ACCESS TOKEN IN TRANSACTION ROUTES',req.user.access_token)
     res.json(data);
   } catch (error) {
     console.error(error);

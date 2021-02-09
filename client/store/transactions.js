@@ -32,10 +32,10 @@ const getBudget = (budget) => ({
   budget,
 });
 
-export const fetchTransactions = (access_token) => {
+export const fetchTransactions = () => {
   return async (dispatch) => {
     try {
-      const res = await axios.get(`/transactions/${access_token}`);
+      const res = await axios.get('/transactions');
       dispatch(getTransactions(res.data.transactions));
     } catch (error) {
       console.log("error fetching transactions", error);

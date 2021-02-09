@@ -239,8 +239,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchTransactions: (access_token) =>
-      dispatch(fetchTransactions(access_token)),
+    fetchTransactions: () =>
+      dispatch(fetchTransactions()),
     fetchBudget: () => dispatch(fetchBudget()),
     updateBudget: (budget) => dispatch(updateBudget(budget)),
   };
