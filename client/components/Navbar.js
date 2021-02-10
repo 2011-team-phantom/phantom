@@ -17,13 +17,14 @@ class Navbar extends Component {
 
   render() {
     const { email } = this.props.meRn;
-    // const { activeItem } = this.state
+    const { hasBudget } = this.props;
+    const { activeItem } = this.state
     return (
       <div className="navBar">
-        {/* <Menu fixed="top" inverted></Menu> */}
+        {/* <Menu fixed="top" inverted> */}
         {this.props.isLoggedIn ? (
           <Menu fixed="top" inverted>
-            <Container>
+            
               <Menu.Item name="phantom">
                 <Image
                   size="mini"
@@ -32,46 +33,58 @@ class Navbar extends Component {
                 />
               </Menu.Item>
 
-              <Link to="/transactions" font="Open Sans">
-                <Menu.Item
-                  className="navItem"
-                  name="transactions"
-                  style={{ marginTop: "1em" }}
-                >
-                  Transactions
-                </Menu.Item>
-              </Link>
+              {hasBudget && (
+                <Menu.Menu>
+                  <Link to="/transactions" font="Open Sans">
+                    <Menu.Item
+                      className="navItem"
+                      name="transactions"
+                      style={{ marginTop: "1em" }}
+                      active={activeItem === 'transactions'}
+                      onClick={this.handleItemClick}
+                      >
+                      Transactions
+                    </Menu.Item>
+                  </Link>
 
-              <Link to="/budget" font="Open Sans">
-                <Menu.Item
-                  className="navItem"
-                  name="budget"
-                  style={{ marginTop: "1em" }}
-                >
-                  Budget
-                </Menu.Item>
-              </Link>
+                  <Link to="/budget" font="Open Sans">
+                    <Menu.Item
+                      className="navItem"
+                      name="budget"
+                      style={{ marginTop: "1em" }}
+                      active={activeItem === 'budget'}
+                      onClick={this.handleItemClick}
+                      >
+                      Budget
+                    </Menu.Item>
+                  </Link>
 
-              <Link to="/plaid" font="Open Sans">
-                <Menu.Item
-                  className="navItem"
-                  name="plaid"
-                  style={{ marginTop: "1em" }}
-                >
-                  Plaid Sync
-                </Menu.Item>
-              </Link>
+                  <Link to="/plaid" font="Open Sans">
+                    <Menu.Item
+                      className="navItem"
+                      name="plaid"
+                      style={{ marginTop: "1em" }}
+                      active={activeItem === 'plaid'}
+                      onClick={this.handleItemClick}
+                      >
+                      Plaid Sync
+                    </Menu.Item>
+                  </Link>
 
-              <Link to="/glance" font="Open Sans">
-                <Menu.Item
-                  className="navItem"
-                  name="glance"
-                  style={{ marginTop: "1em" }}
-                >
-                  At-a-Glance
-                </Menu.Item>
-              </Link>
-            </Container>
+                  <Link to="/glance" font="Open Sans">
+                    <Menu.Item
+                      className="navItem"
+                      name="glance"
+                      style={{ marginTop: "1em" }}
+                      active={activeItem === 'glance'}
+                      onClick={this.handleItemClick}
+                      >
+                      At-a-Glance
+                    </Menu.Item>
+                  </Link>
+                </Menu.Menu>
+              )}
+            
 
             <Menu.Item position="right" font="Open Sans">
               {email}
@@ -79,20 +92,21 @@ class Navbar extends Component {
           </Menu>
         ) : (
           <Menu fixed="top" inverted>
-            <Container>
+            
               <Menu.Item name="phantom">
                 <Image
                   size="mini"
                   src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
                   style={{ marginRight: "1.5em" }}
-                />
+                  />
               </Menu.Item>
               <Link to="/login" font="Open Sans">
                 <Menu.Item
                   className="navItem"
                   name="login"
                   style={{ marginTop: "1em" }}
-                >
+                  onClick={this.handleItemClick}
+                  >
                   Login
                 </Menu.Item>
               </Link>
@@ -101,14 +115,14 @@ class Navbar extends Component {
                   className="navItem"
                   name="join"
                   style={{ marginTop: "1em" }}
-                >
+                  onClick={this.handleItemClick}
+                  >
                   Join
                 </Menu.Item>
               </Link>
-            </Container>
           </Menu>
         )}
-        {/* <Menu fixed="top" inverted></Menu> */}
+        {/* </Menu> */}
       </div>
     );
   }
@@ -117,7 +131,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.user._id,
     meRn: state.user,
-    // activeItem: 'join'
+    hasBudget: !!state.user.budget,
   };
 };
 
