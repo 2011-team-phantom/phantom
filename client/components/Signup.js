@@ -1,18 +1,20 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { signUp } from "../store/user";
-import { Redirect } from "react-router-dom";
-import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signUp } from '../store/user';
+import { Redirect } from 'react-router-dom';
+import validator from 'email-validator';
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
 
 class Signup extends Component {
   constructor() {
     super();
     this.state = {
-      email: "",
-      password: "",
-      dateOfBirth: "",
-      monthlyIncome: 0,
-      housingCost: 0,
+      email: '',
+      password: '',
+      dateOfBirth: '',
+      monthlyIncome: '',
+      housingCost: '',
+      errorMessageSignup: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -22,11 +24,34 @@ class Signup extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  removeErrorFromState(state) {
+    const user = {};
+    for (let key in state) {
+      if (key !== 'errorMessage') {
+        user[key] = state[key];
+      }
+    }
+    return user;
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
 
-    await this.props.signUP(this.state);
-    this.props.history.push("/plaid");
+    if (
+      !validator.validate(this.state.email) ||
+      this.state.password.length < 4
+    ) {
+      this.setState({
+        errorMessage:
+          'Please enter a valid email and a password with a minimum of 4 characters.',
+      });
+    } else {
+      this.setState({
+        errorMessage: '',
+      });
+      const newUser = this.removeErrorFromState(this.state);
+      await this.props.signUP(newUser);
+    }
   }
 
   render() {
@@ -34,7 +59,7 @@ class Signup extends Component {
       <div className="signup">
         <Grid
           textAlign="center"
-          style={{ height: "100vh" }}
+          style={{ height: '100vh' }}
           verticalAlign="middle"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
@@ -96,6 +121,12 @@ class Signup extends Component {
                 <Button color="teal" fluid size="large" type="submit">
                   Sign Up
                 </Button>
+                {this.state.errorMessage !== '' && (
+                  <div>{this.state.errorMessage}</div>
+                )}
+                {this.props.error && this.props.error.response && (
+                  <div> {this.props.error.response.data} </div>
+                )}
               </Segment>
             </Form>
           </Grid.Column>
@@ -143,6 +174,13 @@ class Signup extends Component {
   }
 }
 
+const mapSignup = (state) => {
+  return {
+    error: state.user.error,
+    user: state.user.email,
+  };
+};
+
 const mapDispatch = (dispatch) => {
   return {
     signUP: (obj) => {
@@ -151,4 +189,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatch)(Signup);
+export default connect(mapSignup, mapDispatch)(Signup);

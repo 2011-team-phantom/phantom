@@ -1,24 +1,25 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { createBudget } from "../store/transactions";
-import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createBudget } from '../store/transactions';
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
 
 class AddBudget extends Component {
   constructor(props) {
     super(props);
     this.state = {
       Travel: 0,
-      "Food and Drink": 0,
+      'Food and Drink': 0,
       Payment: 0,
       Shops: 0,
       Transfer: 0,
       Recreation: 0,
-      "Bank Fees": 0,
+      'Bank Fees': 0,
       Healthcare: 0,
       Service: 0,
       Tax: 0,
       Other: 0,
       Total: 0,
+      errorMessage: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -30,16 +31,37 @@ class AddBudget extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    await this.props.createBudget(this.state);
-    this.props.history.push("/transactions");
+    if (
+      Number(this.state['Travel']) === 0 &&
+      Number(this.state['Food and Drink']) === 0 &&
+      Number(this.state['Payment']) === 0 &&
+      Number(this.state['Shops']) === 0 &&
+      Number(this.state['Transfer']) === 0 &&
+      Number(this.state['Recreation']) === 0 &&
+      Number(this.state['Bank Fees']) === 0 &&
+      Number(this.state['Healthcare']) === 0 &&
+      Number(this.state['Service']) === 0 &&
+      Number(this.state['Tax']) === 0 &&
+      Number(this.state['Other']) === 0 &&
+      Number(this.state['Total']) === 0
+    ) {
+      this.setState({
+        errorMessage: 'Please set a budget for at least one category.',
+      });
+    } else {
+      this.setState({ errorMessage: '' });
+      await this.props.createBudget(this.state);
+      this.props.history.push('/transactions');
+    }
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="addbudgets">
         <Grid
           textAlign="center"
-          style={{ height: "100vh" }}
+          style={{ height: '100vh' }}
           verticalAlign="middle"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
@@ -171,6 +193,9 @@ class AddBudget extends Component {
                 <Button color="teal" fluid size="large" type="submit">
                   Submit
                 </Button>
+                {this.state.errorMessage !== '' && (
+                  <div>{this.state.errorMessage}</div>
+                )}
               </Segment>
             </Form>
           </Grid.Column>
