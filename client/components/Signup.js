@@ -131,44 +131,6 @@ class Signup extends Component {
             </Form>
           </Grid.Column>
         </Grid>
-        {/* <form onSubmit={this.handleSubmit}>
-          <label htmlFor="email">Email: </label>
-          <input
-            onChange={this.handleChange}
-            type="email"
-            name="email"
-            value={this.state.email}
-          />
-          <label htmlFor="password">Password: </label>
-          <input
-            onChange={this.handleChange}
-            type="password"
-            name="password"
-            value={this.state.password}
-          />
-          <label htmlFor="dateOfBirth">Date of Birth: </label>
-          <input
-            onChange={this.handleChange}
-            type="string"
-            name="dateOfBirth"
-            value={this.state.dateOfBirth}
-          />
-          <label htmlFor="monthlyIncome">Monthly Income: </label>
-          <input
-            onChange={this.handleChange}
-            type="number"
-            name="monthlyIncome"
-            value={this.state.monthlyIncome}
-          />
-          <label htmlFor="housingCost">Cost of Housing: </label>
-          <input
-            onChange={this.handleChange}
-            type="number"
-            name="housingCost"
-            value={this.state.housingCost}
-          />
-          <button type="submit">Submit</button>
-        </form> */}
       </div>
     );
   }

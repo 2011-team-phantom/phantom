@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { fetchTransactions } from "../store/transactions";
-import { Line } from "react-chartjs-2";
-import { Table, Segment, Image, Loader, Dimmer } from "semantic-ui-react";
-import { me } from "../store/user";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchTransactions } from '../store/transactions';
+import { Line } from 'react-chartjs-2';
+import { Table, Segment, Image, Loader, Dimmer } from 'semantic-ui-react';
+import { me } from '../store/user';
 
 class Transactions extends Component {
   constructor(props) {
@@ -11,13 +11,11 @@ class Transactions extends Component {
     this.state = {
       counter: 0,
     };
-    this.props.fetchUpdatedUser();
   }
 
   componentDidMount() {
+    this.props.fetchUpdatedUser();
     this.props.fetchTransactions();
-
-    this.setState();
   }
 
   render() {
@@ -36,11 +34,11 @@ class Transactions extends Component {
       labels: labels,
       datasets: [
         {
-          label: "spending",
+          label: 'spending',
           fill: true,
           lineTension: 0.5,
-          backgroundColor: "#81B29A", //color of the dots
-          borderColor: "#81B29A", //border of the dots
+          backgroundColor: '#81B29A', //color of the dots
+          borderColor: '#81B29A', //border of the dots
           borderWidth: 2,
           data: spending,
         },
@@ -57,12 +55,12 @@ class Transactions extends Component {
             options={{
               title: {
                 display: true,
-                text: "Monthly Spending",
+                text: 'Monthly Spending',
                 fontSize: 20,
               },
               legend: {
                 display: true,
-                position: "right",
+                position: 'right',
               },
               responsive: true,
               maintainAspectRatio: false,

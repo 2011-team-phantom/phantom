@@ -1,69 +1,53 @@
-import React, { Component } from "react";
-import { PlaidLink } from "react-plaid-link";
-import axios from "axios";
-import { Link, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { Grid, Message } from "semantic-ui-react";
+import React, { Component } from 'react';
+import { PlaidLink } from 'react-plaid-link';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { Grid, Message } from 'semantic-ui-react';
 
 import {
   fetchAcessToken,
   fetchLinkToken,
   fetchTransactions,
-} from "../store/transactions";
-// import Transactions from "./Transactions";
+} from '../store/transactions';
 
 class LinkPlaid extends Component {
   constructor() {
     super();
 
     this.state = {
-      link_token: "",
-      access_token: "",
-      render: "",
+      link_token: '',
+      access_token: '',
+      render: '',
       didRender: false,
     };
 
     this.getLinkToken = this.getLinkToken.bind(this);
-    this.handleOnExit = this.handleOnExit.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchLinkToken();
   }
 
-  handleOnSuccess() {
-    // send token to client server
-  }
-
   async getLinkToken() {
-    const { data } = await axios.get("/link/token/create");
+    const { data } = await axios.get('/link/token/create');
     this.setState({ link_token: data.link_token });
-  }
-
-  async handleOnExit() {
-    // handle the case when your user exits Link
-    // For the sake of this tutorial, we're not going to be doing anything here.
   }
 
   render() {
     return (
       <div className="plaidLink">
-        <Grid container style={{ padding: "5em 0em" }}>
+        <Grid container style={{ padding: '5em 0em' }}>
           {this.props.link_token ? (
             <div>
               <PlaidLink
                 clientName="React Plaid Setup"
                 env="sandbox"
-                product={["auth", "transactions"]}
+                product={['auth', 'transactions']}
                 token={this.props.link_token}
                 onExit={this.handleOnExit}
-                onSuccess={(public_token) => {
-                  this.props.fetchAcessToken(public_token, this.props.user);
-                  setTimeout(
-                    // () => (window.location.href = "/transactions"),
-                    () => this.props.history.push("/addbudget"),
-                    500
-                  );
+                onSuccess={(publicToken) => {
+                  this.props.fetchAcessToken(publicToken, this.props.user);
+                  this.props.history.push('/addbudget');
                 }}
                 className="test"
               >
@@ -91,7 +75,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchTransactions: () => dispatch(fetchTransactions()),
-    fetchAcessToken: (public_token) => dispatch(fetchAcessToken(public_token)),
+    fetchAcessToken: (publicToken) => dispatch(fetchAcessToken(publicToken)),
     fetchLinkToken: () => dispatch(fetchLinkToken()),
   };
 };

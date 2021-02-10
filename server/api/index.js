@@ -5,7 +5,7 @@ router.get('/', function (req, res, next) {
   console.log('connected');
 });
 
-router.post('/addbudget', async function (req, res, next) {
+router.post('/budget', async function (req, res, next) {
   try {
     const budgetUser = await User.updateOne(
       { _id: req.user._id },
@@ -30,7 +30,7 @@ router.get('/budget', async function (req, res, next) {
   }
 });
 
-router.put('/updatebudget', async function (req, res, next) {
+router.put('/budget', async function (req, res, next) {
   try {
     const user = await User.findOne({ _id: req.user._id }, { budget: 1 });
     const budgetUser = await User.updateOne(

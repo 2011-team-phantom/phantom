@@ -9,6 +9,26 @@ import {
   updateBudget,
 } from '../store/transactions';
 
+// an array of categories and map thru it
+
+const categoryOptions = [
+  { key: 'Travel', value: 'Travel', text: 'Travel' },
+  {
+    key: 'Food and Drink',
+    value: 'Food and Drink',
+    text: 'Food and Drink',
+  },
+  { key: 'Payment', value: 'Payment', text: 'Payment' },
+  { key: 'Shops', value: 'Shops', text: 'Shops' },
+  { key: 'Transfer', value: 'Transfer', text: 'Transfer' },
+  { key: 'Recreation', value: 'Recreation', text: 'Recreation' },
+  { key: 'Bank Fees', value: 'Bank Fees', text: 'Bank Fees' },
+  { key: 'Healthcare', value: 'Healthcare', text: 'Healthcare' },
+  { key: 'Service', value: 'Service', text: 'Service' },
+  { key: 'Tax', value: 'Tax', text: 'Tax' },
+  { key: 'Other', value: 'Other', text: 'Other' },
+  { key: 'Total', value: 'Total', text: 'Total' },
+];
 class Budget extends Component {
   constructor() {
     super();
@@ -18,18 +38,6 @@ class Budget extends Component {
       editBudgetForm: false,
       categories: '',
       goalBudget: '',
-      // Travel: '',
-      // 'Food and Drink': '',
-      // Payment: '',
-      // Shops: '',
-      // Transfer: '',
-      // Recreation: '',
-      // 'Bank Fees': '',
-      // Healthcare: '',
-      // Service: '',
-      // Tax: '',
-      // Other: '',
-      // Total: '',
     };
     this.parseTransactionData = this.parseTransactionData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -94,63 +102,18 @@ class Budget extends Component {
 
   render() {
     const budget = Object.keys(this.props.budget) || [];
-    const categoryOptions = [
-      { key: 'Travel', value: 'Travel', text: 'Travel' },
-      {
-        key: 'Food and Drink',
-        value: 'Food and Drink',
-        text: 'Food and Drink',
-      },
-      { key: 'Payment', value: 'Payment', text: 'Payment' },
-      { key: 'Shops', value: 'Shops', text: 'Shops' },
-      { key: 'Transfer', value: 'Transfer', text: 'Transfer' },
-      { key: 'Recreation', value: 'Recreation', text: 'Recreation' },
-      { key: 'Bank Fees', value: 'Bank Fees', text: 'Bank Fees' },
-      { key: 'Healthcare', value: 'Healthcare', text: 'Healthcare' },
-      { key: 'Service', value: 'Service', text: 'Service' },
-      { key: 'Tax', value: 'Tax', text: 'Tax' },
-      { key: 'Other', value: 'Other', text: 'Other' },
-      { key: 'Total', value: 'Total', text: 'Total' },
-    ];
 
     return (
       <div className="budget-container">
         <div className="budget-category-container">
-          {/* <h3>Budget</h3> */}
           <h3>My Monthly Spending vs Budget</h3>
-          {/* {this.state.editBudgetForm ? (
-            <Button
-              className="icon-btn"
-              onClick={(event) => {
-                this.toggleEdit();
-                this.handleSubmit(event);
-              }}
-            >
-              <Icon name="save" />
-            </Button>
-          ) : (
-            <Button className="icon-btn" onClick={this.toggleEdit}>
-              <Icon name="edit" />
-            </Button>
-          )} */}
           {budget.length ? (
             budget
               .filter((cat) => this.props.budget[cat] > 0)
               .map((category, index) => (
                 <div className="single-budget-category" key={index}>
                   <div className="budget-progress-bar-container">
-                    <div className="budget-category-title">
-                      {category}
-                      {/* {this.state.editBudgetForm && (
-                        <Input
-                          style={{ width: '80px' }}
-                          onChange={this.handleChange}
-                          type="number"
-                          name={category}
-                          value={this.state[category]}
-                        />
-                      )} */}
-                    </div>
+                    <div className="budget-category-title">{category}</div>
                     <div className="budget-progress-bar">
                       $
                       {this.state.categoryAmount[category]
@@ -239,13 +202,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchTransactions: () =>
-      dispatch(fetchTransactions()),
+    fetchTransactions: () => dispatch(fetchTransactions()),
     fetchBudget: () => dispatch(fetchBudget()),
     updateBudget: (budget) => dispatch(updateBudget(budget)),
   };
 };
 
 export default connect(mapState, mapDispatch)(Budget);
-
-// categories: travel, food and drink, payment, shops, transfer, recreation
