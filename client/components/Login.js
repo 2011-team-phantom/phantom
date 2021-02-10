@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { auth } from '../store/user';
-import { Redirect } from 'react-router-dom';
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
 
 class Login extends Component {

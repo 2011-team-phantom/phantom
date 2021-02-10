@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { fetchTransactions } from "../store/transactions";
-import { me } from "../store/user";
-import { Pie, Doughnut } from "react-chartjs-2";
-import { Table, Segment, Progress } from "semantic-ui-react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchTransactions } from '../store/transactions';
+import { me } from '../store/user';
+import { Doughnut } from 'react-chartjs-2';
+import { Table, Segment, Progress } from 'semantic-ui-react';
 
 class Glance extends Component {
   constructor(props) {
@@ -37,25 +36,25 @@ class Glance extends Component {
       labels: [...new Set(labels)],
       datasets: [
         {
-          label: "Spending",
+          label: 'Spending',
           backgroundColor: [
-            "#f4f1de",
-            "#e07a5f",
-            "#8f5d5d",
-            "#3d405b",
-            "#5f797b",
-            "#81b29a",
-            "#babf95",
-            "#f2cc8f",
-            "#caa997",
-            "#a1869e",
+            '#f4f1de',
+            '#e07a5f',
+            '#8f5d5d',
+            '#3d405b',
+            '#5f797b',
+            '#81b29a',
+            '#babf95',
+            '#f2cc8f',
+            '#caa997',
+            '#a1869e',
           ],
           hoverBackgroundColor: [
-            "#dbd9c8",
-            "#c46b52",
-            "#555a80",
-            "#6a917e",
-            "#c7a877",
+            '#dbd9c8',
+            '#c46b52',
+            '#555a80',
+            '#6a917e',
+            '#c7a877',
           ],
           data: Object.values(totals),
         },
@@ -74,7 +73,7 @@ class Glance extends Component {
             total={this.props.user.budget.Total * 6}
             progress="percent"
             precision={0}
-            color={percent > 0.85 ? "red" : percent > 0.4 ? "yellow" : "green"}
+            color={percent > 0.85 ? 'red' : percent > 0.4 ? 'yellow' : 'green'}
           />
         </Segment>
 
@@ -84,12 +83,12 @@ class Glance extends Component {
             options={{
               title: {
                 display: true,
-                text: "Spending by Category",
+                text: 'Spending by Category',
                 fontSize: 20,
               },
               legend: {
                 display: true,
-                position: "left",
+                position: 'left',
               },
               maintainAspectRatio: false,
               responsive: true,
