@@ -132,13 +132,17 @@ class Budget extends Component {
                         color={
                           this.state.categoryAmount[category] /
                             this.props.budget[category] >
-                          0.85
+                          0
                             ? this.state.categoryAmount[category] /
                                 this.props.budget[category] >
-                              1
-                              ? 'red'
-                              : 'yellow'
-                            : 'green'
+                              0.85
+                              ? this.state.categoryAmount[category] /
+                                  this.props.budget[category] >
+                                1
+                                ? 'red'
+                                : 'yellow'
+                              : 'green'
+                            : 'grey'
                         }
                         size="medium"
                       />

@@ -118,21 +118,26 @@ app.get('/transactions', async (req, res) => {
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     const yyyy = today.getFullYear();
-    let mmMinusSix = String(today.getMonth() - 6).padStart(2, '0'); //January is 0!
-    let yyyyFix = today.getFullYear();
+    // let mmMinusSix = String(today.getMonth() - 1).padStart(2, '0'); //January is 0!
+    // let yyyyFix = today.getFullYear();
 
     const now = yyyy + '-' + mm + '-' + dd;
-    let nowMinusSixmm = yyyyFix + '-' + mmMinusSix + '-' + dd;
-    if (parseInt(mmMinusSix) < 0) {
-      mmMinusSix = 12 + parseInt(mmMinusSix);
-      yyyyFix--;
-      nowMinusSixmm = yyyyFix + '-0' + mmMinusSix + '-' + dd;
-    }
+    // let nowMinusSixmm = yyyyFix + '-' + mmMinusSix + '-' + dd;
+    // if (parseInt(mmMinusSix) < 0) {
+    //   mmMinusSix = 12 + parseInt(mmMinusSix);
+    //   yyyyFix--;
+    //   nowMinusSixmm = yyyyFix + '-0' + mmMinusSix + '-' + dd;
+    // }
+    const lastYear = yyyy - 1 + '-' + mm + '-' + dd;
 
+    console.log('LAST YEAR', lastYear);
     const data = await client.getTransactions(
       req.user.access_token,
-      nowMinusSixmm,
-      now
+      lastYear,
+      now,
+      {
+        count: 500,
+      }
     );
 
     res.json(data);
