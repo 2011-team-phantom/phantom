@@ -36,6 +36,7 @@ export const signUp = (userBody) => async (dispatch) => {
       budget: res.data.budget,
     };
     dispatch(getUser(postUser));
+    history.push('/plaid');
   } catch (error) {
     console.error(error);
   }

@@ -14,7 +14,7 @@ class Signup extends Component {
       dateOfBirth: '',
       monthlyIncome: '',
       housingCost: '',
-      errorMessage: '',
+      errorMessageSignup: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -50,12 +50,11 @@ class Signup extends Component {
         errorMessage: '',
       });
       const newUser = this.removeErrorFromState(this.state);
-      (await this.props.signUP(newUser)) && this.props.history.push('/plaid');
+      await this.props.signUP(newUser);
     }
   }
 
   render() {
-    console.log('error:', this.props.error);
     return (
       <div className="signup">
         <Grid
@@ -178,6 +177,7 @@ class Signup extends Component {
 const mapSignup = (state) => {
   return {
     error: state.user.error,
+    user: state.user.email,
   };
 };
 
