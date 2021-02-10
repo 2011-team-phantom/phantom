@@ -11,9 +11,8 @@ class Glance extends Component {
     super(props);
   }
 
-  componentDidMount() {}
-
-  componentDidUpdate(prevProps, prevState) {
+  componentDidMount() {
+    this.props.fetchUpdatedUser();
     this.props.fetchTransactions();
   }
 
@@ -40,11 +39,16 @@ class Glance extends Component {
         {
           label: "Spending",
           backgroundColor: [
-            "#F4F1DE",
-            "#E07A5F",
-            "#3D405B",
-            "#81B29A",
-            "#F2CC8F",
+            "#f4f1de",
+            "#e07a5f",
+            "#8f5d5d",
+            "#3d405b",
+            "#5f797b",
+            "#81b29a",
+            "#babf95",
+            "#f2cc8f",
+            "#caa997",
+            "#a1869e",
           ],
           hoverBackgroundColor: [
             "#dbd9c8",
