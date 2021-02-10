@@ -15,7 +15,8 @@ class Routes extends Component {
   //   // this.props.onLoad()
   // }
   render() {
-    const {loggedIn} = this.props;
+    const {loggedIn, budget} = this.props;
+    console.log(budget)
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -25,12 +26,16 @@ class Routes extends Component {
         { loggedIn && (<Switch>
           <Route exact path="/plaid" component={LinkPlaid} />
           <Route exact path="/addbudget" component={AddBudget} />
+          
+          {/* {budget && (<Switch> */}
+  
           <Route exact path="/budget" component={Budget} />
           <Route exact path="/transactions" component={Transactions} />
           <Route exact path="/glance" component={Glance} />
+          {/* </Switch>)} */}
         </Switch>
           )
-
+          
         }
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
@@ -42,6 +47,8 @@ class Routes extends Component {
 const mapState = (state) => {
   return {
     loggedIn: !!state.user._id,
+    // gotBank: !!state.user.access_token,
+    budget: !!state.user.budget
   };
 };
 
