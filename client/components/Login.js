@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { auth } from "../store/user";
-import { Redirect } from "react-router-dom";
-import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { auth } from '../store/user';
+import { Redirect } from 'react-router-dom';
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -29,7 +29,7 @@ class Login extends Component {
       <div className="login">
         <Grid
           textAlign="center"
-          style={{ height: "100vh" }}
+          style={{ height: '100vh' }}
           verticalAlign="middle"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
@@ -61,6 +61,9 @@ class Login extends Component {
                 <Button color="teal" fluid size="large" type="submit">
                   Login
                 </Button>
+                {this.props.error && this.props.error.response && (
+                  <div> {this.props.error.response.data} </div>
+                )}
               </Segment>
             </Form>
           </Grid.Column>
@@ -70,6 +73,12 @@ class Login extends Component {
   }
 }
 
+const mapSignup = (state) => {
+  return {
+    error: state.user.error,
+  };
+};
+
 const mapDispatch = (dispatch) => {
   return {
     login: (email, password) => {
@@ -78,4 +87,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatch)(Login);
+export default connect(mapSignup, mapDispatch)(Login);
