@@ -46,13 +46,16 @@ class Signup extends Component {
           'Please enter a valid email and a password with a minimum of 4 characters.',
       });
     } else {
+      this.setState({
+        errorMessage: '',
+      });
       const newUser = this.removeErrorFromState(this.state);
-      await this.props.signUP(newUser);
-      this.props.history.push('/plaid');
+      (await this.props.signUP(newUser)) && this.props.history.push('/plaid');
     }
   }
 
   render() {
+    console.log('error:', this.props.error);
     return (
       <div className="signup">
         <Grid
@@ -122,6 +125,9 @@ class Signup extends Component {
                 {this.state.errorMessage !== '' && (
                   <div>{this.state.errorMessage}</div>
                 )}
+                {this.props.error && this.props.error.response && (
+                  <div> {this.props.error.response.data} </div>
+                )}
               </Segment>
             </Form>
           </Grid.Column>
@@ -169,6 +175,12 @@ class Signup extends Component {
   }
 }
 
+const mapSignup = (state) => {
+  return {
+    error: state.user.error,
+  };
+};
+
 const mapDispatch = (dispatch) => {
   return {
     signUP: (obj) => {
@@ -177,4 +189,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatch)(Signup);
+export default connect(mapSignup, mapDispatch)(Signup);
