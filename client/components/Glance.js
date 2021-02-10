@@ -61,7 +61,6 @@ class Glance extends Component {
         },
       ],
     };
-    // console.log(newData.labels);
     const totalSpending = Object.values(totals).reduce((accum, cur) => {
       return accum + cur;
     }, 0);

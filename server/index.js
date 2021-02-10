@@ -136,7 +136,6 @@ app.get("/gettransactions/", async (req, res) => {
     // if (mmMinusSix > 6) yyyy = today.getFullYear() - 1;
     // const nowMinusSixmm = yyyy + "-" + mmMinusSix + "-" + dd;
 
-    console.log("MONTH-6", mmMinusSix);
     const data = await client.getTransactions(
       req.user.access_token,
       nowMinusSixmm,
