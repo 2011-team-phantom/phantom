@@ -56,7 +56,6 @@ class AddBudget extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="addbudgets">
         <Grid

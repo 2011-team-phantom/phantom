@@ -15,8 +15,7 @@ class Routes extends Component {
   //   // this.props.onLoad()
   // }
   render() {
-    const {loggedIn, budget} = this.props;
-    console.log(budget)
+    const {loggedIn} = this.props;
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -47,22 +46,7 @@ class Routes extends Component {
 const mapState = (state) => {
   return {
     loggedIn: !!state.user._id,
-    // gotBank: !!state.user.access_token,
-    budget: !!state.user.budget
   };
 };
 
-// const mapDispatch = (dispatch) => {
-//   return {
-//     onLoad() {
-//       dispatch(me());
-//     },
-//   };
-// };
-
 export default withRouter(connect(mapState, null)(Routes));
-
-// Routes.propTypes = {
-//   onLoad: PropTypes.func.isRequired,
-//   loggedIn: PropTypes.bool.isRequired
-// }

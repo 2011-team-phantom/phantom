@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { logout } from "../store/user";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Container, Image, Menu } from "semantic-ui-react";
+import { Button, Image, Menu } from "semantic-ui-react";
 
 class Navbar extends Component {
   constructor() {
@@ -10,6 +11,7 @@ class Navbar extends Component {
     this.state = {
       activeItem: "",
     };
+    this.handleItemClick = this.handleItemClick.bind(this)
   }
   handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
@@ -87,7 +89,12 @@ class Navbar extends Component {
             
 
             <Menu.Item position="right" font="Open Sans">
-              {email}
+              <Button
+                onClick={this.props.logout}
+                content={email}
+                label={{ basic: true, content: "Logout" }}
+                labelPosition="right"
+              />
             </Menu.Item>
           </Menu>
         ) : (
@@ -134,5 +141,10 @@ const mapState = (state) => {
     hasBudget: !!state.user.budget,
   };
 };
+const mapDispatch = (dispatch) => {
+  return {
+    logout: () => dispatch(logout()),
+  };
+};
 
-export default connect(mapState, null)(Navbar);
+export default connect(mapState, mapDispatch)(Navbar);

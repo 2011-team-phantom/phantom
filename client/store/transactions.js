@@ -50,7 +50,6 @@ export const fetchAcessToken = (public_token, user) => {
         user: user,
         public_token: public_token,
       });
-      // console.log(data);
       dispatch(getAccessToken(data));
     } catch (error) {
       console.log("error fetching public token", error);
