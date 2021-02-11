@@ -1,23 +1,23 @@
-const express = require('express');
-const plaid = require('plaid');
-const path = require('path');
+const express = require("express");
+const plaid = require("plaid");
+const path = require("path");
 const app = express();
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv').config();
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const dotenv = require("dotenv").config();
 const port = process.env.PORT || 3000;
-const db = require('./db');
-const session = require('express-session');
-const passport = require('passport');
-const MongoDBStore = require('connect-mongodb-session')(session);
+const db = require("./db");
+const session = require("express-session");
+const passport = require("passport");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 function handleError(errorMessage) {
   console.error(errorMessage);
 }
 
 const store = new MongoDBStore({
-  uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/phantomdb',
-  collection: 'mySessions',
+  uri: process.env.MONGODB_URI || "mongodb://localhost:27017/phantomdb",
+  collection: "mySessions",
 });
 
 const client = new plaid.Client({
@@ -26,19 +26,19 @@ const client = new plaid.Client({
   env: plaid.environments.sandbox,
 });
 
-store.on('error', function (error) {
+store.on("error", function (error) {
   console.log(error);
 });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
 passport.serializeUser((user, done) => done(null, user._id));
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await db.collection('users').findOne({ _id: id });
+    const user = await db.collection("users").findOne({ _id: id });
     done(null, user);
   } catch (err) {
     done(err);
@@ -52,27 +52,31 @@ app.use(
     saveUninitialized: true,
     store: store,
     cookie: { secure: false, _expires: 3600000 },
-    credentials: 'include',
+    credentials: "include",
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/link/token/create', async (req, res) => {
+app.get("/serviceWorker.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../serviceWorker.js"));
+});
+
+app.get("/link/token/create", async (req, res) => {
   try {
     const { link_token } = await client.createLinkToken({
       user: {
-        client_user_id: '123-test-user-id',
+        client_user_id: "123-test-user-id",
       },
-      client_name: 'Plaid Test App',
-      products: ['auth', 'transactions'],
-      country_codes: ['US'],
-      language: 'en',
+      client_name: "Plaid Test App",
+      products: ["auth", "transactions"],
+      country_codes: ["US"],
+      language: "en",
       // webhook: 'https://sample-web-hook.com',
       account_filters: {
         depository: {
-          account_subtypes: ['checking', 'savings'],
+          account_subtypes: ["checking", "savings"],
         },
       },
     });
@@ -82,9 +86,9 @@ app.get('/link/token/create', async (req, res) => {
   }
 });
 
-app.post('/plaidTokenExchange', async (req, res) => {
+app.post("/plaidTokenExchange", async (req, res) => {
   try {
-    const user = await db.collection('users').findOne({ _id: req.user._id });
+    const user = await db.collection("users").findOne({ _id: req.user._id });
     const { publicToken } = req.body;
 
     if (user.access_token.length) {
@@ -100,7 +104,7 @@ app.post('/plaidTokenExchange', async (req, res) => {
         .getAccounts(access_token)
         .catch(handleError);
 
-      db.collection('users').updateOne(
+      db.collection("users").updateOne(
         { _id: req.user._id },
         { $set: { access_token } }
       );
@@ -112,25 +116,25 @@ app.post('/plaidTokenExchange', async (req, res) => {
   }
 });
 
-app.get('/transactions', async (req, res) => {
+app.get("/transactions", async (req, res) => {
   try {
     const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     const yyyy = today.getFullYear();
     // let mmMinusSix = String(today.getMonth() - 1).padStart(2, '0'); //January is 0!
     // let yyyyFix = today.getFullYear();
 
-    const now = yyyy + '-' + mm + '-' + dd;
+    const now = yyyy + "-" + mm + "-" + dd;
     // let nowMinusSixmm = yyyyFix + '-' + mmMinusSix + '-' + dd;
     // if (parseInt(mmMinusSix) < 0) {
     //   mmMinusSix = 12 + parseInt(mmMinusSix);
     //   yyyyFix--;
     //   nowMinusSixmm = yyyyFix + '-0' + mmMinusSix + '-' + dd;
     // }
-    const lastYear = yyyy - 1 + '-' + mm + '-' + dd;
+    const lastYear = yyyy - 1 + "-" + mm + "-" + dd;
 
-    console.log('LAST YEAR', lastYear);
+    console.log("LAST YEAR", lastYear);
     const data = await client.getTransactions(
       req.user.access_token,
       lastYear,
@@ -146,16 +150,16 @@ app.get('/transactions', async (req, res) => {
   }
 });
 
-app.use(express.static(path.join(__dirname, '../public')));
-app.use('/api', require('./api'));
-app.use('/auth', require('./auth'));
+app.use(express.static(path.join(__dirname, "../public")));
+app.use("/api", require("./api"));
+app.use("/auth", require("./auth"));
 
-app.use('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+app.use("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 app.listen(port, function () {
-  console.log('Knock, knock');
+  console.log("Knock, knock");
   console.log("Who's there?");
   console.log(`Your server, listening on port ${port}`);
 });
@@ -163,7 +167,7 @@ app.listen(port, function () {
 app.use(function (err, req, res, next) {
   console.error(err);
   console.error(err.stack);
-  res.status(err.status || 500).send(err.message || 'Internal server error.');
+  res.status(err.status || 500).send(err.message || "Internal server error.");
 });
 
 module.exports = client;
