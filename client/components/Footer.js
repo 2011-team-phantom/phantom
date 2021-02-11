@@ -11,7 +11,12 @@ class Footer extends Component {
         <Segment
           inverted
           vertical
-          style={{ margin: "5em 0em 0em", padding: "5em 0em" }}
+          style={{
+            margin: "5em 0em 0em",
+            padding: "5em 0em",
+            bottom: "0",
+            width: "100%",
+          }}
         >
           <Container textAlign="center">
             <Image

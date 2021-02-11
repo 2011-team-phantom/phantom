@@ -99,7 +99,7 @@ router.post("/budget", async function (req, res, next) {
   try {
     const budgetUser = await User.updateOne(
       { _id: req.user._id },
-      { $set: { budget: req.body } }
+      { $set: { budget: { ...req.body, ...budgetUser.budget } } }
     );
     const updatedUser = await User.findOne(
       { _id: req.user._id },
