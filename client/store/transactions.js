@@ -72,7 +72,7 @@ export const fetchLinkToken = () => {
 export const createBudget = (budget) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("/api/addbudget", budget);
+      const { data } = await axios.put("/api/updatebudget", budget);
       dispatch(setBudget(data));
     } catch (error) {
       console.log("error creating budget", error);
