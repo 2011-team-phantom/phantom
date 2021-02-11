@@ -9,8 +9,8 @@ class EditUser extends Component {
     super();
     this.state = {
       // password: '',
-      Income: 0,
-      HousingCost: 0,
+      monthlyIncome: 0,
+      housingCost: 0,
       finished: false,
       // errorMessageEdit: '',
     };
@@ -24,11 +24,11 @@ class EditUser extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    if (this.state.Income < 1) {
+    if (this.state.monthlyIncome < 1) {
       this.setState({
         errorMessage: "Please enter a new income greater than 0",
       });
-    } else if (this.state.HousingCost < 1) {
+    } else if (this.state.housingCost < 1) {
       this.setState({
         errorMessage: "Please enter a housing cost greater than 0",
       });
@@ -64,26 +64,28 @@ class EditUser extends Component {
                 <h3>Income</h3>
                 <Form.Input
                   fluid
-                  name="Income"
+                  name="monthlyIncome"
                   type="number"
                   placeholder="New Income"
                   onChange={this.handleChange}
-                  defaultValue={this.props.user.budget.Income}
+                  defaultValue={this.props.user.budget.monthlyIncome}
                 />
                 <h3>Housing Cost</h3>
                 <Form.Input
                   fluid
-                  name="HousingCost"
+                  name="housingCost"
                   type="number"
                   placeholder="New Housing Cost"
                   onChange={this.handleChange}
-                  defaultValue={this.props.user.budget.HousingCost}
+                  defaultValue={this.props.user.budget.housingCost}
                 />
 
                 <Button color="teal" fluid size="large" type="submit">
                   Update My Account
                 </Button>
-                {this.state.errorMessage !== '' && (<div>{this.state.errorMessage}</div>)}
+                {this.state.errorMessage !== "" && (
+                  <div>{this.state.errorMessage}</div>
+                )}
               </Segment>
             </Form>
           </Grid.Column>
