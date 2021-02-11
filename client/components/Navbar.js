@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { logout } from "../store/user";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Container, Image, Menu } from "semantic-ui-react";
+import { Button, Image, Menu } from "semantic-ui-react";
 
 class Navbar extends Component {
   constructor() {
@@ -22,7 +23,6 @@ class Navbar extends Component {
     const { activeItem } = this.state;
     return (
       <div className="navBar">
-        {/* <Menu fixed="top" inverted> */}
         {this.props.isLoggedIn ? (
           <Menu fixed="top" inverted>
             <Menu.Item name="phantom">
@@ -85,8 +85,23 @@ class Navbar extends Component {
               </Menu.Menu>
             )}
 
+            <Link to="/edituser" font="Open Sans">
+              <Menu.Item
+                className="navItem"
+                position="right"
+                active={activeItem === "edituser"}
+                onClick={this.handleItemClick}
+              >
+                Edit-User
+              </Menu.Item>
+            </Link>
             <Menu.Item position="right" font="Open Sans">
-              {email}
+              <Button
+                onClick={this.props.logout}
+                content={email}
+                label={{ basic: true, content: "Logout" }}
+                labelPosition="right"
+              />
             </Menu.Item>
           </Menu>
         ) : (
@@ -120,7 +135,6 @@ class Navbar extends Component {
             </Link>
           </Menu>
         )}
-        {/* </Menu> */}
       </div>
     );
   }
@@ -132,5 +146,10 @@ const mapState = (state) => {
     hasBudget: !!state.user.budget,
   };
 };
+const mapDispatch = (dispatch) => {
+  return {
+    logout: () => dispatch(logout()),
+  };
+};
 
-export default connect(mapState, null)(Navbar);
+export default connect(mapState, mapDispatch)(Navbar);

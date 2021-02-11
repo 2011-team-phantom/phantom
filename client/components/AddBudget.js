@@ -77,6 +77,7 @@ class AddBudget extends Component {
   }
 
   render() {
+
     console.log(this.state);
     let saving =
       Object.keys(this.state)
@@ -87,6 +88,7 @@ class AddBudget extends Component {
           return Number(acc) + Number(this.state[item]);
         }, 0) + this.props.user.budget.housingCost;
     console.log("saving", saving);
+
     return (
       <div className="addbudgets">
         <Grid

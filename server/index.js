@@ -11,8 +11,6 @@ const session = require("express-session");
 const passport = require("passport");
 const MongoDBStore = require("connect-mongodb-session")(session);
 
-// const cors = require("cors");
-
 function handleError(errorMessage) {
   console.error(errorMessage);
 }
@@ -22,17 +20,16 @@ const store = new MongoDBStore({
   collection: "mySessions",
 });
 
-const client = new plaid.Client({
-  clientID: process.env.PLAID_CLIENT_ID,
-  secret: process.env.PLAID_SECRET,
-  env: plaid.environments.sandbox,
-});
+// const client = new plaid.Client({
+//   clientID: process.env.PLAID_CLIENT_ID,
+//   secret: process.env.PLAID_SECRET,
+//   env: plaid.environments.sandbox,
+// });
 
 store.on("error", function (error) {
   console.log(error);
 });
 
-// app.use(cors({ credentials: true, origin: "localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
@@ -50,7 +47,7 @@ passport.deserializeUser(async (id, done) => {
 
 app.use(
   session({
-    secret: "a wildly insecure secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: store,
@@ -62,94 +59,91 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/link/token/create", async (req, res) => {
-  try {
-    const { link_token } = await client.createLinkToken({
-      user: {
-        client_user_id: "123-test-user-id",
-      },
-      client_name: "Plaid Test App",
-      products: ["auth", "transactions"],
-      country_codes: ["US"],
-      language: "en",
-      webhook: "https://sample-web-hook.com",
-      account_filters: {
-        depository: {
-          account_subtypes: ["checking", "savings"],
-        },
-      },
-    });
-    res.send(link_token);
-  } catch (error) {
-    console.error(error);
-  }
+
+// app.get('/link/token/create', async (req, res) => {
+//   try {
+//     const { link_token } = await client.createLinkToken({
+//       user: {
+//         client_user_id: '123-test-user-id',
+//       },
+//       client_name: 'Plaid Test App',
+//       products: ['auth', 'transactions'],
+//       country_codes: ['US'],
+//       language: 'en',
+//       // webhook: 'https://sample-web-hook.com',
+//       account_filters: {
+//         depository: {
+//           account_subtypes: ['checking', 'savings'],
+//         },
+//       },
+//     });
+//     res.send(link_token);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
+
+// app.post('/plaidTokenExchange', async (req, res) => {
+//   try {
+//     const user = await db.collection('users').findOne({ _id: req.user._id });
+//     const { publicToken } = req.body;
+
+//     if (user.access_token.length) {
+//       const { accounts, item } = await client
+//         .getAccounts(user.access_token)
+//         .catch(handleError);
+//       res.send(user.access_token);
+//     } else {
+//       const { access_token } = await client
+//         .exchangePublicToken(publicToken)
+//         .catch(handleError);
+//       const { accounts, item } = await client
+//         .getAccounts(access_token)
+//         .catch(handleError);
+
+//       db.collection('users').updateOne(
+//         { _id: req.user._id },
+//         { $set: { access_token } }
+//       );
+//       req.user.access_token = access_token;
+//       res.send(access_token);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+// app.get('/transactions', async (req, res) => {
+//   try {
+//     const today = new Date();
+//     const dd = String(today.getDate()).padStart(2, '0');
+//     const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+//     const yyyy = today.getFullYear();
+
+//     const now = yyyy + '-' + mm + '-' + dd;
+//     const lastYear = yyyy - 1 + '-' + mm + '-' + dd;
+
+//     console.log('LAST YEAR', lastYear);
+//     const data = await client.getTransactions(
+//       req.user.access_token,
+//       lastYear,
+//       now,
+//       {
+//         count: 500,
+//       }
+//     );
+
+//     res.json(data);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
+
+app.get("/serviceWorker.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../serviceWorker.js"));
 });
 
-app.post("/plaid_token_exchange", async (req, res) => {
-  try {
-    const user = await db.collection("users").findOne({ _id: req.user._id });
-    const { public_token } = req.body;
 
-    if (user.access_token.length) {
-      const { accounts, item } = await client
-        .getAccounts(user.access_token)
-        .catch(handleError);
-      res.send(user.access_token);
-    } else {
-      const { access_token } = await client
-        .exchangePublicToken(public_token)
-        .catch(handleError);
-      const { accounts, item } = await client
-        .getAccounts(access_token)
-        .catch(handleError);
-
-      db.collection("users").updateOne(
-        { _id: req.user._id },
-        { $set: { access_token } }
-      );
-      req.user.access_token = access_token;
-      res.send(access_token);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-app.post("/auth/public_token");
-
-app.get("/gettransactions/", async (req, res) => {
-  try {
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, "0");
-    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    const yyyy = today.getFullYear();
-    let mmMinusSix = String(today.getMonth() - 6).padStart(2, "0"); //January is 0!
-    let yyyyFix = today.getFullYear();
-
-    const now = yyyy + "-" + mm + "-" + dd;
-    let nowMinusSixmm = yyyyFix + "-" + mmMinusSix + "-" + dd;
-    if (parseInt(mmMinusSix) < 0) {
-      mmMinusSix = 12 + parseInt(mmMinusSix);
-      yyyyFix--;
-      nowMinusSixmm = yyyyFix + "-0" + mmMinusSix + "-" + dd;
-    }
-    // if (mmMinusSix > 6) yyyy = today.getFullYear() - 1;
-    // const nowMinusSixmm = yyyy + "-" + mmMinusSix + "-" + dd;
-
-    console.log("MONTH-6", mmMinusSix);
-    const data = await client.getTransactions(
-      req.user.access_token,
-      nowMinusSixmm,
-      // "2020-12-01",
-      // "2021-01-01"
-      now
-    );
-
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-  }
-});
 
 app.use(express.static(path.join(__dirname, "../public")));
 app.use("/api", require("./api"));
@@ -171,4 +165,4 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500).send(err.message || "Internal server error.");
 });
 
-module.exports = client;
+// module.exports = client;

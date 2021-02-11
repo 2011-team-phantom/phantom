@@ -1,19 +1,11 @@
-const router = require("express").Router();
-const User = require("../db/models/users");
-const db = require("../db");
-const BCrypt = require("bcrypt-nodejs");
-const { session } = require("passport");
-// const { client } = require("../index.js");
-const plaid = require("plaid");
+
+const router = require('express').Router();
+const User = require('../db/models/users');
+
 //session logger for debugging
 router.use((req, res, next) => {
   console.log("SESSION --> ", req.session);
   next();
-});
-const client = new plaid.Client({
-  clientID: process.env.PLAID_CLIENT_ID,
-  secret: process.env.PLAID_SECRET,
-  env: plaid.environments.sandbox,
 });
 
 router.post("/login", async (req, res, next) => {
@@ -73,14 +65,5 @@ router.get("/me", async (req, res) => {
   }
 });
 
-router.put("/updateAccess", async (req, res) => {
-  try {
-    const thisUser = await User.findOne({ email: req.body.user.email });
-    thisUser.accessToken.push(req.body.access_token);
-    await thisUser.save();
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 module.exports = router;

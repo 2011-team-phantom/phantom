@@ -1,27 +1,70 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { fetchTransactions } from "../store/transactions";
-import { Line } from "react-chartjs-2";
-import { Table, Segment, Image, Loader, Dimmer } from "semantic-ui-react";
-import { me } from "../store/user";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchTransactions } from '../store/transactions';
+import { Line } from 'react-chartjs-2';
+import { Table, Loader, Dimmer, Dropdown, Button } from 'semantic-ui-react';
+import { sub, parseISO, isAfter } from 'date-fns';
+import { me } from '../store/user';
+
+const timeframe = ['3 Months', '6 Months', '1 Year'];
+const timeframeOptions = timeframe.map((t) => {
+  return { key: t, value: t, text: t };
+});
 
 class Transactions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0,
+      timeframe: '6 Months',
     };
-    this.props.fetchUpdatedUser();
+    this.handleTimeframeChange = this.handleTimeframeChange.bind(this);
   }
 
   componentDidMount() {
+    this.props.fetchUpdatedUser();
     this.props.fetchTransactions();
+  }
 
-    this.setState();
+  handleTimeframeChange(event, data) {
+    const { name, value } = data;
+    this.setState({ [name]: value });
+  }
+
+  parseTransactions(transactions, timeframe) {
+    let beforeDate;
+    const today = new Date();
+    if (timeframe === '1 Year') {
+      beforeDate = sub(today, {
+        years: 1,
+      });
+    }
+    if (timeframe === '6 Months') {
+      beforeDate = sub(today, {
+        months: 6,
+      });
+    }
+    if (timeframe === '3 Months') {
+      beforeDate = sub(today, {
+        months: 3,
+      });
+    }
+
+    return transactions.filter((t) => {
+      if (isAfter(parseISO(t.date), beforeDate)) {
+        return t;
+      }
+    });
   }
 
   render() {
-    let transactions = this.props.transactions.transactions || [];
+    let allTransactions = this.props.transactions.transactions || [];
+    let transactions = [];
+    if (allTransactions.length > 0) {
+      transactions = this.parseTransactions(
+        allTransactions,
+        this.state.timeframe
+      );
+    }
     let spending = transactions
       .map((t) => {
         return t.amount;
@@ -36,11 +79,11 @@ class Transactions extends Component {
       labels: labels,
       datasets: [
         {
-          label: "spending",
+          label: 'spending',
           fill: true,
           lineTension: 0.5,
-          backgroundColor: "#81B29A", //color of the dots
-          borderColor: "#81B29A", //border of the dots
+          backgroundColor: '#81B29A', //color of the dots
+          borderColor: '#81B29A', //border of the dots
           borderWidth: 2,
           data: spending,
         },
@@ -49,6 +92,16 @@ class Transactions extends Component {
 
     return (
       <div className="transactionsContainer">
+        <form className="timeframe-dropdown">
+          <Dropdown
+            onChange={this.handleTimeframeChange}
+            name="timeframe"
+            placeholder="Select Timeframe"
+            fluid
+            selection
+            options={timeframeOptions}
+          />
+        </form>
         <div id="transactions_spending">
           <Line
             data={newData}
@@ -57,12 +110,12 @@ class Transactions extends Component {
             options={{
               title: {
                 display: true,
-                text: "Monthly Spending",
+                text: 'Monthly Spending',
                 fontSize: 20,
               },
               legend: {
                 display: true,
-                position: "right",
+                position: 'right',
               },
               responsive: true,
               maintainAspectRatio: false,
