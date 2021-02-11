@@ -1,3 +1,4 @@
+
 const router = require('express').Router();
 const User = require('../db/models/users');
 const db = require('../db');
@@ -10,9 +11,11 @@ const client = new plaid.Client({
   env: plaid.environments.sandbox,
 });
 
-router.get('/', function (req, res, next) {
-  console.log('connected');
+
+router.get("/", function (req, res, next) {
+  console.log("connected");
 });
+
 
 router.get('/linkTokenCreate', async (req, res) => {
   try {
@@ -93,10 +96,11 @@ router.get('/plaidTransactions', async (req, res) => {
 });
 
 router.post('/budget', async function (req, res, next) {
+
   try {
     const budgetUser = await User.updateOne(
       { _id: req.user._id },
-      { $set: { budget: req.body } }
+      { $set: { budget: { ...req.body, ...budgetUser.budget } } }
     );
     const updatedUser = await User.findOne(
       { _id: req.user._id },
@@ -104,20 +108,22 @@ router.post('/budget', async function (req, res, next) {
     );
     res.send(updatedUser.budget);
   } catch (error) {
-    console.log('Error adding budget:', error);
+    console.log("Error adding budget:", error);
   }
 });
 
-router.get('/budget', async function (req, res, next) {
+router.get("/budget", async function (req, res, next) {
   try {
     const user = await User.findOne({ _id: req.user._id });
     res.send(user);
   } catch (error) {
-    console.log('Error getting budget:', error);
+    console.log("Error getting budget:", error);
   }
 });
 
+
 router.put('/budget', async function (req, res, next) {
+
   try {
     const user = await User.findOne({ _id: req.user._id }, { budget: 1 });
     const budgetUser = await User.updateOne(
@@ -130,12 +136,12 @@ router.put('/budget', async function (req, res, next) {
     );
     res.send(updatedUser.budget);
   } catch (error) {
-    console.log('Error updating budget:', error);
+    console.log("Error updating budget:", error);
   }
 });
 
 router.use(function (req, res, next) {
-  const err = new Error('Not found.');
+  const err = new Error("Not found.");
   err.status = 404;
   next(err);
 });

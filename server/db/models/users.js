@@ -14,13 +14,9 @@ const userSchema = new mongoose.Schema(
     },
     dateOfBirth: {
       type: String,
+      required: true,
     },
-    monthlyIncome: {
-      type: Number,
-    },
-    housingCost: {
-      type: Number,
-    },
+
     access_token: {
       type: Array,
     },
