@@ -1,0 +1,19 @@
+{
+  "name": "Phantom Budget App",
+  "short_name": "Phantom",
+  "start_url": "./public/index.html",
+
+  "background_color": "#F4F1DE",
+  "theme_color": "#81B29A",
+  "Scope": "/",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+
+  "display": "standalone"
+}
