@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createBudget } from "../store/transactions";
+import { updateBudget } from "../store/transactions";
 import {
   Button,
   Form,
@@ -71,13 +71,12 @@ class AddBudget extends Component {
       });
     } else {
       this.setState({ errorMessage: "" });
-      await this.props.createBudget(this.state);
+      await this.props.updateBudget(this.state);
       this.props.history.push("/transactions");
     }
   }
 
   render() {
-
     console.log(this.state);
     let saving =
       Object.keys(this.state)
@@ -85,8 +84,8 @@ class AddBudget extends Component {
           return key !== "Total" && key !== "errorMessage";
         })
         .reduce((acc, item) => {
-          return Number(acc) + Number(this.state[item]);
-        }, 0) + this.props.user.budget.housingCost;
+          return parseInt(acc) + parseInt(this.state[item]);
+        }, 0) + parseInt(this.props.user.budget.housingCost);
     console.log("saving", saving);
 
     return (
@@ -408,7 +407,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    createBudget: (budget) => dispatch(createBudget(budget)),
+    updateBudget: (budget) => dispatch(updateBudget(budget)),
   };
 };
 
