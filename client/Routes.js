@@ -8,6 +8,7 @@ import AddBudget from './components/AddBudget';
 import Budget from './components/Budget';
 import Transactions from './components/Transactions';
 import Glance from './components/Glance';
+import EditUser from './components/EditUser'
 
 class Routes extends Component {
   render() {
@@ -26,6 +27,7 @@ class Routes extends Component {
             <Route exact path="/budget" component={Budget} />
             <Route exact path="/transactions" component={Transactions} />
             <Route exact path="/glance" component={Glance} />
+            <Route exact path="/edituser" component={EditUser} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
