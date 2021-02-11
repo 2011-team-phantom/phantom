@@ -9,26 +9,24 @@ import {
   updateBudget,
 } from '../store/transactions';
 
-// an array of categories and map thru it
-
-const categoryOptions = [
-  { key: 'Travel', value: 'Travel', text: 'Travel' },
-  {
-    key: 'Food and Drink',
-    value: 'Food and Drink',
-    text: 'Food and Drink',
-  },
-  { key: 'Payment', value: 'Payment', text: 'Payment' },
-  { key: 'Shops', value: 'Shops', text: 'Shops' },
-  { key: 'Transfer', value: 'Transfer', text: 'Transfer' },
-  { key: 'Recreation', value: 'Recreation', text: 'Recreation' },
-  { key: 'Bank Fees', value: 'Bank Fees', text: 'Bank Fees' },
-  { key: 'Healthcare', value: 'Healthcare', text: 'Healthcare' },
-  { key: 'Service', value: 'Service', text: 'Service' },
-  { key: 'Tax', value: 'Tax', text: 'Tax' },
-  { key: 'Other', value: 'Other', text: 'Other' },
-  { key: 'Total', value: 'Total', text: 'Total' },
+const categories = [
+  'Travel',
+  'Food and Drink',
+  'Payment',
+  'Shops',
+  'Transfer',
+  'Recreation',
+  'Bank Fees',
+  'Healthcare',
+  'Service',
+  'Tax',
+  'Other',
+  'Total',
 ];
+const categoryOptions = categories.map((category) => {
+  return { key: category, value: category, text: category };
+});
+
 class Budget extends Component {
   constructor() {
     super();
