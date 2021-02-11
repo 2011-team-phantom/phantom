@@ -35,7 +35,7 @@ const getBudget = (budget) => ({
 export const fetchTransactions = () => {
   return async (dispatch) => {
     try {
-      const res = await axios.get('/transactions');
+      const res = await axios.get('/api/plaidTransactions');
       dispatch(getTransactions(res.data.transactions));
     } catch (error) {
       console.log('error fetching transactions', error);
@@ -46,7 +46,7 @@ export const fetchTransactions = () => {
 export const fetchAcessToken = (publicToken, user) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('/plaidTokenExchange', {
+      const { data } = await axios.post('/api/plaidTokenExchange', {
         user: user,
         publicToken: publicToken,
       });
@@ -60,7 +60,7 @@ export const fetchAcessToken = (publicToken, user) => {
 export const fetchLinkToken = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get('/link/token/create');
+      const { data } = await axios.get('/api/linkTokenCreate');
       dispatch(getLinkToken(data));
     } catch (error) {
       console.log('error fetching link token', error);
