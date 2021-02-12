@@ -10,6 +10,10 @@ const client = new plaid.Client({
   env: plaid.environments.sandbox,
 });
 
+function handleError(errorMessage) {
+  console.error(errorMessage);
+}
+
 router.get('/', function (req, res, next) {
   console.log('connected');
 });
@@ -111,7 +115,7 @@ router.post('/budget', async function (req, res, next) {
 router.get('/budget', async function (req, res, next) {
   try {
     const user = await User.findOne({ _id: req.user._id });
-    res.send(user);
+    res.send(user.budget);
   } catch (error) {
     console.log('Error getting budget:', error);
   }
@@ -131,6 +135,32 @@ router.put('/budget', async function (req, res, next) {
     res.send(updatedUser.budget);
   } catch (error) {
     console.log('Error updating budget:', error);
+  }
+});
+
+router.get('/transaction', async function (req, res, next) {
+  try {
+    const user = await User.findOne({ _id: req.user._id });
+    res.send(user.transaction);
+  } catch (error) {
+    console.log('Error getting transactions:', error);
+  }
+});
+
+router.put('/transaction', async function (req, res, next) {
+  try {
+    const user = await User.findOne({ _id: req.user._id }, { transaction: 1 });
+    const transactionUser = await User.updateOne(
+      { _id: req.user._id },
+      { $set: { transaction: [req.body, ...user.transaction] } }
+    );
+    const updatedUser = await User.findOne(
+      { _id: req.user._id },
+      { transaction: 1 }
+    );
+    res.send(updatedUser.transaction);
+  } catch (error) {
+    console.log('Error adding transaction:', error);
   }
 });
 

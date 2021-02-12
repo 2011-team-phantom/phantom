@@ -1,10 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchTransactions } from '../store/transactions';
+import { fetchTransactions, updateTransactions } from '../store/transactions';
 import { Line } from 'react-chartjs-2';
 import { Table, Loader, Dimmer, Dropdown, Button } from 'semantic-ui-react';
 import { sub, parseISO, isAfter } from 'date-fns';
 import { me } from '../store/user';
+import AddTransaction from './AddTransaction';
+
+const categories = [
+  'Travel',
+  'Food and Drink',
+  'Payment',
+  'Shops',
+  'Transfer',
+  'Recreation',
+  'Bank Fees',
+  'Healthcare',
+  'Service',
+  'Tax',
+  'Other',
+];
+const categoryOptions = categories.map((category) => {
+  return { key: category, value: category, text: category };
+});
 
 const timeframe = ['3 Months', '6 Months', '1 Year'];
 const timeframeOptions = timeframe.map((t) => {
@@ -16,8 +34,12 @@ class Transactions extends Component {
     super(props);
     this.state = {
       timeframe: '6 Months',
+      addTransactionForm: false,
     };
-    this.handleTimeframeChange = this.handleTimeframeChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDropdownChange = this.handleDropdownChange.bind(this);
+    this.toggleAddTransaction = this.toggleAddTransaction.bind(this);
+    this.handleSubmit = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -25,9 +47,24 @@ class Transactions extends Component {
     this.props.fetchTransactions();
   }
 
-  handleTimeframeChange(event, data) {
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleDropdownChange(event, data) {
     const { name, value } = data;
     this.setState({ [name]: value });
+  }
+
+  toggleAddTransaction() {
+    this.setState({ addTransactionForm: !this.state.addTransactionForm });
+  }
+
+  handleSubmit(event) {
+    console.log('handle submit', this.state);
+    const { date, merchant_name, amount, category } = this.state;
+    event.preventDefault();
+    this.props.updateTransactions({ date, merchant_name, amount, category });
   }
 
   parseTransactions(transactions, timeframe) {
@@ -90,11 +127,13 @@ class Transactions extends Component {
       ],
     };
 
+    console.log(this.state);
+
     return (
       <div className="transactionsContainer">
         <form className="timeframe-dropdown">
           <Dropdown
-            onChange={this.handleTimeframeChange}
+            onChange={this.handleDropdownChange}
             name="timeframe"
             placeholder="Select Timeframe"
             fluid
@@ -121,6 +160,14 @@ class Transactions extends Component {
               maintainAspectRatio: false,
             }}
           />
+        </div>
+        <div className="add-transaction-container">
+          <br />
+          <Button className="icon-btn" onClick={this.toggleAddTransaction}>
+            Add Transaction
+          </Button>
+          <br />
+          {this.state.addTransactionForm && <AddTransaction />}
         </div>
         <Table celled selectable>
           <Table.Header>
@@ -175,6 +222,8 @@ const mapDispatch = (dispatch) => {
   return {
     fetchTransactions: () => dispatch(fetchTransactions()),
     fetchUpdatedUser: () => dispatch(me()),
+    updateTransactions: (transaction) =>
+      dispatch(updateTransactions(transaction)),
   };
 };
 

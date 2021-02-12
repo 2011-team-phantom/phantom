@@ -1,11 +1,11 @@
 import axios from 'axios';
-import history from '../history';
 
 const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
 const GET_ACCESS_TOKEN = 'GET_ACCESS_TOKEN';
 const GET_LINK_TOKEN = 'GET_LINK_TOKEN';
 const SET_BUDGET = 'SET_BUDGET';
 const GET_BUDGET = 'GET_BUDGET';
+const ADD_TRANSACTION = 'ADD_TRANSACTION';
 
 const getTransactions = (transactions) => ({
   type: GET_TRANSACTIONS,
@@ -32,13 +32,34 @@ const getBudget = (budget) => ({
   budget,
 });
 
+const addTransaction = (transaction) => ({
+  type: ADD_TRANSACTION,
+  transaction,
+});
+
 export const fetchTransactions = () => {
   return async (dispatch) => {
     try {
       const res = await axios.get('/api/plaidTransactions');
-      dispatch(getTransactions(res.data.transactions));
+      const { data } = await axios.get('/api/transaction');
+      console.log('PLAID', res.data);
+      console.log('DB', data);
+      dispatch(getTransactions([...res.data.transactions, ...data]));
     } catch (error) {
       console.log('error fetching transactions', error);
+    }
+  };
+};
+
+export const updateTransactions = (transaction) => {
+  return async (dispatch) => {
+    console.log('transaction', transaction);
+    try {
+      const { data } = await axios.put('/api/transaction', transaction);
+      console.log(data);
+      dispatch(addTransaction(data));
+    } catch (error) {
+      console.log('error adding transaction', error);
     }
   };
 };
@@ -83,7 +104,7 @@ export const fetchBudget = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get('/api/budget');
-      dispatch(getBudget(data.budget));
+      dispatch(getBudget(data));
     } catch (error) {
       console.log('error fetching budget', error);
     }
@@ -120,6 +141,11 @@ export default function transactionsReducer(state = initialState, action) {
       return { ...state, budget: action.budget };
     case GET_BUDGET:
       return { ...state, budget: action.budget };
+    case ADD_TRANSACTION:
+      return {
+        ...state,
+        transactions: [...action.transaction, ...state.transactions],
+      };
     default:
       return state;
   }
