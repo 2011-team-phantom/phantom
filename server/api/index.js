@@ -27,7 +27,7 @@ router.get('/linkTokenCreate', async (req, res) => {
       user: {
         client_user_id: '123-test-user-id',
       },
-      client_name: 'Plaid Test App',
+      client_name: 'Phantom',
       products: ['auth', 'transactions'],
       country_codes: ['US'],
       language: 'en',
