@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Container, Divider, Image, List, Segment } from "semantic-ui-react";
+import React, { Component } from 'react';
+import { Container, Image, List, Segment } from 'semantic-ui-react';
 
 class Footer extends Component {
   constructor() {
@@ -12,10 +12,10 @@ class Footer extends Component {
           inverted
           vertical
           style={{
-            margin: "5em 0em 0em",
-            padding: "5em 0em",
-            bottom: "0",
-            width: "100%",
+            margin: '5em 0em 0em',
+            padding: '5em 0em',
+            bottom: '0',
+            width: '100%',
           }}
         >
           <Container textAlign="center">

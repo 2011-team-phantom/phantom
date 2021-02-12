@@ -1,18 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import store from "./store";
-import history from "./history";
-import { Router } from "react-router-dom";
-import App from "./app";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import history from './history';
+import { Router } from 'react-router-dom';
+import App from './app';
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
     navigator.serviceWorker
-      .register("./serviceWorker.js")
+      .register('./serviceWorker.js')
       .then((res) => `do nothing`)
       .catch((err) =>
-        console.log("Service Worker not registered due to: ", err)
+        console.error('Service Worker not registered due to: ', err)
       );
   });
 }
@@ -24,5 +24,5 @@ ReactDOM.render(
     </Router>
   </Provider>,
 
-  document.getElementById("app")
+  document.getElementById('app')
 );

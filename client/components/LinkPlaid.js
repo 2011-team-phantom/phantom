@@ -20,17 +20,10 @@ class LinkPlaid extends Component {
       render: '',
       didRender: false,
     };
-
-    this.getLinkToken = this.getLinkToken.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchLinkToken();
-  }
-
-  async getLinkToken() {
-    const { data } = await axios.get('/link/token/create');
-    this.setState({ link_token: data.link_token });
   }
 
   render() {
@@ -40,7 +33,7 @@ class LinkPlaid extends Component {
           {this.props.link_token ? (
             <div>
               <PlaidLink
-                clientName="React Plaid Setup"
+                clientName="Phantom"
                 env="sandbox"
                 product={['auth', 'transactions']}
                 token={this.props.link_token}

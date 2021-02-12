@@ -7,23 +7,6 @@ import { sub, parseISO, isAfter } from 'date-fns';
 import { me } from '../store/user';
 import AddTransaction from './AddTransaction';
 
-const categories = [
-  'Travel',
-  'Food and Drink',
-  'Payment',
-  'Shops',
-  'Transfer',
-  'Recreation',
-  'Bank Fees',
-  'Healthcare',
-  'Service',
-  'Tax',
-  'Other',
-];
-const categoryOptions = categories.map((category) => {
-  return { key: category, value: category, text: category };
-});
-
 const timeframe = ['3 Months', '6 Months', '1 Year'];
 const timeframeOptions = timeframe.map((t) => {
   return { key: t, value: t, text: t };
@@ -133,8 +116,6 @@ class Transactions extends Component {
         },
       ],
     };
-
-    console.log(this.state);
 
     return (
       <div className="transactionsContainer">

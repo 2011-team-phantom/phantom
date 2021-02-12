@@ -99,13 +99,16 @@ class Budget extends Component {
   }
 
   render() {
-    const budget = Object.keys(this.props.budget) || [];
+    const budget =
+      Object.keys(this.props.budget).filter(
+        (name) => name !== 'monthlyIncome' && name !== 'housingCost'
+      ) || [];
 
     return (
       <div className="budget-container">
         <div className="budget-category-container">
           <h3>My Monthly Spending vs Budget</h3>
-          {budget.length ? (
+          {budget.length &&
             budget
               .filter((cat) => this.props.budget[cat] > 0)
               .map((category, index) => (
@@ -117,7 +120,7 @@ class Budget extends Component {
                       {this.state.categoryAmount[category]
                         ? Number(this.state.categoryAmount[category]).toFixed(2)
                         : '0'}
-                      / ${this.props.budget[category]}
+                      / ${Math.round(this.props.budget[category])}
                       {(this.state.categoryAmount[category] || '0') >
                         this.props.budget[category] && (
                         <div style={{ color: 'red' }}>OVERBUDGET!</div>
@@ -156,10 +159,7 @@ class Budget extends Component {
                     </div>
                   </div>
                 </div>
-              ))
-          ) : (
-            <span>Nope</span>
-          )}
+              ))}
           <Button className="icon-btn" onClick={this.toggleAdd}>
             <Icon name="edit" />
           </Button>
