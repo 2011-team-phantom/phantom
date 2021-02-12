@@ -61,7 +61,6 @@ class Transactions extends Component {
   }
 
   handleSubmit(event) {
-    console.log('handle submit', this.state);
     const { date, merchant_name, amount, category } = this.state;
     event.preventDefault();
     this.props.updateTransactions({ date, merchant_name, amount, category });
@@ -86,11 +85,19 @@ class Transactions extends Component {
       });
     }
 
-    return transactions.filter((t) => {
-      if (isAfter(parseISO(t.date), beforeDate)) {
-        return t;
-      }
-    });
+    return this.sortTransactions(
+      transactions.filter((t) => {
+        if (isAfter(parseISO(t.date), beforeDate)) {
+          return t;
+        }
+      })
+    );
+  }
+
+  sortTransactions(transactions) {
+    return transactions
+      .slice()
+      .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
   }
 
   render() {

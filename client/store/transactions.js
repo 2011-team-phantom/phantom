@@ -42,8 +42,6 @@ export const fetchTransactions = () => {
     try {
       const res = await axios.get('/api/plaidTransactions');
       const { data } = await axios.get('/api/transaction');
-      console.log('PLAID', res.data);
-      console.log('DB', data);
       dispatch(getTransactions([...res.data.transactions, ...data]));
     } catch (error) {
       console.log('error fetching transactions', error);
@@ -53,11 +51,9 @@ export const fetchTransactions = () => {
 
 export const updateTransactions = (transaction) => {
   return async (dispatch) => {
-    console.log('transaction', transaction);
     try {
       const { data } = await axios.put('/api/transaction', transaction);
-      console.log(data);
-      dispatch(addTransaction(data));
+      dispatch(addTransaction(transaction));
     } catch (error) {
       console.log('error adding transaction', error);
     }
@@ -144,7 +140,7 @@ export default function transactionsReducer(state = initialState, action) {
     case ADD_TRANSACTION:
       return {
         ...state,
-        transactions: [...action.transaction, ...state.transactions],
+        transactions: [action.transaction, ...state.transactions],
       };
     default:
       return state;
