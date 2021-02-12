@@ -1,18 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import validator from "email-validator";
-import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
-import { updateBudget } from "../store/transactions";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
+import { updateBudget } from '../store/transactions';
 
 class EditUser extends Component {
   constructor() {
     super();
     this.state = {
-      // password: '',
       monthlyIncome: 0,
       housingCost: 0,
       finished: false,
-      // errorMessageEdit: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,19 +23,18 @@ class EditUser extends Component {
 
     if (this.state.monthlyIncome < 1) {
       this.setState({
-        errorMessage: "Please enter a new income greater than 0",
+        errorMessage: 'Please enter a new income greater than 0',
       });
     } else if (this.state.housingCost < 1) {
       this.setState({
-        errorMessage: "Please enter a housing cost greater than 0",
+        errorMessage: 'Please enter a housing cost greater than 0',
       });
     } else {
       this.setState({
-        errorMessage: "",
+        errorMessage: '',
         finished: true,
       });
       this.props.updateBudget(this.state);
-      //   this.props.history.push('transactions');
     }
   }
 
@@ -47,7 +43,7 @@ class EditUser extends Component {
       <div className="editUser">
         <Grid
           textAlign="center"
-          style={{ height: "100vh" }}
+          style={{ height: '100vh' }}
           verticalAlign="middle"
         >
           <Grid.Column style={{ maxWidth: 200 }}>
@@ -83,7 +79,7 @@ class EditUser extends Component {
                 <Button color="teal" fluid size="large" type="submit">
                   Update My Account
                 </Button>
-                {this.state.errorMessage !== "" && (
+                {this.state.errorMessage !== '' && (
                   <div>{this.state.errorMessage}</div>
                 )}
               </Segment>

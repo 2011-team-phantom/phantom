@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import { logout } from "../store/user";
-
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { Button, Image, Menu } from "semantic-ui-react";
+import React, { Component } from 'react';
+import { logout } from '../store/user';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Button, Image, Menu } from 'semantic-ui-react';
 
 class Navbar extends Component {
   constructor() {
     super();
     this.state = {
-      activeItem: "",
+      activeItem: '',
     };
     this.handleItemClick = this.handleItemClick.bind(this);
   }
@@ -29,77 +28,78 @@ class Navbar extends Component {
               <Image
                 size="mini"
                 src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
-                style={{ marginRight: "1.5em" }}
+                style={{ marginRight: '1.5em' }}
               />
             </Menu.Item>
 
             {hasBudget && (
               <Menu.Menu>
-                <Link to="/transactions" font="Open Sans">
-                  <Menu.Item
-                    className="navItem"
-                    name="transactions"
-                    style={{ marginTop: "1em" }}
-                    active={activeItem === "transactions"}
-                    onClick={this.handleItemClick}
-                  >
-                    Transactions
-                  </Menu.Item>
-                </Link>
+                <Menu.Item
+                  as={Link}
+                  to="/transactions"
+                  className="navItem"
+                  name="transactions"
+                  active={activeItem === 'transactions'}
+                  onClick={this.handleItemClick}
+                >
+                  Transactions
+                </Menu.Item>
 
-                <Link to="/budget" font="Open Sans">
-                  <Menu.Item
-                    className="navItem"
-                    name="budget"
-                    style={{ marginTop: "1em" }}
-                    active={activeItem === "budget"}
-                    onClick={this.handleItemClick}
-                  >
-                    Budget
-                  </Menu.Item>
-                </Link>
+                <Menu.Item
+                  as={Link}
+                  to="/budget"
+                  className="navItem"
+                  name="budget"
+                  style={{ marginTop: '1em' }}
+                  active={activeItem === 'budget'}
+                  onClick={this.handleItemClick}
+                >
+                  Budget
+                </Menu.Item>
 
-                <Link to="/plaid" font="Open Sans">
-                  <Menu.Item
-                    className="navItem"
-                    name="plaid"
-                    style={{ marginTop: "1em" }}
-                    active={activeItem === "plaid"}
-                    onClick={this.handleItemClick}
-                  >
-                    Plaid Sync
-                  </Menu.Item>
-                </Link>
+                <Menu.Item
+                  as={Link}
+                  to="/plaid"
+                  className="navItem"
+                  name="plaid"
+                  style={{ marginTop: '1em' }}
+                  active={activeItem === 'plaid'}
+                  onClick={this.handleItemClick}
+                >
+                  Plaid Sync
+                </Menu.Item>
 
-                <Link to="/glance" font="Open Sans">
-                  <Menu.Item
-                    className="navItem"
-                    name="glance"
-                    style={{ marginTop: "1em" }}
-                    active={activeItem === "glance"}
-                    onClick={this.handleItemClick}
-                  >
-                    At-a-Glance
-                  </Menu.Item>
-                </Link>
+                <Menu.Item
+                  as={Link}
+                  to="/glance"
+                  className="navItem"
+                  name="glance"
+                  style={{ marginTop: '1em' }}
+                  active={activeItem === 'glance'}
+                  onClick={this.handleItemClick}
+                >
+                  At-a-Glance
+                </Menu.Item>
+
+                <Menu.Item
+                  as={Link}
+                  to="/edituser"
+                  className="navItem"
+                  name="edituser"
+                  style={{ marginTop: '1em' }}
+                  active={activeItem === 'edituser'}
+                  onClick={this.handleItemClick}
+                >
+                  Edit-User
+                </Menu.Item>
               </Menu.Menu>
             )}
 
-            <Link to="/edituser" font="Open Sans">
-              <Menu.Item
-                className="navItem"
-                position="right"
-                active={activeItem === "edituser"}
-                onClick={this.handleItemClick}
-              >
-                Edit-User
-              </Menu.Item>
-            </Link>
             <Menu.Item position="right" font="Open Sans">
               <Button
                 onClick={this.props.logout}
                 content={email}
-                label={{ basic: true, content: "Logout" }}
+                label={{ basic: true, content: 'Logout' }}
                 labelPosition="right"
               />
             </Menu.Item>
@@ -110,14 +110,14 @@ class Navbar extends Component {
               <Image
                 size="mini"
                 src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
-                style={{ marginRight: "1.5em" }}
+                style={{ marginRight: '1.5em' }}
               />
             </Menu.Item>
             <Link to="/login" font="Open Sans">
               <Menu.Item
                 className="navItem"
                 name="login"
-                style={{ marginTop: "1em" }}
+                style={{ marginTop: '1em' }}
                 onClick={this.handleItemClick}
               >
                 Login
@@ -127,7 +127,7 @@ class Navbar extends Component {
               <Menu.Item
                 className="navItem"
                 name="join"
-                style={{ marginTop: "1em" }}
+                style={{ marginTop: '1em' }}
                 onClick={this.handleItemClick}
               >
                 Join

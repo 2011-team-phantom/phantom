@@ -29,9 +29,6 @@ class Glance extends Component {
       }
       return t.amount;
     });
-    //need two arrays, one with labels
-    //one with corresponding totals
-    //totals must be in order of labels
     let newData = {
       labels: [...new Set(labels)],
       datasets: [
@@ -64,7 +61,6 @@ class Glance extends Component {
       return accum + cur;
     }, 0);
     const percent = totalSpending / (this.props.user.budget.Total * 6);
-    //{`${totalSpending}/${this.props.user.budget.Total}`}
     return (
       <div className="glanceContainer">
         <Segment>
@@ -132,7 +128,5 @@ const mapDispatch = (dispatch) => {
     fetchUpdatedUser: () => dispatch(me()),
   };
 };
-
-Glance.propTypes = {};
 
 export default connect(mapState, mapDispatch)(Glance);

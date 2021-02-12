@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchTransactions, updateTransactions } from '../store/transactions';
+import { updateTransactions } from '../store/transactions';
 import { Dropdown, Button, Input } from 'semantic-ui-react';
-import { me } from '../store/user';
 
 const categories = [
   'Travel',
@@ -38,11 +37,6 @@ class AddTransaction extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.props.fetchUpdatedUser();
-    this.props.fetchTransactions();
-  }
-
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -57,7 +51,6 @@ class AddTransaction extends Component {
   }
 
   handleSubmit(event) {
-    console.log('handle submit', this.state);
     const { amount, category } = this.state;
     event.preventDefault();
     this.props.updateTransactions({
@@ -69,8 +62,6 @@ class AddTransaction extends Component {
   }
 
   render() {
-    console.log(this.state);
-
     return (
       <div className="add-transaction-form-container">
         <form className="add-transaction-form">
@@ -119,20 +110,11 @@ class AddTransaction extends Component {
   }
 }
 
-const mapState = (state) => {
-  return {
-    transactions: state.transactions,
-    user: state.user,
-  };
-};
-
 const mapDispatch = (dispatch) => {
   return {
-    fetchTransactions: () => dispatch(fetchTransactions()),
-    fetchUpdatedUser: () => dispatch(me()),
     updateTransactions: (transaction) =>
       dispatch(updateTransactions(transaction)),
   };
 };
 
-export default connect(mapState, mapDispatch)(AddTransaction);
+export default connect(null, mapDispatch)(AddTransaction);
