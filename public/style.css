@@ -117,3 +117,34 @@ div.glanceContainer {
 .ui.red.progress .bar {
   background-color: #e07a5f !important;
 }
+
+.add-transaction-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.add-transaction-container button {
+  align-self: center;
+}
+
+.add-transaction-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.add-transaction-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 720px;
+}
+
+.add-transaction-form-input {
+  display: flex;
+}
+
+.add-transaction-form-input input {
+  margin-left: 5px;
+  margin-right: 5px;
+}
