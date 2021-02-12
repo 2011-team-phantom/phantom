@@ -5,17 +5,21 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 const port = process.env.PORT || 3000;
+
 const db = require('./db');
 const session = require('express-session');
 const passport = require('passport');
 const MongoDBStore = require('connect-mongodb-session')(session);
+
 
 const store = new MongoDBStore({
   uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/phantomdb',
   collection: 'mySessions',
 });
 
+
 store.on('error', function (error) {
+
   console.log(error);
 });
 
@@ -48,6 +52,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.get('/serviceWorker.js', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../serviceWorker.js'));
 });
@@ -58,6 +63,7 @@ app.use('/auth', require('./auth'));
 
 app.use('*', function (req, res) {
   res.sendFile(path.join(__dirname, '../public/index.html'));
+
 });
 
 app.listen(port, function () {
