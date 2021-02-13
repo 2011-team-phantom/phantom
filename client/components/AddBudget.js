@@ -267,7 +267,7 @@ class AddBudget extends Component {
                     Savings | 15%
                   </Segment>
                   <Segment attached="bottom">
-                    {Math.round(parseInt(this.state.Total) - saving)}
+                    ${Math.round(parseInt(this.state.Total) - saving)}
                   </Segment>
                 </Segment.Group>
                 <Segment.Group horizontal>
@@ -280,7 +280,7 @@ class AddBudget extends Component {
                     Total | 100%
                   </Segment>
                   <Segment attached="bottom">
-                    {Math.round(this.state.Total)}
+                    ${Math.round(this.state.Total)}
                   </Segment>
                 </Segment.Group>
                 <Button color="teal" fluid size="large" type="submit">
