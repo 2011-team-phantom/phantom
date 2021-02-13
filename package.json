@@ -1,14 +1,11 @@
 {
   "name": "Phantom",
   "version": "1.0.0",
-  "description": "",
+  "description": "A budgeting app that lets users visualize their spending for the last six months.",
   "main": "./server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "start-dev": "webpack -w & nodemon server",
-    "deploy": "./deploy",
-    "webP": "./node_modules/.bin/webpack -p"
+    "start-dev": "webpack -w & nodemon server"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +17,6 @@
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.4",
     "connect-mongodb-session": "^2.4.1",
-    "cors": "^2.8.5",
     "date-fns": "^2.17.0",
     "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",

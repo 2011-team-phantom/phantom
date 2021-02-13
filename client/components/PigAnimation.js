@@ -12,20 +12,12 @@ export default function Animation() {
     },
   };
 
-  const events = [
-    {
-      eventName: "complete",
-      callback: () => console.log("the animation completed:"),
-    },
-  ];
-
   return (
     <div>
       <Lottie
         options={defaultOptions}
         height={300}
         width={300}
-        eventListeners={events}
       />
     </div>
   );

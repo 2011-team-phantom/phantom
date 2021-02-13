@@ -32,18 +32,7 @@ class AddBudget extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     if (
-      Number(this.state['Travel']) === 0 &&
-      Number(this.state['Food and Drink']) === 0 &&
-      Number(this.state['Payment']) === 0 &&
-      Number(this.state['Shops']) === 0 &&
-      Number(this.state['Transfer']) === 0 &&
-      Number(this.state['Recreation']) === 0 &&
-      Number(this.state['Bank Fees']) === 0 &&
-      Number(this.state['Healthcare']) === 0 &&
-      Number(this.state['Service']) === 0 &&
-      Number(this.state['Tax']) === 0 &&
-      Number(this.state['Other']) === 0 &&
-      Number(this.state['Total']) === 0
+      Number(this.state.Total) === 0
     ) {
       this.setState({
         errorMessage: 'Please set a budget for at least one category.',
@@ -62,8 +51,8 @@ class AddBudget extends Component {
           return key !== 'Total' && key !== 'errorMessage';
         })
         .reduce((acc, item) => {
-          return parseInt(acc) + parseInt(this.state[item]);
-        }, 0) + parseInt(this.props.user.budget.housingCost);
+          return parseInt(acc, 10) + parseInt(this.state[item], 10);
+        }, 0) + parseInt(this.props.user.budget.housingCost, 10);
 
     return (
       <div className="addbudgets">
@@ -245,7 +234,7 @@ class AddBudget extends Component {
                     Housing | 30%
                   </Segment>
                   <Segment attached="bottom">
-                    ${Math.round(parseInt(this.props.user.budget.housingCost))}
+                    ${Math.round(parseInt(this.props.user.budget.housingCost, 10))}
                   </Segment>
                 </Segment.Group>
                 <Segment.Group horizontal>
@@ -258,7 +247,7 @@ class AddBudget extends Component {
                     Savings | 15%
                   </Segment>
                   <Segment attached="bottom">
-                    ${Math.round(parseInt(this.state.Total) - saving)}
+                    ${Math.round(parseInt(this.state.Total, 10) - saving)}
                   </Segment>
                 </Segment.Group>
                 <Segment.Group horizontal>
