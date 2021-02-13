@@ -61,8 +61,8 @@ class Login extends Component {
                 <Button color="teal" fluid size="large" type="submit">
                   Login
                 </Button>
-                {this.props.error && this.props.error.response && (
-                  <div> {this.props.error.response.data} </div>
+                {this.props.loginError && this.props.loginError.response && (
+                  <div> {this.props.loginError.response.data} </div>
                 )}
               </Segment>
             </Form>
@@ -76,7 +76,7 @@ class Login extends Component {
 
 const mapSignup = (state) => {
   return {
-    error: state.user.error,
+    loginError: state.user.loginError,
   };
 };
 
