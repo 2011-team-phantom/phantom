@@ -2,10 +2,6 @@ body {
   background-color: aliceblue;
 }
 
-.navItem {
-  margin-top: 1em;
-}
-
 .signup {
   min-height: 100vh;
   margin-top: 60px;
