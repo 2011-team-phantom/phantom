@@ -12,20 +12,12 @@ export default function CoinAnimation() {
     },
   };
 
-  const events = [
-    {
-      eventName: "complete",
-      callback: () => console.log("the animation completed:"),
-    },
-  ];
-
   return (
     <div>
       <Lottie
         options={defaultOptions}
         height={100}
         width={100}
-        eventListeners={events}
       />
     </div>
   );
