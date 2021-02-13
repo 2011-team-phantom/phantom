@@ -100,7 +100,7 @@ class Signup extends Component {
                   iconPosition="left"
                   placeholder="Date Of Birth"
                   name="dateOfBirth"
-                  type="string"
+                  type="date"
                   onChange={this.handleChange}
                   value={this.state.dateOfBirth}
                 />
@@ -128,11 +128,11 @@ class Signup extends Component {
                 <Button color="teal" fluid size="large" type="submit">
                   Sign Up
                 </Button>
-                {this.state.errorMessage !== '' && (
+                {this.state.errorMessage && (
                   <div>{this.state.errorMessage}</div>
                 )}
-                {this.props.error && this.props.error.response && (
-                  <div> {this.props.error.response.data} </div>
+                {this.props.signupError && this.props.signupError.response && (
+                  <div> {this.props.signupError.response.data} </div>
                 )}
               </Segment>
             </Form>
@@ -145,7 +145,7 @@ class Signup extends Component {
 
 const mapSignup = (state) => {
   return {
-    error: state.user.error,
+    signupError: state.user.signupError,
     user: state.user.email,
   };
 };

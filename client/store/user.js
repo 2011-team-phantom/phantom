@@ -27,7 +27,7 @@ export const signUp = (userBody) => async (dispatch) => {
   try {
     res = await axios.post('/auth/signup', userBody);
   } catch (error) {
-    return dispatch(getUser({ error: error }));
+    return dispatch(getUser({ signupError: error }));
   }
   try {
     let postUser = {
@@ -59,7 +59,7 @@ export const auth = (email, password) => async (dispatch) => {
       history.push('/transactions');
     }
   } catch (authError) {
-    return dispatch(getUser({ error: authError }));
+    return dispatch(getUser({ loginError: authError }));
   }
 };
 
@@ -80,7 +80,8 @@ export default function (state = defaultUser, action) {
         _id: action.user._id,
         email: action.user.email,
         budget: action.user.budget,
-        error: action.user.error,
+        loginError: action.user.loginError,
+        signupError: action.user.signupError,
       };
     case REMOVE_USER:
       return defaultUser;
