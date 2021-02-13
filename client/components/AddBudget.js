@@ -93,6 +93,7 @@ class AddBudget extends Component {
                       placeholder="Food and Drink"
                       onChange={this.handleChange}
                       value={Math.round(this.state['Food and Drink'])}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -115,6 +116,7 @@ class AddBudget extends Component {
                       placeholder="Travel"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Travel)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -137,6 +139,7 @@ class AddBudget extends Component {
                       placeholder="Payment"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Payment)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -159,6 +162,7 @@ class AddBudget extends Component {
                       placeholder="Shops"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Shops)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -181,6 +185,7 @@ class AddBudget extends Component {
                       placeholder="Recreation"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Recreation)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -203,6 +208,7 @@ class AddBudget extends Component {
                       placeholder="Healthcare"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Healthcare)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -225,6 +231,7 @@ class AddBudget extends Component {
                       placeholder="Other"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Other)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -246,6 +253,7 @@ class AddBudget extends Component {
                       name="Housing"
                       placeholder="Housing"
                       value={Math.round(this.props.user.budget.housingCost)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
