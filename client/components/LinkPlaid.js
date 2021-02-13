@@ -33,7 +33,7 @@ class LinkPlaid extends Component {
           {this.props.link_token ? (
             <div>
               <PlaidLink
-                clientName="Phantom"
+                clientName="Plutus"
                 env="sandbox"
                 product={['auth', 'transactions']}
                 token={this.props.link_token}

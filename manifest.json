@@ -1,6 +1,6 @@
 {
-  "name": "Phantom Budget App",
-  "short_name": "Phantom",
+  "name": "Plutus Budget App",
+  "short_name": "Plutus",
   "start_url": "./public/index.html",
 
   "background_color": "#F4F1DE",
