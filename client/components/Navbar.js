@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { logout } from '../store/user';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Button, Image, Menu } from 'semantic-ui-react';
+import React, { Component } from "react";
+import { logout } from "../store/user";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { Button, Image, Menu } from "semantic-ui-react";
 
 class Navbar extends Component {
   constructor() {
     super();
     this.state = {
-      activeItem: '',
+      activeItem: "",
     };
     this.handleItemClick = this.handleItemClick.bind(this);
   }
@@ -20,6 +20,15 @@ class Navbar extends Component {
     const { email } = this.props.meRn;
     const { hasBudget } = this.props;
     const { activeItem } = this.state;
+    const navItems = ["transactions", "budget", "plaid", "glance", "edituser"];
+    const navItemTags = [
+      "Transactions",
+      "Budget",
+      "Plaid Sync",
+      "At A Glance",
+      "Edit User",
+    ];
+    const loginNav = ["login", "join"];
     return (
       <div className="navBar">
         {this.props.isLoggedIn ? (
@@ -28,70 +37,27 @@ class Navbar extends Component {
               <Image
                 size="mini"
                 src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
-                style={{ marginRight: '1.5em' }}
+                style={{ marginRight: "1.5em" }}
               />
             </Menu.Item>
 
             {hasBudget && (
               <Menu.Menu>
-                <Menu.Item
-                  as={Link}
-                  to="/transactions"
-                  className="navItem"
-                  name="transactions"
-                  active={activeItem === 'transactions'}
-                  onClick={this.handleItemClick}
-                >
-                  Transactions
-                </Menu.Item>
-
-                <Menu.Item
-                  as={Link}
-                  to="/budget"
-                  className="navItem"
-                  name="budget"
-                  style={{ marginTop: '1em' }}
-                  active={activeItem === 'budget'}
-                  onClick={this.handleItemClick}
-                >
-                  Budget
-                </Menu.Item>
-
-                <Menu.Item
-                  as={Link}
-                  to="/plaid"
-                  className="navItem"
-                  name="plaid"
-                  style={{ marginTop: '1em' }}
-                  active={activeItem === 'plaid'}
-                  onClick={this.handleItemClick}
-                >
-                  Plaid Sync
-                </Menu.Item>
-
-                <Menu.Item
-                  as={Link}
-                  to="/glance"
-                  className="navItem"
-                  name="glance"
-                  style={{ marginTop: '1em' }}
-                  active={activeItem === 'glance'}
-                  onClick={this.handleItemClick}
-                >
-                  At-a-Glance
-                </Menu.Item>
-
-                <Menu.Item
-                  as={Link}
-                  to="/edituser"
-                  className="navItem"
-                  name="edituser"
-                  style={{ marginTop: '1em' }}
-                  active={activeItem === 'edituser'}
-                  onClick={this.handleItemClick}
-                >
-                  Edit-User
-                </Menu.Item>
+                {navItems.map((value, idx) => {
+                  return (
+                    <Menu.Item
+                      key={idx}
+                      as={Link}
+                      to={value}
+                      className="navItem"
+                      name={value}
+                      active={activeItem === { value }}
+                      onClick={this.handleItemClick}
+                    >
+                      {navItemTags[idx]}
+                    </Menu.Item>
+                  );
+                })}
               </Menu.Menu>
             )}
 
@@ -99,40 +65,36 @@ class Navbar extends Component {
               <Button
                 onClick={this.props.logout}
                 content={email}
-                label={{ basic: true, content: 'Logout' }}
+                label={{ basic: true, content: "Logout" }}
                 labelPosition="right"
               />
             </Menu.Item>
           </Menu>
         ) : (
           <Menu fixed="top" inverted>
+            
             <Menu.Item name="phantom">
               <Image
                 size="mini"
                 src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
-                style={{ marginRight: '1.5em' }}
+                style={{ marginRight: "1.5em" }}
               />
             </Menu.Item>
-            <Link to="/login" font="Open Sans">
-              <Menu.Item
-                className="navItem"
-                name="login"
-                style={{ marginTop: '1em' }}
-                onClick={this.handleItemClick}
-              >
-                Login
-              </Menu.Item>
-            </Link>
-            <Link to="/join" font="Open Sans">
-              <Menu.Item
-                className="navItem"
-                name="join"
-                style={{ marginTop: '1em' }}
-                onClick={this.handleItemClick}
-              >
-                Join
-              </Menu.Item>
-            </Link>
+            {loginNav.map((label, idx) => {
+              return (
+                <Menu.Item
+                  key={idx}
+                  as={Link}
+                  to={label}
+                  className="navItem"
+                  name={label}
+                  active={activeItem === { label }}
+                  onClick={this.handleItemClick}
+                >
+                  {label.charAt(0).toUpperCase() + label.slice(1)}
+                </Menu.Item>
+              );
+            })}
           </Menu>
         )}
       </div>
