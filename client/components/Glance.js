@@ -1,18 +1,70 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchTransactions } from '../store/transactions';
-import { me } from '../store/user';
-import { Doughnut } from 'react-chartjs-2';
-import { Table, Segment, Progress } from 'semantic-ui-react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchTransactions } from "../store/transactions";
+import { me } from "../store/user";
+import { Doughnut } from "react-chartjs-2";
+import { Table, Segment, Progress, Dropdown } from "semantic-ui-react";
+import { sub, parseISO, isAfter } from "date-fns";
+
+const timeframe = ["3 Months", "6 Months", "1 Year"];
+const timeframeOptions = timeframe.map((t) => {
+  return { key: t, value: t, text: t };
+});
 
 class Glance extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      timeframe: "6 Months",
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDropdownChange = this.handleDropdownChange.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchUpdatedUser();
     this.props.fetchTransactions();
+  }
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleDropdownChange(event, data) {
+    const { name, value } = data;
+    this.setState({ [name]: value });
+  }
+
+  sortTransactions(transactions) {
+    return transactions
+      .slice()
+      .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+  }
+  parseTransactions(transactions, timeframe) {
+    let beforeDate;
+    const today = new Date();
+    if (timeframe === "1 Year") {
+      beforeDate = sub(today, {
+        years: 1,
+      });
+    }
+    if (timeframe === "6 Months") {
+      beforeDate = sub(today, {
+        months: 6,
+      });
+    }
+    if (timeframe === "3 Months") {
+      beforeDate = sub(today, {
+        months: 3,
+      });
+    }
+
+    return this.sortTransactions(
+      transactions.filter((t) => {
+        if (isAfter(parseISO(t.date), beforeDate)) {
+          return t;
+        }
+      })
+    );
   }
 
   render() {
@@ -20,7 +72,14 @@ class Glance extends Component {
     const labels = this.props.transactions.transactions.map((item) => {
       return item.category[item.category.length - 1];
     });
-    let transactions = this.props.transactions.transactions || [];
+    let allTransactions = this.props.transactions.transactions || [];
+    let transactions = [];
+    if (allTransactions.length > 0) {
+      transactions = this.parseTransactions(
+        allTransactions,
+        this.state.timeframe
+      );
+    }
     let spending = transactions.map((t) => {
       if (totals[t.category[t.category.length - 1]]) {
         totals[t.category[t.category.length - 1]] += Math.round(t.amount);
@@ -33,25 +92,34 @@ class Glance extends Component {
       labels: [...new Set(labels)],
       datasets: [
         {
-          label: 'Spending',
+          label: "Spending",
           backgroundColor: [
-            '#f4f1de',
-            '#e07a5f',
-            '#8f5d5d',
-            '#3d405b',
-            '#5f797b',
-            '#81b29a',
-            '#babf95',
-            '#f2cc8f',
-            '#caa997',
-            '#a1869e',
+            "#f4f1de",
+            "#e07a5f",
+            "#8f5d5d",
+            "#3d405b",
+            "#5f797b",
+            "#81b29a",
+            "#babf95",
+            "#f2cc8f",
+            "#caa997",
+            "#a1869e",
+            "#3A5A40",
+            "#2A7FA6",
           ],
           hoverBackgroundColor: [
-            '#dbd9c8',
-            '#c46b52',
-            '#555a80',
-            '#6a917e',
-            '#c7a877',
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
+            "#81B29A",
           ],
           data: Object.values(totals),
         },
@@ -63,15 +131,16 @@ class Glance extends Component {
     const percent = totalSpending / (this.props.user.budget.Total * 6);
     return (
       <div className="glanceContainer">
-        <Segment>
-          <Progress
-            value={totalSpending}
-            total={this.props.user.budget.Total * 6}
-            progress="percent"
-            precision={0}
-            color={percent > 0.85 ? 'red' : percent > 0.4 ? 'yellow' : 'green'}
+        <form className="timeframe-dropdown">
+          <Dropdown
+            onChange={this.handleDropdownChange}
+            name="timeframe"
+            placeholder="Select Timeframe"
+            fluid
+            selection
+            options={timeframeOptions}
           />
-        </Segment>
+        </form>
 
         <div>
           <Doughnut
@@ -79,12 +148,12 @@ class Glance extends Component {
             options={{
               title: {
                 display: true,
-                text: 'Spending by Category',
+                text: `Spending by Category for ${this.state.timeframe}`,
                 fontSize: 20,
               },
               legend: {
                 display: true,
-                position: 'left',
+                position: "left",
               },
               maintainAspectRatio: false,
               responsive: true,

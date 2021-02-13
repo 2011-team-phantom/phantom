@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Container, Image, List, Segment } from 'semantic-ui-react';
+import React, { Component } from "react";
+import { Container, Image, List, Segment } from "semantic-ui-react";
 
 class Footer extends Component {
   constructor() {
@@ -12,10 +12,10 @@ class Footer extends Component {
           inverted
           vertical
           style={{
-            margin: '5em 0em 0em',
-            padding: '5em 0em',
-            bottom: '0',
-            width: '100%',
+            margin: "5em 0em 0em",
+            padding: "5em 0em",
+            bottom: "0",
+            width: "100%",
           }}
         >
           <Container textAlign="center">
@@ -25,14 +25,38 @@ class Footer extends Component {
               src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
             />
             <List horizontal inverted divided link size="small">
-              <List.Item as="a" href="#">
-                Site Map
+              <List.Item as="a" href="https://www.fullstackacademy.com/">
+                Created By Fullstack Academy Graduates of the Web Development
+                Fellowship:
               </List.Item>
-              <List.Item as="a" href="#">
-                Contact Us
+              <br />
+              <List.Item
+                as="a"
+                href="https://www.linkedin.com/in/teofilocallanaupa/"
+              >
+                Teofilo Callañaupa
               </List.Item>
-              <List.Item as="a" href="#">
-                FAQ
+              <List.Item as="a" href="https://www.linkedin.com/in/comfort-o/">
+                Comfort Olowo
+              </List.Item>
+              <List.Item
+                as="a"
+                href="https://www.linkedin.com/in/janetlam3933/"
+              >
+                Janet Lam
+              </List.Item>
+              <List.Item
+                as="a"
+                href="https://www.linkedin.com/in/kaitlin-browne/"
+              >
+                Kaitlin Browne
+              </List.Item>
+              <br />
+              <List.Item
+                as="a"
+                href="https://github.com/2011-team-phantom/phantom"
+              >
+                GitHub Repository
               </List.Item>
             </List>
           </Container>
