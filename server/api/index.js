@@ -27,7 +27,7 @@ router.get('/linkTokenCreate', async (req, res) => {
       user: {
         client_user_id: '123-test-user-id',
       },
-      client_name: 'Phantom',
+      client_name: 'Plutus',
       products: ['auth', 'transactions'],
       country_codes: ['US'],
       language: 'en',
