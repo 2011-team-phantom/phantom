@@ -1,27 +1,27 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Progress, Button, Icon, Input, Dropdown } from 'semantic-ui-react';
-import moment from 'moment';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Progress, Button, Icon, Input, Dropdown } from "semantic-ui-react";
+import moment from "moment";
 
 import {
   fetchTransactions,
   fetchBudget,
   updateBudget,
-} from '../store/transactions';
+} from "../store/transactions";
 
 const categories = [
-  'Travel',
-  'Food and Drink',
-  'Payment',
-  'Shops',
-  'Transfer',
-  'Recreation',
-  'Bank Fees',
-  'Healthcare',
-  'Service',
-  'Tax',
-  'Other',
-  'Total',
+  "Travel",
+  "Food and Drink",
+  "Payment",
+  "Shops",
+  "Transfer",
+  "Recreation",
+  "Bank Fees",
+  "Healthcare",
+  "Service",
+  "Tax",
+  "Other",
+  "Total",
 ];
 const categoryOptions = categories.map((category) => {
   return { key: category, value: category, text: category };
@@ -34,8 +34,8 @@ class Budget extends Component {
       categoryAmount: {},
       addBudgetForm: false,
       editBudgetForm: false,
-      categories: '',
-      goalBudget: '',
+      categories: "",
+      goalBudget: "",
     };
     this.parseTransactionData = this.parseTransactionData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -101,7 +101,7 @@ class Budget extends Component {
   render() {
     const budget =
       Object.keys(this.props.budget).filter(
-        (name) => name !== 'monthlyIncome' && name !== 'housingCost'
+        (name) => name !== "monthlyIncome" && name !== "housingCost"
       ) || [];
 
     return (
@@ -119,14 +119,15 @@ class Budget extends Component {
                       $
                       {this.state.categoryAmount[category]
                         ? Number(this.state.categoryAmount[category]).toFixed(2)
-                        : '0'}
+                        : "0"}
                       / ${Math.round(this.props.budget[category])}
-                      {(this.state.categoryAmount[category] || '0') >
+                      {(this.state.categoryAmount[category] || "0") >
                         this.props.budget[category] && (
-                        <div style={{ color: 'red' }}>OVERBUDGET!</div>
+                        <div style={{ color: "red" }}>OVERBUDGET!</div>
                       )}
                       <Progress
-                        value={this.state.categoryAmount[category] || '0'}
+                        indicating
+                        value={this.state.categoryAmount[category] || "0"}
                         total={this.props.budget[category]}
                         precision={0}
                         progress="percent"
@@ -140,10 +141,10 @@ class Budget extends Component {
                               ? this.state.categoryAmount[category] /
                                   this.props.budget[category] >
                                 1
-                                ? 'red'
-                                : 'yellow'
-                              : 'green'
-                            : 'grey'
+                                ? "red"
+                                : "yellow"
+                              : "green"
+                            : "grey"
                         }
                         size="medium"
                       />
@@ -165,7 +166,7 @@ class Budget extends Component {
           </Button>
           {this.state.addBudgetForm && (
             <div className="add-budget-container">
-              <h4 style={{ textAlign: 'center' }}>Add/Edit Budget</h4>
+              <h4 style={{ textAlign: "center" }}>Add/Edit Budget</h4>
               <form className="add-budget-form" onSubmit={this.handleSubmit}>
                 <label htmlFor="categories">Budget Category: </label>
                 <Dropdown
