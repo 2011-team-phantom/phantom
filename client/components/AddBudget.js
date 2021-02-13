@@ -26,7 +26,7 @@ class AddBudget extends Component {
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value || 0 });
   }
 
   async handleSubmit(event) {
@@ -245,16 +245,7 @@ class AddBudget extends Component {
                     Housing | 30%
                   </Segment>
                   <Segment attached="bottom">
-                    <Form.Input
-                      fluid
-                      icon="money"
-                      type="number"
-                      iconPosition="left"
-                      name="Housing"
-                      placeholder="Housing"
-                      value={Math.round(this.props.user.budget.housingCost)}
-                      max={this.props.user.budget.monthlyIncome}
-                    />
+                    ${Math.round(parseInt(this.props.user.budget.housingCost))}
                   </Segment>
                 </Segment.Group>
                 <Segment.Group horizontal>
