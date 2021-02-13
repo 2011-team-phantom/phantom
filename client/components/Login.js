@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { auth } from '../store/user';
-import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
-import Animation from './Animation';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { auth } from "../store/user";
+import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
+import Animation from "./PigAnimation";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -29,7 +29,7 @@ class Login extends Component {
       <div className="login">
         <Grid
           textAlign="center"
-          style={{ height: '60vh' }}
+          style={{ height: "50vh" }}
           verticalAlign="middle"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
