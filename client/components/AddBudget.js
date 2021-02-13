@@ -26,7 +26,7 @@ class AddBudget extends Component {
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value || 0 });
   }
 
   async handleSubmit(event) {
@@ -93,6 +93,7 @@ class AddBudget extends Component {
                       placeholder="Food and Drink"
                       onChange={this.handleChange}
                       value={Math.round(this.state['Food and Drink'])}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -115,6 +116,7 @@ class AddBudget extends Component {
                       placeholder="Travel"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Travel)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -137,6 +139,7 @@ class AddBudget extends Component {
                       placeholder="Payment"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Payment)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -159,6 +162,7 @@ class AddBudget extends Component {
                       placeholder="Shops"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Shops)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -181,6 +185,7 @@ class AddBudget extends Component {
                       placeholder="Recreation"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Recreation)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -203,6 +208,7 @@ class AddBudget extends Component {
                       placeholder="Healthcare"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Healthcare)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -225,6 +231,7 @@ class AddBudget extends Component {
                       placeholder="Other"
                       onChange={this.handleChange}
                       value={Math.round(this.state.Other)}
+                      max={this.props.user.budget.monthlyIncome}
                     />
                   </Segment>
                 </Segment.Group>
@@ -238,15 +245,7 @@ class AddBudget extends Component {
                     Housing | 30%
                   </Segment>
                   <Segment attached="bottom">
-                    <Form.Input
-                      fluid
-                      icon="money"
-                      type="number"
-                      iconPosition="left"
-                      name="Housing"
-                      placeholder="Housing"
-                      value={Math.round(this.props.user.budget.housingCost)}
-                    />
+                    ${Math.round(parseInt(this.props.user.budget.housingCost))}
                   </Segment>
                 </Segment.Group>
                 <Segment.Group horizontal>
@@ -259,7 +258,7 @@ class AddBudget extends Component {
                     Savings | 15%
                   </Segment>
                   <Segment attached="bottom">
-                    {Math.round(parseInt(this.state.Total) - saving)}
+                    ${Math.round(parseInt(this.state.Total) - saving)}
                   </Segment>
                 </Segment.Group>
                 <Segment.Group horizontal>
@@ -272,7 +271,7 @@ class AddBudget extends Component {
                     Total | 100%
                   </Segment>
                   <Segment attached="bottom">
-                    {Math.round(this.state.Total)}
+                    ${Math.round(this.state.Total)}
                   </Segment>
                 </Segment.Group>
                 <Button color="teal" fluid size="large" type="submit">
