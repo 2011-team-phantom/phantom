@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { fetchTransactions } from "../store/transactions";
 import { me } from "../store/user";
 import { Doughnut } from "react-chartjs-2";
-import { Table, Segment, Progress, Dropdown } from "semantic-ui-react";
+import { Table, Dropdown } from "semantic-ui-react";
 import { sub, parseISO, isAfter } from "date-fns";
 
 const timeframe = ["3 Months", "6 Months", "1 Year"];
@@ -80,7 +80,7 @@ class Glance extends Component {
         this.state.timeframe
       );
     }
-    let spending = transactions.map((t) => {
+    transactions.map((t) => {
       if (totals[t.category[t.category.length - 1]]) {
         totals[t.category[t.category.length - 1]] += Math.round(t.amount);
       } else {
@@ -125,10 +125,7 @@ class Glance extends Component {
         },
       ],
     };
-    const totalSpending = Object.values(totals).reduce((accum, cur) => {
-      return accum + cur;
-    }, 0);
-    const percent = totalSpending / (this.props.user.budget.Total * 6);
+
     return (
       <div className="glanceContainer">
         <form className="timeframe-dropdown">
