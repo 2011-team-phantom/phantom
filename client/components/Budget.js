@@ -113,7 +113,6 @@ class Budget extends Component {
     const budget =
       Object.keys(this.props.budget).filter(
         (name) => categories.includes(name)
-        // name !== "monthlyIncome" && name !== "housingCost" && name !== "finished" && name !== "open"
       ) || [];
 
     return (
