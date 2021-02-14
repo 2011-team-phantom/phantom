@@ -25,8 +25,8 @@ class Navbar extends Component {
       "Transactions",
       "Budget",
       "Plaid Sync",
-      "At A Glance",
-      "Edit User",
+      "Summary",
+      "Profile",
     ];
     const loginNav = ["login", "join"];
     return (
@@ -72,7 +72,6 @@ class Navbar extends Component {
           </Menu>
         ) : (
           <Menu fixed="top" inverted>
-            
             <Menu.Item name="phantom">
               <Image
                 size="mini"
