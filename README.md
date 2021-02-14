@@ -51,16 +51,16 @@ You can run this app in two modes: sandbox or development, based on the API key 
 
    For development mode, also change your Client env in `/server/api/index.js`.
 
-   ```
+   ```javascript
    const client = new plaid.Client({
-    clientID: process.env.PLAID_CLIENT_ID,
-    secret: process.env.PLAID_SECRET,
-    env: plaid.environments.development,
+     clientID: process.env.PLAID_CLIENT_ID,
+     secret: process.env.PLAID_SECRET,
+     env: plaid.environments.development,
    });
    ```
 
 5. Start server and run locally.
-   ```
+   ```bash
    npm run start-dev
    ```
 6. You can now interact with Plutus app on http://localhost:3000/.
