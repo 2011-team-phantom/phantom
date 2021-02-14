@@ -54,6 +54,10 @@ class AddBudget extends Component {
           return parseInt(acc, 10) + parseInt(this.state[item], 10);
         }, 0) + parseInt(this.props.user.budget.housingCost, 10);
 
+
+    const categoryLabels = ["Food and Drink", "Travel", "Payment", "Shops", "Recreation", "Healthcare", "Other"]
+    const categoryNumber = ["Food | 10%", "Travel | 10%", "Bills | 10%", "Shops | 5%", "Recreation | 5%", "Health | 10%", "Other | 5%"]
+
     return (
       <div className="addbudgets">
         <Grid textAlign="center" verticalAlign="middle">
@@ -63,167 +67,33 @@ class AddBudget extends Component {
             </Header>
             <Form size="large" onSubmit={this.handleSubmit}>
               <Segment.Group>
-                <Segment.Group horizontal>
-                  <Segment
-                    style={{ width: '50%' }}
-                    inverted
-                    color="teal"
-                    attached="top"
-                  >
-                    Food | 10%
-                  </Segment>
-                  <Segment attached="bottom">
-                    <Form.Input
-                      fluid
-                      type="number"
-                      icon="money"
-                      iconPosition="left"
-                      name="Food and Drink"
-                      placeholder="Food and Drink"
-                      onChange={this.handleChange}
-                      value={Math.round(this.state['Food and Drink'])}
-                      max={this.props.user.budget.monthlyIncome}
-                    />
-                  </Segment>
-                </Segment.Group>
-                <Segment.Group horizontal>
-                  <Segment
-                    style={{ width: '50%' }}
-                    inverted
-                    color="teal"
-                    attached="top"
-                  >
-                    Travel | 10%
-                  </Segment>
-                  <Segment attached="bottom">
-                    <Form.Input
-                      fluid
-                      icon="money"
-                      type="number"
-                      iconPosition="left"
-                      name="Travel"
-                      placeholder="Travel"
-                      onChange={this.handleChange}
-                      value={Math.round(this.state.Travel)}
-                      max={this.props.user.budget.monthlyIncome}
-                    />
-                  </Segment>
-                </Segment.Group>
-                <Segment.Group horizontal>
-                  <Segment
-                    style={{ width: '50%' }}
-                    inverted
-                    color="teal"
-                    attached="top"
-                  >
-                    Bills | 10%
-                  </Segment>
-                  <Segment attached="bottom">
-                    <Form.Input
-                      fluid
-                      icon="money"
-                      type="number"
-                      iconPosition="left"
-                      name="Payment"
-                      placeholder="Payment"
-                      onChange={this.handleChange}
-                      value={Math.round(this.state.Payment)}
-                      max={this.props.user.budget.monthlyIncome}
-                    />
-                  </Segment>
-                </Segment.Group>
-                <Segment.Group horizontal>
-                  <Segment
-                    style={{ width: '50%' }}
-                    inverted
-                    color="teal"
-                    attached="top"
-                  >
-                    Shops | 5%
-                  </Segment>
-                  <Segment attached="bottom">
-                    <Form.Input
-                      fluid
-                      icon="money"
-                      type="number"
-                      iconPosition="left"
-                      name="Shops"
-                      placeholder="Shops"
-                      onChange={this.handleChange}
-                      value={Math.round(this.state.Shops)}
-                      max={this.props.user.budget.monthlyIncome}
-                    />
-                  </Segment>
-                </Segment.Group>
-                <Segment.Group horizontal>
-                  <Segment
-                    style={{ width: '50%' }}
-                    inverted
-                    color="teal"
-                    attached="top"
-                  >
-                    Recreation | 5%
-                  </Segment>
-                  <Segment attached="bottom">
-                    <Form.Input
-                      fluid
-                      icon="money"
-                      type="number"
-                      iconPosition="left"
-                      name="Recreation"
-                      placeholder="Recreation"
-                      onChange={this.handleChange}
-                      value={Math.round(this.state.Recreation)}
-                      max={this.props.user.budget.monthlyIncome}
-                    />
-                  </Segment>
-                </Segment.Group>
-                <Segment.Group horizontal>
-                  <Segment
-                    style={{ width: '50%' }}
-                    inverted
-                    color="teal"
-                    attached="top"
-                  >
-                    Health | 10%
-                  </Segment>
-                  <Segment attached="bottom">
-                    <Form.Input
-                      fluid
-                      icon="money"
-                      type="number"
-                      iconPosition="left"
-                      name="Healthcare"
-                      placeholder="Healthcare"
-                      onChange={this.handleChange}
-                      value={Math.round(this.state.Healthcare)}
-                      max={this.props.user.budget.monthlyIncome}
-                    />
-                  </Segment>
-                </Segment.Group>
-                <Segment.Group horizontal>
-                  <Segment
-                    style={{ width: '50%' }}
-                    inverted
-                    color="teal"
-                    attached="top"
-                  >
-                    Other | 5%
-                  </Segment>
-                  <Segment attached="bottom">
-                    <Form.Input
-                      fluid
-                      icon="money"
-                      type="number"
-                      iconPosition="left"
-                      name="Other"
-                      placeholder="Other"
-                      onChange={this.handleChange}
-                      value={Math.round(this.state.Other)}
-                      max={this.props.user.budget.monthlyIncome}
-                    />
-                  </Segment>
-                </Segment.Group>
+                {categoryLabels.map((cat, idx) => {
+                  return (
+                    <Segment.Group key={idx} horizontal>
+                      <Segment
+                        style={{ width: '50%' }}
+                        inverted
+                        color="teal"
+                        attached="top"
+                      >
+                        {categoryNumber[idx]}
+                      </Segment>
+                      <Segment attached="bottom">
+                        <Form.Input
+                          fluid
+                          type="number"
+                          icon="money"
+                          iconPosition="left"
+                          name={cat}
+                          placeholder={cat}
+                          onChange={this.handleChange}
+                          value={Math.round(this.state[cat])}
+                          max={this.props.user.budget.monthlyIncome}
+                        />
+                      </Segment>
+                    </Segment.Group>
+                  )
+                })}               
                 <Segment.Group horizontal>
                   <Segment
                     style={{ width: '50%' }}
