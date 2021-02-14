@@ -20,11 +20,10 @@ class Navbar extends Component {
     const { email } = this.props.meRn;
     const { hasBudget } = this.props;
     const { activeItem } = this.state;
-    const navItems = ["transactions", "budget", "plaid", "glance", "edituser"];
+    const navItems = ["transactions", "budget", "glance", "edituser"];
     const navItemTags = [
       "Transactions",
       "Budget",
-      "Plaid Sync",
       "Summary",
       "Profile",
     ];
