@@ -54,7 +54,7 @@ class AddBudget extends Component {
           return parseInt(acc, 10) + parseInt(this.state[item], 10);
         }, 0) + parseInt(this.props.user.budget.housingCost, 10);
 
-    // const categories = ["Food and Drink", Travel ]
+
     const categoryLabels = ["Food and Drink", "Travel", "Payment", "Shops", "Recreation", "Healthcare", "Other"]
     const categoryNumber = ["Food | 10%", "Travel | 10%", "Bills | 10%", "Shops | 5%", "Recreation | 5%", "Health | 10%", "Other | 5%"]
 
