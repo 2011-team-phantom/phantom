@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Image, List, Segment } from "semantic-ui-react";
+import { Container, Image, List, Segment, Icon } from "semantic-ui-react";
 
 class Footer extends Component {
   constructor() {
@@ -25,10 +25,6 @@ class Footer extends Component {
               src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
             />
             <List horizontal inverted divided link size="small">
-              <List.Item as="a" href="https://www.fullstackacademy.com/">
-                Created By Fullstack Academy Graduates of the Web Development
-                Fellowship:
-              </List.Item>
               <br />
               <List.Item
                 as="a"
@@ -52,11 +48,16 @@ class Footer extends Component {
                 Kaitlin Browne
               </List.Item>
               <br />
+
+              <List.Item as="a" href="https://www.fullstackacademy.com/">
+                Thanks to Fullstack Academy Web Development Fellowship
+              </List.Item>
+              <br />
               <List.Item
                 as="a"
                 href="https://github.com/2011-team-phantom/phantom"
               >
-                GitHub Repository
+                <Icon name="github" size="large" />
               </List.Item>
             </List>
           </Container>

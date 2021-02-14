@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProfileAnimation from "./ProfileAnimation";
 import CoinAnimation from "./CoinAnimation";
+//import photo from "../../public/src/profileman.png";
 import {
   Button,
   Form,
@@ -102,7 +103,7 @@ class EditUser extends Component {
                   bordered
                   circular
                   size="medium"
-                  src="https://img.pngio.com/cartoon-ghost-png-images-vector-and-psd-files-free-download-on-cartoon-ghost-png-360_360.png"
+                  src="https://previews.123rf.com/images/doppelganger4/doppelganger41507/doppelganger4150700057/42687746-businessman-riding-money-finance-survey-vector.jpg"
                 />
               </Grid.Column>
             </Grid.Row>
@@ -179,6 +180,7 @@ class EditUser extends Component {
                                 name="Bills"
                                 type="number"
                                 placeholder="Bills"
+                                defaultValue="100"
                               />
                             </Segment>
                           </Form>
