@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProfileAnimation from "./ProfileAnimation";
 import CoinAnimation from "./CoinAnimation";
-//import photo from "../../public/src/profileman.png";
+import { me } from "../store/user"
 import {
   Button,
   Form,
@@ -10,7 +10,6 @@ import {
   Header,
   Segment,
   Container,
-  Icon,
   Image,
   Modal,
 } from "semantic-ui-react";
@@ -30,6 +29,10 @@ class EditUser extends Component {
     this.setOpen = this.setOpen.bind(this);
   }
 
+  componentDidMount () {
+    this.props.fetchUpdatedUser();
+    this.setState({monthlyIncome: this.props.user.budget.monthlyIncome, housingCost: this.props.user.budget.housingCost})
+  }
   setOpen(openState) {
     this.setState({ open: openState });
   }
@@ -39,24 +42,8 @@ class EditUser extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-
-    if (this.state.monthlyIncome < 1) {
-      this.setState({
-        errorMessage: "Please enter a new income greater than 0",
-      });
-    } else if (this.state.housingCost < 1) {
-      this.setState({
-        errorMessage: "Please enter a housing cost greater than 0",
-      });
-    } else {
-      this.setState({
-        errorMessage: "",
-        finished: true,
-      });
-
       this.props.updateBudget(this.state);
       this.setOpen(false);
-    }
   }
 
   render() {
@@ -200,10 +187,6 @@ class EditUser extends Component {
                       icon="checkmark"
                       onClick={(e) => this.handleSubmit(e)}
                     />
-
-                    {this.state.errorMessage !== "" && (
-                      <div>{this.state.errorMessage}</div>
-                    )}
                   </Modal.Actions>
                 </Modal>
               </Grid.Column>
@@ -257,6 +240,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     updateBudget: (budget) => dispatch(updateBudget(budget)),
+    fetchUpdatedUser: () => dispatch(me()),
   };
 };
 export default connect(mapState, mapDispatch)(EditUser);

@@ -18,7 +18,6 @@ body {
 
 .add-budget-container {
   padding-top: 30px;
-  padding-bottom: 30px;
 }
 
 .budget-category-container {
@@ -72,7 +71,6 @@ body {
 .add-budget-form {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 .add-budget-form button {
@@ -147,4 +145,10 @@ div.glanceContainer {
 .add-transaction-form-input input {
   margin-left: 5px;
   margin-right: 5px;
+}
+/*
+navbar
+*/
+.estimated-savings {
+  text-align: center !important;
 }
