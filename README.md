@@ -26,7 +26,7 @@ You can run this app in two modes: sandbox or development, based on the API key 
 
 1. Clone the repo.
    ```bash
-   git clone https://github.com/2011-team-phantom/phantom
+   git clone https://github.com/2011-team-phantom/phantom.git
    ```
 2. Install NPM packages.
 

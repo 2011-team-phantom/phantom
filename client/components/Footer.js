@@ -19,11 +19,7 @@ class Footer extends Component {
           }}
         >
           <Container textAlign="center">
-            <Image
-              centered
-              size="mini"
-              src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
-            />
+            <Image centered size="mini" src={`../favicon/navbarlogo.png`} />
             <List horizontal inverted divided link size="small">
               <br />
               <List.Item

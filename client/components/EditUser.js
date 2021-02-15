@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProfileAnimation from "./ProfileAnimation";
 import CoinAnimation from "./CoinAnimation";
-import { me } from "../store/user"
+import { me } from "../store/user";
 import {
   Button,
   Form,
@@ -29,9 +29,12 @@ class EditUser extends Component {
     this.setOpen = this.setOpen.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.fetchUpdatedUser();
-    this.setState({monthlyIncome: this.props.user.budget.monthlyIncome, housingCost: this.props.user.budget.housingCost})
+    this.setState({
+      monthlyIncome: this.props.user.budget.monthlyIncome,
+      housingCost: this.props.user.budget.housingCost,
+    });
   }
   setOpen(openState) {
     this.setState({ open: openState });
@@ -42,8 +45,8 @@ class EditUser extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-      this.props.updateBudget(this.state);
-      this.setOpen(false);
+    this.props.updateBudget(this.state);
+    this.setOpen(false);
   }
 
   render() {
@@ -90,7 +93,7 @@ class EditUser extends Component {
                   bordered
                   circular
                   size="medium"
-                  src="https://previews.123rf.com/images/doppelganger4/doppelganger41507/doppelganger4150700057/42687746-businessman-riding-money-finance-survey-vector.jpg"
+                  src={`../favicon/navbarlogo.png`}
                 />
               </Grid.Column>
             </Grid.Row>
