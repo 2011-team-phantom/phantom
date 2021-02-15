@@ -111,8 +111,8 @@ class Budget extends Component {
 
   render() {
     const budget =
-      Object.keys(this.props.budget).filter(
-        (name) => categories.includes(name)
+      Object.keys(this.props.budget).filter((name) =>
+        categories.includes(name)
       ) || [];
 
     return (
@@ -123,12 +123,12 @@ class Budget extends Component {
             {budget.length ? (
               <div
                 style={{
-                  width: "67%",
+                  width: "60%",
 
                   margin: "auto",
                 }}
               >
-                <Card.Group style={{ fontSize: "20px", color: "teal" }}>
+                <Card.Group style={{ fontSize: "14px", color: "teal" }}>
                   <Card
                     className="estimated-savings"
                     fluid
@@ -139,8 +139,10 @@ class Budget extends Component {
                   this.props.budget.monthlyIncome -
                     this.state.categoryAmount.Total >
                   0
-                    ? this.props.budget.monthlyIncome -
-                      this.state.categoryAmount.Total
+                    ? Math.round(
+                        this.props.budget.monthlyIncome -
+                          this.state.categoryAmount.Total
+                      )
                     : 0
                 }`}
                   ></Card>
