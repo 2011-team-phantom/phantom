@@ -2,7 +2,6 @@
   "name": "Plutus Budget App",
   "short_name": "Plutus",
   "start_url": "./public/index.html",
-
   "background_color": "#F4F1DE",
   "theme_color": "#81B29A",
   "Scope": "/",

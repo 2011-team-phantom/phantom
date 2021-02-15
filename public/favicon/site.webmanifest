@@ -1,8 +1,7 @@
 {
-  "name": "Phantom Budget App",
-  "short_name": "Phantom",
+  "name": "Plutus",
+  "short_name": "Plutus",
   "start_url": "../public/index.html",
-
   "background_color": "#F4F1DE",
   "theme_color": "#81B29A",
   "Scope": "/",
@@ -34,8 +33,8 @@
       "type": "image/png"
     },
     {
-      "src": "plogo.png",
-      "sizes": "512x637",
+      "src": "navbarlogo.png",
+      "sizes": "1250x1250",
       "type": "image/png"
     }
   ],

@@ -21,12 +21,7 @@ class Navbar extends Component {
     const { hasBudget } = this.props;
     const { activeItem } = this.state;
     const navItems = ["transactions", "budget", "glance", "edituser"];
-    const navItemTags = [
-      "Transactions",
-      "Budget",
-      "Summary",
-      "Profile",
-    ];
+    const navItemTags = ["Transactions", "Budget", "Summary", "Profile"];
     const loginNav = ["login", "join"];
     return (
       <div className="navBar">
@@ -35,8 +30,8 @@ class Navbar extends Component {
             <Menu.Item name="phantom">
               <Image
                 size="mini"
-                src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
-                style={{ marginRight: "1.5em" }}
+                src={`../favicon/navbarlogo.png`}
+                // style={{ marginRight: "1.5em" }}
               />
             </Menu.Item>
 
@@ -74,8 +69,8 @@ class Navbar extends Component {
             <Menu.Item name="phantom">
               <Image
                 size="mini"
-                src="https://s3.amazonaws.com/DesignStudio/Website/images/plogo.png"
-                style={{ marginRight: "1.5em" }}
+                src={`../favicon/navbarlogo.png`}
+                // style={{ marginRight: "1.5em" }}
               />
             </Menu.Item>
             {loginNav.map((label, idx) => {
